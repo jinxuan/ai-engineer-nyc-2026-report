@@ -1,40 +1,35 @@
-# The Hidden Costs of a Faster Model：精确版
+# A Faster Model Is Only Faster If the Whole Job Is
 
-> Precise notes for this session, compiled from the official video captions where available, the author's room recording, slide photos and the primary sources linked inline. Written in Chinese with English terms and quotes. Source tags: slide, 讲者说 (said in a recording), 资料 (primary source), 我的理解 (inference), 【待确认】 (unverified).
+*At AI Engineer NYC 2026, MiniMax's Morgan Suo walked through the speed-ups inside the company's new M3.1 Flash model, from sparse attention to 4-bit math, and argued that each one has to be judged by the cost and time of a finished, checkable result.*
 
-状态（2026-10-27）：素材整理完，正文逐节和 slide、视频字幕、录音、MiniMax 文档对过。这场没有 Q&A。
+**Breakout · Wednesday, October 14, 2026 · 10:40–10:58am · McCarthy Room (Riverside Suite), Curated track**
+**Speaker:** Morgan Suo, Head of US Business Development, MiniMax
 
-## 素材盘点
+---
 
-| 素材 | 情况 |
-| --- | --- |
-| 官方视频 | [YvQ4BVTWfHI](https://www.youtube.com/watch?v=YvQ4BVTWfHI)，2026-10-21 上传，改名为「Is a Faster Model Actually Faster? Test the Whole Job — Morgan Suo, MiniMax」。正文 [00:12]–[17:35]，**没有 Q&A**。自动字幕是正文主要依据，时间标「视频 mm:ss」。视频描述带章节（见下）。ai.engineer 的[讲座页](https://ai.engineer/talks/YvQ4BVTWfHI)是视频内容的摘要，没有新信息 |
-| slide | 作者拍的 13 张（IMG_0576–0580、0582–0589；0581 不在文件夹里），全部属于本场，没有别场的照片。0577/0578、0579/0580 是同一页拍了两次。**开场、研究问题（PCB）那几页没拍到**，照片从「Cash flow behind the growth story」开始。数字都从照片读过 |
-| 一手资料 | MiniMax 官方：[API 文档（OpenAI 兼容接口）](https://platform.minimax.io/docs/api-reference/text-openai-api)、[Hugging Face 模型卡 MiniMaxAI/MiniMax-M3.1-Flash](https://huggingface.co/MiniMaxAI/MiniMax-M3.1-Flash)、[MiniMax Agent 的 M3.1 Flash 页](https://agent.minimax.io/tools/m3-1-flash-preview)。第三方但技术细节最全：[vLLM 博客 Day-0 Support for MiniMax-M3.1-Flash](https://vllm.ai/blog/2026-10-23-minimax-m31-flash)（Inferact and the vLLM Team，2026-10-23） |
+"When a new model arrives," Morgan Suo said, "it can generate a task faster, but … should I switch to that model?" Suo described a familiar outcome: a research report comes back very quickly, "but it misses a very important source. So someone has to find that source and fix that report … So did the job really get faster with this faster model?"
 
-视频章节（视频描述原文）：00:00 Intro · 01:44 The research job · 03:20 Profit vs. cash flow · 04:22 What changed inside the model · 05:09 Sparse attention on long inputs · 07:53 4-bit KV cache · 08:59 Low-precision experts · 10:20 Speculative decoding · 11:39 Throughput vs. wait time · 13:09 Reasoning budgets · 14:41 How to evaluate a model switch · 16:12 Recap
+Suo has been at MiniMax for almost three years and recalled that when the company first entered the American market, "almost no one knows us"; at the time it had its first video generation model. The talk covered the company's latest language model, M3.1 Flash, which Suo said would be released the following week. The plan was to look at how MiniMax reduced the model's computation, then ask how to test whether those changes are worth it. (The official video was retitled "Is a Faster Model Actually Faster? Test the Whole Job.")
 
-## 基本信息
+## 1. The research job: is growth turning into cash?
 
-- 时间地点：2026-10-14 10:40–10:58am，McCarthy Room (Riverside Suite)，Breakout Session (18 mins)，Curated Track
-- 讲者：Morgan Suo，MiniMax Head of US Business Development（日程）。讲者说（视频 00:18）：在 MiniMax「almost three years」，刚进美国市场时「almost no one knows us」，当时有第一个视频生成模型
-- 讲者说（视频 00:38）：「our latest language model which will be released next week」（讲于 10-14）。资料：模型的发布日期，二手资料说是 2026-10-19，vLLM 的 day-0 支持博客是 10-23，MiniMax 官方页没写日期，【待确认】
-- 题目：日程「The Hidden Costs of a Faster Model」，视频「Is a Faster Model Actually Faster? Test the Whole Job」
-- 讲者说（视频 01:01–01:33）：新模型来了，「It can generate a task faster but … should I switch to that model?」报告很快回来，「but it misses a very important source. So someone has to find that source and fix that report … So did the job really get faster with this faster model?」
+A quick chat reply and a research report have different needs, Suo said, so "the task tells us what good performance means." The talk used one research job throughout. The analyst's question: "As AI server demand is growing, are the companies supplying the circuit boards turning this growth into cash?" (PCB, or printed circuit board, connects the electronic components inside devices such as AI servers.)
 
-## 1. 研究任务：AI 服务器需求，PCB 供应商赚到现金了吗
+The model had several jobs: find the right reports, line up the same reporting periods, keep different businesses separate, and explain what the numbers mean. The analyst who receives the report needs to "open the source behind an important claim," check a calculation and "see what evidence could change the conclusion." "That is our standard for a finished research job," Suo said. (The slides introducing the job were not photographed.)
 
-- 讲者说（视频 02:06–03:20）：今天只讲 M3.1 Flash 和一个研究任务。分析师的问题：「as AI server demand is growing, are the companies supplying the circuit boards turning this growth into cash?」（PCB = printed circuit board）。「The internal review describes work across 14 company reports」，模型要找对报告、对齐 reporting period、把不同业务分开，再解释数字的含义。分析师要能「open the source behind an important claim … check a calculation … see what evidence could change the conclusion」，「that is our standard for a finished research job」（这几页 slide 没拍到）
-- slide（IMG_0576）「FINANCIAL RESEARCH / INTERNAL REVIEW — **Cash flow behind the growth story**」，「M3.1 Flash checkpoint 0918-e3 · September 2026 · qualitative internal review」
-  - 「Finding highlighted in the internal review」：**Profit growth ≠ Cash conversion**
-  - 「Illustrative example: Profit can rise while cash remains tied up in receivables and inventory.」
-  - 「Verification: reconcile cash from operations with the income statement and working capital.」
-  - 底部：「**14 interim reports · 22 source URLs · 5 testable theses**」
-- 讲者说（视频 03:26–04:21）：「profit can grow but cash flow tells a different story」，模型要指向现金流量表和相关披露；「a report earns trust when its claims can be checked」。这个 review 讲的是研究产出；后面的技术测试是「separate tasks」，用来理解具体的 trade-off
+![Cash flow behind the growth story](../slides/10-14-1040-the-hidden-costs-of-a-faster-model/01.jpg)
+*A qualitative internal review of an M3.1 Flash checkpoint on the circuit-board research job.*
 
-## 2. M3.1 Flash 改了什么（总表）
+The slide described a "qualitative internal review" of M3.1 Flash checkpoint 0918-e3 from September 2026. The finding it highlighted: "Profit growth ≠ Cash conversion." Its illustrative example: "Profit can rise while cash remains tied up in receivables and inventory." The verification step: "reconcile cash from operations with the income statement and working capital." The source pack was "14 interim reports · 22 source URLs · 5 testable theses." (On stage Suo described "14 company reports.")
 
-- slide（IMG_0577–0578）「**What changed in M3.1 Flash**」：「Attention and precision change the engine; serving and effort determine the research budget.」
+"Profit can grow but cash flow tells a different story," Suo said. A company sells more and reports higher profit, but customers haven't paid yet, or it has bought materials still sitting in storage. So the model should point to the cash flow statement and the relevant disclosures: "a report earns trust when its claims can be checked." The review described the research output; the technical tests in the rest of the talk were separate tasks, used to understand specific trade-offs.
+
+## 2. What changed inside M3.1 Flash
+
+![What changed in M3.1 Flash](../slides/10-14-1040-the-hidden-costs-of-a-faster-model/03.jpg)
+*"Attention and precision change the engine; serving and effort determine the research budget."*
+
+The slide summarized the changes against the previous configuration, MiniMax M3:
 
 | Component | Previous configuration | M3.1 Flash configuration |
 | --- | --- | --- |
@@ -43,187 +38,139 @@
 | Routed MoE experts | MXFP8 | W4A4 NVFP4 |
 | Reasoning controls | M3 can disable thinking | Always on, default effort max |
 
-  底部（左侧被挡）：「…source pack; change the configuration, then compare completed work.」
-- 我的理解：「Previous configuration」指 MiniMax M3（第四行写明「M3 can disable thinking」）
-- 讲者说（视频 04:28–05:09）：四个问题：哪里能减少 attention 的计算；数据怎么存、怎么搬；serving 配置怎么影响用户等待；模型推理多少。「every optimization has to help the finished job」
-- 资料核对（逐行）：
-  - 前三层：HF 模型卡「the first three full-attention layers are replaced with sparse attention」，模型「uses MiniMax Sparse Attention (MSA) throughout the model」
-  - KV：vLLM 博客「The KV cache is stored in NVFP4 while the query stays in FP8」，覆盖「both the indexer and the attention path」，模型「natively quantization-aware trained for an NVFP4 KV cache」；每 token 34,560 bytes，FP8 是 61,440 bytes
-  - MoE：vLLM 博客「its routed MoE weights are stored in NVFP4」，checkpoint 从 451.5 GB（MiniMax-M3-MXFP8）降到 250.1 GB；shared experts 仍是 MXFP8（「fused MXFP8 shared experts」）。HF 模型卡说 quantization-aware training 覆盖「the routed MoE experts and the attention paths」。「W4A4」（权重和激活都是 4-bit）只见于 slide，资料里没写，【待确认】
-  - Reasoning：见第 7 节，官方 API 文档完全一致
+The partly hidden footer ended: "…source pack; change the configuration, then compare completed work."
 
-## 3. Sparse attention：少算 attention，但要找到那条脚注
+Suo tied the changes to four questions: where attention work can be reduced, how data is stored and moved, how the serving setup affects how long a user waits, and how much reasoning the model does. "Every optimization has to help the finished job."
 
-- slide（IMG_0579–0580）「MINIMAX SPARSE ATTENTION — **How sparse attention works**」：「A lightweight indexer selects blocks for the main attention calculation.」
-  - **Index branch**：Scores candidate blocks for each query. Example: locate the cash-flow footnote.
-  - **Main branch**：Runs attention on selected blocks. Local context remains included.
-  - 图：Query Group 1 / Query Group 2 各自的 block 选择 mask（Selected / Non-selected，Query → Key Block），汇总成 Attention Mask
-  - 底部：「• P…d MSA: **16 × 128 = 2,048 selected tokens**」「…tokens ≠ the full context window.」（第一个词被挡，【待确认】）
-- 讲者说（视频 05:15–06:17）：「every model says oh I have a very big context window like we said we have 1 million」，关键是在这 100 万里能不能又快又对地找到。sparse attention 先用一个很小的选择步骤给文本块打分，main attention 只算选中的块，「also keeps the nearby text in view」；选择随 query 变化
-- 讲者说（视频 06:18–06:53）：目标是减少多个文档上的 attention 计算，但「a very short footnote there may change the entire conclusion. So for a cash flow question, the footnote may matter more than the pages of industry outlook」；「less attention work still has to find the important evidence」
-- 资料（vLLM 博客）：KV cache 按 128 token 分块，indexer 每个 GQA group 用一个 index query 给所有 key 打分、max-pool 成每块一个分数，attention 只算 top 16 块，外加始终保留的最近一块，「This caps each query at 2,048 keys」。和 slide 的 16 × 128 = 2,048 一致
-- 资料：MSA 论文 arXiv:2606.13392（HF 模型卡引用，2026-06-11），我没有读论文正文
+MiniMax's model card and vLLM's launch-support blog post confirm most of the table: the first three full-attention layers were replaced with sparse attention; the KV cache is stored in NVFP4 while queries stay in FP8, in both the indexer and the attention path; and the routed MoE weights are stored in NVFP4, which shrinks the checkpoint from 451.5 GB to 250.1 GB, while the shared experts stay in MXFP8. The "W4A4" label, meaning activations as well as weights in 4 bits, appears only on the slide and in the talk; the published sources mention only the weights.
 
-**长上下文检索测试**
+## 3. Sparse attention: less work, but it still has to find the footnote
 
-- slide（IMG_0582）「…ATTENTION COVERAGE — **Sparse attention in three more layers**」：「[M3].1 Flash changes the first three layers from full attention to sparse attention.」左：「[Fi]nd the decisive footnote」「Find the footnote that changes the thesis. [Test a]cross input lengths and positions.」右「**M3.1 Flash long-context retrieval**」：
+![How sparse attention works](../slides/10-14-1040-the-hidden-costs-of-a-faster-model/05.jpg)
+*A lightweight indexer picks blocks; main attention runs only on those.*
 
-| Input tokens | Single, 5 positions | 4-fact sum |
+"Nowadays I think every model says, oh, I have a very big context window, like we said we have 1 million," Suo said. The question is whether the model can find the right result in it quickly and correctly.
+
+The slide showed two branches. The index branch "scores candidate blocks for each query. Example: locate the cash-flow footnote." The main branch "runs attention on selected blocks. Local context remains included." A diagram showed two query groups, each with its own pattern of selected and non-selected key blocks, combined into an attention mask. The bottom line gave the budget: "16 × 128 = 2,048 selected tokens," noting that this is not the full context window. The selection changes with each query, since different questions need different passages. (vLLM's blog describes the same mechanism: the KV cache is split into 128-token blocks, an indexer scores them, and attention runs on the top 16 blocks plus the most recent one, capping each query at 2,048 keys.)
+
+For the research job, the point is to reduce attention work across many documents. But "a very short footnote there may change the entire conclusion," Suo said. "For a cash flow question, the footnote may matter more than the pages of industry outlook." "Less attention work still has to find the important evidence."
+
+![Sparse attention in three more layers](../slides/10-14-1040-the-hidden-costs-of-a-faster-model/06.jpg)
+*A retrieval test across input lengths and positions, up to about 830,000 tokens.*
+
+Because M3.1 Flash now uses sparse attention in its first three layers as well, retrieval is an important check. The slide, headed "Find the decisive footnote," reported a separate synthetic test that placed facts at different positions in long inputs:
+
+| Input tokens | Single fact, 5 positions | 4-fact sum |
 | --- | --- | --- |
 | 7.6–7.9K | 5/5 | — |
 | 27.1–32.7K | 5/5 | — |
 | 112.9–119.8K | 5/5 | 3/3 |
 | 233.8–236.6K | 5/5 | — |
 | 465.3–497.7K | 5/5 | 3/3 |
-| 817.0–830.5K | 5/5 | 3/3（照片右下角被挡，按总数推算） |
+| 817.0–830.5K | 5/5 | 3/3 |
 
-  底部：「[Ch]eck: retrieve the decisive filing. **Separate synthetic retrieval test: 39/39 pa[ss]**」
-- 我核对了总数：6 × 5 + 3 × 3 = 39，和 39/39 一致，所以最后一格应是 3/3
-- 讲者说（视频 06:55–07:23）：「M3.1 Flash also uses … this sparse attention in its first three layers that makes this retrieval an important check」；「in [one] run the model passes all 39 requests and the longest inputs were about 830k tokens」；「the result covers the cases in this test」
-- 讲者说（视频 07:26–07:53）：对真实研究任务还要问：能找到现金流脚注吗？用对 reporting period 吗？能发现不同文档之间的矛盾吗？把关键段落挪到输入的不同位置再问一遍
+The last cell is hidden in the photo, but the slide's total of "39/39 pass" (30 single-fact plus nine 4-fact requests) implies 3/3. The model passed all 39 requests, Suo said, and the longest inputs were about 830,000 tokens, but "the result covers the cases in this test." For real reports, the questions are different: can the model find a cash-flow footnote, use the right reporting period, and spot a conflict between documents? Suo's advice was to move the important passage to different places in the input and ask the same question again.
 
-## 4. 4-bit KV cache：平均分没变，单项掉了
+## 4. 4-bit KV cache: a stable average can hide a drop
 
-- slide（IMG_0583）「ATTENTION PRECISION — **Four-bit KV: check the workload behind the average**」：「M3.1 Flash: Q8KV8 → Q8KV4 in the sparse indexer and main attention branch.」
-  - 左「Smaller values, block scales」：「• 8-bit queries; 4-bit K/V.」「…per 16 values.」红字（左侧被挡）：「…[regres]sions can hide behind a stable average.」「…[−6].6 points; RISE-Fix1 +5.25 points.」
-  - 右「**M3.1 Flash DSpark configurations**」，「Internal engineering evaluation · September 21」：
+![Four-bit KV: check the workload behind the average](../slides/10-14-1040-the-hidden-costs-of-a-faster-model/07.jpg)
+*Moving keys and values from 8 to 4 bits barely moved the average, but one benchmark fell 6.6 points.*
 
-| Evaluation | Q8KV8 | Q8KV4 | 变化（我算的） |
+The model keeps internal information from earlier text in what is called the KV cache. M3.1 Flash "changes its keys and values from eight bits to four bits, but the query still stays at eight bits," Suo said. That reduces the data stored and moved. The slide noted 8-bit queries, 4-bit keys and values, and block scales per 16 values. Its table came from an internal engineering evaluation dated September 21, with speculative decoding (DSpark, M3.1 Flash's draft model) enabled:
+
+| Evaluation | Q8KV8 | Q8KV4 | Change |
 | --- | --- | --- | --- |
 | Macro average | 61.72 | 61.83 | +0.11 |
 | GPQA-Diamond | 79.3 | 80.8 | +1.5 |
-| SciCode | 48.6 | 42.0 | **−6.6** |
+| SciCode | 48.6 | 42.0 | −6.6 |
 | RISE-Fix1 | 34.0 | 39.25 | +5.25 |
 
-- 讲者说（视频 07:58–08:47）：「the model keeps the internal information from earlier text which we call this KV cache. And M3.1 Flash changes its keys and values from eight bits to four bits, but the query still stays at eight bits」；「the average scores actually is almost the same but the [SciCode] score there it drops like 6.6 percentage」，「the average score actually can hide a mistake … your user cares about」；这张表比的是两套完整配置，「does not tell us which changes caused each score」
-- 讲者说（视频 08:50）：对研究任务要重新检查输出：来源对不对、计算对不对、解释和证据是否一致
-- 资料：「per 16 values」的 block scale 和 NVFP4 的格式一致（NVFP4 每 16 个值共享一个 scale；我的理解，来自 NVIDIA 对 NVFP4 的公开说明，这里没有附原文链接，【待确认】）
-- 资料：表名里的「DSpark」是 M3.1 Flash 的 speculative decoding drafter（HF 模型卡：「DSpark replaces the earlier EAGLE-like MTP approach」），说明这组 KV 对比是在开了 DSpark 的配置下测的（我的理解）
+The slide's warning in red: regressions "can hide behind a stable average." "The average scores actually is almost the same, but the SciCode score there, it drops like 6.6 percentage," Suo said, while other scores rose. "The average score actually can hide a mistake … your user cares about." The table compares two complete setups, Suo added, so "it does not tell us which changes caused each score." For the research job, that means checking the output again: are the sources right, are the calculations right, does the explanation match the evidence?
 
-## 5. Routed experts 改成 NVFP4 W4A4：scale 在哪一步恢复很重要
+## 5. 4-bit experts: where the scale is restored matters
 
-- slide（IMG_0584）「ROUTED MOE EXPERTS — **Routed experts move to NVFP4 W4A4**」：「M3.1 Flash: MXFP8 → four-bit weights and activations. The shared expert stays unchanged.」
-  - 左「Efficiency and implementation cost」：「[Less we]ight traffic; lower precision.」「[Scaling and] restoration still add work.」（左侧被挡）
-  - 右「Scale restoration changes the result」：
+![Routed experts move to NVFP4 W4A4](../slides/10-14-1040-the-hidden-costs-of-a-faster-model/08.jpg)
+*Routed experts move to 4-bit weights and activations; the shared expert stays unchanged.*
+
+M3.1 Flash is a mixture-of-experts model: it has computing parts called experts and selects some of them for each token. "In M3.1 Flash, these selected experts use four-bit weights and activations. The shared expert is outside this change," Suo said. Weights are the model's stored values; activations are values the model calculates. Lower precision reduces data movement and supports more efficient computation, and the slide noted the cost side: "Scaling and restoration still add work."
+
+But the calculation has several steps: "we scale the numbers, we run the calculation and restore the scale. The position of these steps really matters." The slide's table, "Scale restoration changes the result," showed where:
 
 | Path | Activation-scale handling |
 | --- | --- |
 | FC1 | Dynamic per row. Restore after GEMM, before nonlinear activation |
 | FC2 | Fixed encoding factor: 16. Restore with × 1/16 after GEMM |
 
-  - 底部：「[Ch]eck: verify derived numbers after changing the numerical path; the[n …]」（右侧被挡）
-- 讲者说（视频 09:02–10:19）：MoE「selects some of them for each token. In M3.1 Flash, these selected experts use four bit [weights] and activations. The shared expert is outside this change」；weights 是存储的模型参数，activations 是模型算出来的值；低精度减少数据搬运、支持更高效的计算；但计算有几步：「we scale the numbers, we run the calculation and restore the scale. The position of these steps really matters」，「getting that order right is the part of getting the answer right. So fast math still has to be correct」；要测「the complete implementation」
-- 资料：见第 2 节（vLLM 博客：routed MoE 权重 NVFP4，shared experts MXFP8）。FC1/FC2 的 scale 处理细节资料里没有，只见于 slide
+"Getting that order right is the part of getting the answer right. So fast math still has to be correct," Suo said. The test has to cover the complete implementation, and for the research job, the same questions are run again to see why answers still miss the checks. The slide's red line: "verify derived numbers after changing the numerical path."
 
-## 6. Speculative decoding 和并发：吞吐翻倍，p95 首 token 等待 7.9 倍
+## 6. Speculative decoding: count the checking time too
 
-**Speculative decoding**
+![Draft faster. Verify. Measure accepted output.](../slides/10-14-1040-the-hidden-costs-of-a-faster-model/09.jpg)
+*Draft, verify, accept or correct: both drafting and verification cost time.*
 
-- slide（IMG_0585）「SPECULATIVE DECODING — **Draft faster. Verify. Measure accepted output.**」：「Drafting and target verification both contribute to the cost of a completed answer.」三步：Draft（P[ropose a t]oken sequence）→ Verify（Target-model scoring）→ Accept / correct（Keep prefix; then co[ntinue]）。底部红字：「…[accep]ted tokens and end-to-end time. Financial facts still need separate checks.」
-- 讲者说（视频 10:30–11:38）：「a faster draft process … propose a short sequence of tokens and then the target model can check it and the system keeps this first part that the target accepts and makes a correction when it's needed」；「the opportunity here is to get several tokens from one target check … but drafting takes time, checking takes time, rejecting these tokens also takes time. So count the time spent checking the draft too」；这些 check 验的是 token，「financial claims and sources need their own checks」；最终指标是「the time to a report that an analyst can really use」，要算上检索、tool calls 和 retries
-- 资料：M3.1 Flash 的 drafter 叫 **DSpark**，取代之前「EAGLE-like MTP」，发布时附带 draft head（HF 模型卡）；vLLM 的 NVIDIA 示例配置用 7 个 speculative tokens，AMD 示例用 3 个（vLLM 博客）。讲者台上没说 DSpark 这个名字（只出现在第 4 节表名里）
+Moving from the model to how it generates answers, Suo described speculative decoding. A faster draft process proposes a short sequence of tokens, "and then the target model can check it, and the system keeps this first part that the target accepts and makes a correction when it's needed." The slide showed the three steps: draft, verify (target-model scoring), and accept or correct (keep the prefix, then continue).
 
-**并发负载测试**
+"The opportunity here is to get several tokens from one target check," Suo said, "but drafting takes time, checking takes time, rejecting these tokens also takes time. So count the time spent checking the draft too." The slide made the same point: "Drafting and target verification both contribute to the cost of a completed answer." These checks verify tokens, but "financial claims and sources need their own checks." For the research job, the measurement should also include source retrieval, tool calls and retries. "The final measure is the time to a report that an analyst can really use."
 
-- slide（IMG_0586）「SERVING CAPACITY — **1.9x throughput. 7.9x p95 first-token wait.**」：「M3.1 Flash load test: simultaneous story-generation requests at low reasoning effort.」
+## 7. Throughput nearly doubled; the slowest first tokens took 7.9 times longer
+
+![1.9x throughput. 7.9x p95 first-token wait.](../slides/10-14-1040-the-hidden-costs-of-a-faster-model/10.jpg)
+*A load test of simultaneous story-generation requests at low reasoning effort.*
+
+Even when one request runs well, many users change the experience. A separate serving test ran simultaneous story-generation requests at low reasoning effort:
 
 | Concurrent requests | Aggregate output tokens/s | Median first-token wait | p95 first-token wait |
 | --- | --- | --- | --- |
 | 32 | 1,092 | 0.99 s | 1.46 s |
-| 64 | 2,043 | 1.03 s | **11.59 s** |
+| 64 | 2,043 | 1.03 s | 11.59 s |
 | 128 | 4,138 | 11.29 s | 11.71 s |
 
-  底部：「32 → 64 requests: 1.9x throughput; 7.9x p95 wait.」「…[G]PU does not remove queueing.」「…[p9]5 time-to-usable-memo target, then test throughput at that limit.」（左侧被挡）
-- 我核对了：2,043 / 1,092 = 1.87；11.59 / 1.46 = 7.94，和标题一致
-- 讲者说（视频 11:47–12:58）：这是另一个「separate serving test」，story generation、low reasoning effort，并发从 32 升到 64，「total output per second grows about 1.9 times」，但「the P95 wait for the first token … goes from about 1.5 seconds to 11.[6] seconds」，「eight times longer」；「the median stay[s] … we cannot only look at the median time」；「even when the throughput you see like oh we have [throughput] like more than 300 per second but still you need to care about the final wait time」（「300」和 slide 对不上，见「出入」）
-- 讲者说（视频 12:58–13:09）：首 token 可能只是 reasoning，还要量「when the usable report arrives」；「set a deadline for that report, [then] we choose a [load] that meets it」
-- 我的理解：128 并发时 median 也跳到 11.29 s，说明 64 并发时只有尾部请求排队，128 时大多数请求都在排队；台上没讲 128 这一行
+Going from 32 to 64 requests, total output per second grew about 1.9 times, but the wait for the first token at the 95th percentile went from about 1.5 seconds to about 11.6, "eight times longer," Suo said. (The slide gives 1.46 s to 11.59 s, or 7.9 times.) The median barely moved, "but we cannot only look at the median time." The users feel the wait. (Suo also mentioned throughput of "more than 300 per second," a figure that doesn't match any number on the slide.) The talk did not discuss the 128-request row, where the median wait also jumped to 11.29 seconds.
 
-## 7. Reasoning controls：不填 effort 就是 max
+The slide's partly hidden footer said a GPU "does not remove queueing" and suggested setting a p95 "time-to-usable-memo target, then test throughput at that limit." The first token may only be reasoning, Suo said, so what matters is when the usable report arrives: set a deadline for the report, then choose a load that meets it.
 
-- slide（IMG_0587）「REASONING CONTROLS — **Default max changes the work you request**」：「[M]3.1 Flash requires adaptive thinking. Missing effort becomes max.」
-  - 左「What actually reaches the model」：Effort omitted → max；Reasoning remains on；Record the effective route and prompt
-  - 右「**M3.1 Flash reasoning evaluation · matched items**」：
+## 8. Reasoning controls: leave effort blank and you get max
+
+![Default max changes the work you request](../slides/10-14-1040-the-hidden-costs-of-a-faster-model/11.jpg)
+*In M3.1 Flash, thinking is always on, and an omitted effort setting becomes max.*
+
+One more setting changes the work the model is asked to do. "Thinking stays on, but if we leave the effort blank, the default is max," Suo said. "So a default can change the amount of work we request." The slide stated it plainly: "M3.1 Flash requires adaptive thinking. Missing effort becomes max." Under "What actually reaches the model" it listed: effort omitted becomes max; reasoning remains on; record the effective route and prompt. MiniMax's API documentation matches: `reasoning_effort` accepts `low`, `medium`, `high`, `xhigh` or `max`, "defaults to `max` when omitted," and M3.1 Flash returns an error if thinking is disabled, which M3 allowed.
+
+The slide's evaluation on matched items showed the trade-off (output tokens include reasoning):
 
 | Evaluation | High | Max |
 | --- | --- | --- |
 | MMLU-Pro accuracy | 76.9% | 78.5% |
 | Mean output tokens | 1,005 | 1,851 |
-| LiveCodeBench accuracy | **68.0%** | **80.0%** |
+| LiveCodeBench accuracy | 68.0% | 80.0% |
 | Mean output tokens | 7,703 | 10,443 |
 
-  「Output tokens include reasoning.」底部红字：「…[se]t by evidence quality. **LCB high used fewer tokens but lost 12 accuracy points.**」
-- 讲者说（视频 13:14–14:37）：「this is the default max changes … it can control how many tokens we use for this model thinking … thinking stays on but if we leave the effort blank the default is max. So a default can change the amount of work we request」；「one coding test there shows the tradeoff … the high uses fewer output tokens than the max but the accuracy actually fell from 80% to 68%」；「give this task the thinking budget it really needs」；同一批报告上比较不同设置，「the quick first pass [and] the report ready for review may need different budgets」，要记录用了哪个 reasoning 设置
-- 资料（[MiniMax API 文档](https://platform.minimax.io/docs/api-reference/text-openai-api)）：`reasoning_effort` 仅 M3.1-Flash 支持，取值 `low`、`medium`、`high`、`xhigh`、`max`，「**Defaults to `max` when omitted**」，`none` 不支持、返回 400；thinking 的 `type` 可以是 `disabled` 或 `adaptive`，「`MiniMax-M3.1-Flash` always thinks and returns `400` if `disabled` is sent」，报错信息「model "MiniMax-M3.1-Flash" requires adaptive thinking」；MiniMax-M3 发 `disabled` 则「Skips thinking and answers directly」。**和 slide 的「requires adaptive thinking」「Missing effort becomes max」「M3 can disable thinking」完全一致**
-- 资料（[MiniMax Agent 页](https://agent.minimax.io/tools/m3-1-flash-preview)）：「Reasoning is always on in M3.1 Flash and cannot be disabled」，五档 effort，「Max as the default recommendation」
+On the coding test, high effort "uses fewer output tokens than the max, but the accuracy actually fell from 80% to 68%," Suo said; the slide put it as "LCB high used fewer tokens but lost 12 accuracy points." "Give this task the thinking budget it really needs." For the research job, that means comparing settings on the same reports, recognizing that a quick first pass and a report ready for review may need different budgets, and recording which setting was used.
 
-- slide（IMG_0588）「RESEARCH WORKFLOW / RELEASE DECISION — **Would you ship this research workflow?**」：「Evaluate the complete serving configuration on the same task, sources and deadline.」三项：
-  - **Evidence & numbers**：Audit citations and calculations.
-  - **Cost & latency**：Cost per acceptable memo.
-  - **Reproducibility**：Pin versions; replay; roll bac[k].
-  - 底部：「…[chec]kpoint, runtime, prompt, effort and sources. Canary; compare; roll back.」
-- 讲者说（视频 14:41–16:11）：先固定问题和源报告，用同样的 information cutoff，事先约定什么样的报告算合格，再比较。然后查三件事：
-  1. 分析师能不能信这份报告：能打开重要结论背后的来源、核对 reporting period、重算财务数字、找可能推翻结论的证据
-  2. 完成的工作花了多少、用了多久：「include retrieval, tool c[alls] and retries. So if a person must fix the report before use, count that work too … include all the failed attempts in the cost of producing … acceptable reports」；按预期用户数测试，检查报告是否在承诺时间内到达，「measure the cost of [a] report you can actually use」
-  3. 能不能复现：保存模型和 runtime 版本、prompt 设置和来源，保留失败样例，「start with a small roll out and keep a way to switch back」
-- slide（IMG_0589，收尾页）：「**Measure the cost of delivering an acceptable result at the required latency.**」「Traceable evidence. Correct calculations. A deadline the user can accept.」署名「[Morgan] Suo」「…@minimax.io」
-- 讲者说（视频 16:12–16:48）：放了一段用 MiniMax 视频模型生成的回顾短片（字幕和录音都是「A3」），说「it's open[-weight]」「it's only a one prompt with the text to video」。资料：MiniMax 现有的视频模型是 H3（Hailuo 3，2026-07-31 发布，二手资料称开放了权重，如 [fal.ai 介绍](https://fal.ai/learn/tools/minimax-h3-explained)）；**「A3」可能是「H3」的 ASR 错误，【待确认】**
-- 讲者说（视频 16:51–17:35）：回到开头问题，对分析师来说完成的工作是「a report with [sources] they can open and it has numbers they can check, it must arrive when they need it」；「measure what [it] cost[s] to finish [the] job and on time」；结尾：「**faster models really matter but what matter[s] most is what we can do with them**」
+## 9. Would you ship this research workflow?
 
-## Q&A 精确版
+![Would you ship this research workflow?](../slides/10-14-1040-the-hidden-costs-of-a-faster-model/12.jpg)
+*Three release checks: evidence and numbers, cost and latency, reproducibility.*
 
-无。视频在 [17:35]「Thank you guys」后结束；录音最后一句是「if you want to interact you can start it」（指什么不清楚，【待确认】），之后没有问答。
+The slide asked the audience to "evaluate the complete serving configuration on the same task, sources and deadline." Suo's procedure: fix the question and the source reports, use the same information cutoff, and agree on what makes a report acceptable before running the comparison. Then check three things.
 
-## 勘误表（Whisper / 自动字幕 → 实际）
+First, evidence and numbers ("Audit citations and calculations"): can the analyst trust the report, open the sources behind important claims, check reporting periods, recalculate the financial numbers and look for evidence that could change the conclusion?
 
-| 转写 | 实际 | 依据 |
-| --- | --- | --- |
-| Minax / Miniax | MiniMax | slide |
-| m3.1 flat / every point one flash | M3.1 Flash | slide |
-| glass attention / this bar's attention | sparse attention | slide |
-| passenger passages / tax | passages / text | 上下文 |
-| in v run | in one run（台上数字见 slide：39/39） | 上下文，【待确认】 |
-| kd cache | KV cache | slide |
-| sign score | SciCode score | slide |
-| MO ine architecture / mo in moe | MoE architecture | slide |
-| four big weights / four bit ways | 4-bit weights | slide |
-| speculative coding | speculative decoding | slide |
-| parking model / targeting model | target model | slide |
-| tool halls / tool costs | tool calls | 上下文 |
-| storage generation | story generation | slide |
-| 105 seconds（录音） / 1.5 seconds | 1.46 s | slide |
-| 11.3 seconds … 6 seconds | 11.59 s | slide |
-| weight（time） | wait | slide |
-| medium state | median | slide |
-| dial line / guideline | deadline | 上下文 |
-| choose a low that miss it | choose a load that meets it | 上下文、slide（我的理解） |
-| default master / default max changes | Default max changes the work you request | slide |
-| awkward tokens / up output tokens | output tokens | slide |
-| populations | calculations | 视频字幕 |
-| information code | information cutoff | 视频字幕 |
-| retracts | retries | 视频字幕 |
-| short report / recap（片子） | recap | 视频字幕 |
-| A3（视频模型） | 可能是 H3，【待确认】 | 资料 |
-| opened way / open with | open-weight | 上下文 |
-| 14 company reports | 14 interim reports | slide |
+Second, cost and latency ("Cost per acceptable memo"): what did the finished job cost and how long did it take? "Include retrieval, tool calls and retries. So if a person must fix the report before use, count that work too," Suo said, and include all failed attempts in the cost of producing acceptable reports. Test at the number of users expected, check whether reports arrive within the promised time, and "measure the cost of a report you can actually use."
 
-## 出入
+Third, reproducibility ("Pin versions; replay; roll back"): save the model and runtime versions, the prompt settings and the sources; keep examples of failures; and "start with a small rollout and keep a way to switch back." The slide's footer listed the checkpoint, runtime, prompt, effort and sources to pin, and ended: "Canary; compare; roll back."
 
-1. **p95 首 token 等待**：slide 是 1.46 s → 11.59 s（7.9x）；讲者口头「about 1.5 seconds to 11.[3/6] seconds」「eight times」。以 slide 为准
-2. **「more than 300 per second」**：讲者说「we have throughput like more than 300 per second」（视频 12:52），slide 上的总吞吐是 1,092 / 2,043 / 4,138 tokens/s，没有 300 这个数。每请求吞吐约 34（1,092 / 32）和 32（2,043 / 64）tokens/s 也不是 300。【待确认】讲者指的是什么
-3. **报告数量的说法**：讲者说「14 company reports」，slide 是「14 interim reports · 22 source URLs · 5 testable theses」
-4. **W4A4**：slide 写 routed experts 是「W4A4 NVFP4」（权重和激活都 4-bit），讲者也说「4-bit weights and activations」；vLLM 博客和 HF 模型卡只说 routed MoE weights 是 NVFP4，没提激活精度
-5. **KV 的精度叫法**：slide 用 Q8KV4（8-bit query、4-bit KV）；vLLM 博客的说法是 KV cache NVFP4、query FP8。两者一致，只是叫法不同（我的理解）
-6. **发布时间**：讲者 10-14 说「will be released next week」；二手资料说 10-19 发布，vLLM day-0 博客是 10-23。官方日期没找到
-7. **简介和正文**：简介写「blockwise 4-bit attention and MoE quantization change scale selection and rounding」「how reasoning controls can alter the path from API request to prompt construction」，台上都讲到了；简介里「observability」一词台上只体现为「record the effective route and prompt」「pin versions; replay」
+## 10. Measure the cost of an acceptable result
 
-## 【待确认】汇总
+![Measure the cost of delivering an acceptable result at the required latency](../slides/10-14-1040-the-hidden-costs-of-a-faster-model/13.jpg)
+*The closing slide: "Traceable evidence. Correct calculations. A deadline the user can accept."*
 
-1. M3.1 Flash 的官方发布日期
-2. slide 的「W4A4」（激活也是 4-bit）在官方资料里的出处
-3. IMG_0580 底部「P…d MSA: 16 × 128 = 2,048 selected tokens」第一个词
-4. NVFP4「每 16 个值一个 scale」的一手出处链接（本文没附）
-5. 「in one run … 39 requests」里 ASR「v run」的原话
-6. 讲者「more than 300 per second」指的是什么
-7. 回顾短片用的视频模型是「A3」还是 H3
-8. 录音末句「if you want to interact you can start it」指什么
+Before finishing, Suo played a short recap of the talk generated with MiniMax's AI video model from a single text prompt. Then Suo returned to the opening question of whether to switch to a faster model. For the analyst, the finished job is "a report with sources they can open, and it has numbers they can check; it must arrive when they need it." M3.1 Flash changes how computation is spent, and the complete task shows what those changes mean for the user. The closing slide read: "Measure the cost of delivering an acceptable result at the required latency."
+
+"Faster models really matter," Suo said, "but what matters most is what we can do with them."
+
+---
+
+**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=f3445fe7-308b-4e84-8490-fd78a13db4fb) · [Video](https://www.youtube.com/watch?v=YvQ4BVTWfHI) · [MiniMax API documentation (OpenAI-compatible)](https://platform.minimax.io/docs/api-reference/text-openai-api) · [MiniMax-M3.1-Flash model card](https://huggingface.co/MiniMaxAI/MiniMax-M3.1-Flash) · [MiniMax Agent: M3.1 Flash](https://agent.minimax.io/tools/m3-1-flash-preview) · [vLLM: Day-0 Support for MiniMax-M3.1-Flash](https://vllm.ai/blog/2026-10-23-minimax-m31-flash)
+
+This write-up is based on the official video's captions (which cover the first six minutes that the author's room recording missed), the room recording, slide photos and the sources above; the slides introducing the research question were not photographed. The video ends after the talk without a Q&A. The [precise notes](precise/10-14-1040-the-hidden-costs-of-a-faster-model.md) (Chinese) keep timestamps and the full record of where the talk, slides and MiniMax's documentation differ.

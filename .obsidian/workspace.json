@@ -1,0 +1,213 @@
+{
+  "main": {
+    "id": "213633da236c8a4f",
+    "type": "split",
+    "children": [
+      {
+        "id": "bcc1c5f4ef89b636",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e72f95ab7f0d6088",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "sessions/10-12-1530-unhobbling-the-frontier.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "10-12-1530-unhobbling-the-frontier"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "e14d67fe2bbd503c",
+    "type": "split",
+    "children": [
+      {
+        "id": "89816e81f6bb223b",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "24561ed9999972a7",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "b8a3850038c38fcd",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "c8376ced9c5eea19",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "fbaa4d5d76d8ea1a",
+    "type": "split",
+    "children": [
+      {
+        "id": "384d258a5ae15c05",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "279f9ed8ccb71396",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "sessions/10-12-1530-unhobbling-the-frontier.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "9324dd4ec8f082de",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "sessions/10-12-1530-unhobbling-the-frontier.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links"
+            }
+          },
+          {
+            "id": "35887fd0fef921b9",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "ed3d6f0acdc26e5b",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "d525d7e073899b8c",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "sessions/10-12-1530-unhobbling-the-frontier.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "e72f95ab7f0d6088",
+  "lastOpenFiles": [
+    "slides/10-14-1648-process-supervision-for-agents-that-do-l/16.jpg",
+    "slides/10-14-1648-process-supervision-for-agents-that-do-l/15.jpg",
+    "slides/10-14-1648-process-supervision-for-agents-that-do-l/14.jpg",
+    "slides/10-14-1648-process-supervision-for-agents-that-do-l/13.jpg",
+    "slides/10-14-1648-process-supervision-for-agents-that-do-l/12.jpg",
+    "slides/10-14-1648-process-supervision-for-agents-that-do-l/11.jpg",
+    "slides/10-14-1648-process-supervision-for-agents-that-do-l/10.jpg",
+    "slides/10-14-1648-process-supervision-for-agents-that-do-l/09.jpg",
+    "slides/10-14-1648-process-supervision-for-agents-that-do-l/08.jpg",
+    "slides/10-14-1648-process-supervision-for-agents-that-do-l/07.jpg",
+    "slides/10-14-1648-process-supervision-for-agents-that-do-l/06.jpg",
+    "slides/10-14-1648-process-supervision-for-agents-that-do-l",
+    "slides/10-14-1545-code-mode-your-agent-should-write-code",
+    "slides/10-14-1455-build-your-own-team-of-managed-agents",
+    "slides/10-14-1430-your-agent-needs-a-skill-to-improve-its",
+    "slides/10-14-1405-scaling-agentic-rl-across-the-globe",
+    "slides/10-14-1340-building-a-self-improving-software-facto",
+    "slides/10-14-1220-ab-testing-ai-products-is-weird-what-cha",
+    "slides/10-14-1155-the-model-ate-the-coding-harness-now-wha"
+  ]
+}

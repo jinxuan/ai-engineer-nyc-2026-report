@@ -1,37 +1,47 @@
-# Build your own team of managed agents：精确版
+# One API Call Gets an Agent Its Own Computer
 
-> Precise notes for this session, compiled from the official video captions where available, the author's room recording, slide photos and the primary sources linked inline. Written in Chinese with English terms and quotes. Source tags: slide, 讲者说 (said in a recording), 资料 (primary source), 我的理解 (inference), 【待确认】 (unverified).
+*At AI Engineer NYC 2026, Google DeepMind's Jack Wotherspoon showed how Gemini Managed Agents run a full agent loop in a cloud sandbox from a single API call, then chained three financial agents through one shared sandbox to research, value and write up a stock.*
 
-状态（2026-10-27）：素材整理完，视频和现场录音逐段对照完，产品名对过 Google 文档和博客。
+**Expo Session · Wednesday, October 14, 2026 · 2:55–3:13pm · Shannon Room (NY Ballroom E)**
+**Speaker:** Jack Wotherspoon, Member of Technical Staff (DevEx engineer), Google DeepMind
 
-## 素材盘点
+![The Shannon Room as the talk began](../slides/10-14-1455-build-your-own-team-of-managed-agents/01.jpg)
 
-| 素材 | 情况 |
-| --- | --- |
-| slide | 作者拍的 20 张（IMG_0722–0741），全部属于这场。slide 是网页式 deck，右下角有页码，拍到 2、3、5、6、7、8、9、10（两张）、11、12、13、14、15、16 /19 页，以及 demo 画面；**第 1、4、17–19 页没拍到**。数字从照片上读 |
-| 视频 | [Y_p3y6zP5QE](https://www.youtube.com/watch?v=Y_p3y6zP5QE)「Build Your Own Team of Managed Agents - Jack Wotherspoon, Google DeepMind」，19:43，上传 2026-10-26。字幕 `subs/Y_p3y6zP5QE.txt`。**和现场是同一场**：措辞逐句一致，视频时间 ≈ 录音时间 + 62 秒 |
-| 一手资料 | Google 官方博客：[Introducing Managed Agents in the Gemini API](https://blog.google/innovation-and-ai/technology/developers-tools/managed-agents-gemini-api)、[Interactions API: our primary interface for Gemini models and agents](https://blog.google/innovation-and-ai/technology/developers-tools/interactions-api-general-availability)、[Expanding Managed Agents in Gemini API](https://blog.google/innovation-and-ai/technology/developers-tools/expanding-managed-agents-gemini-api/)；文档 [Antigravity agent](https://ai.google.dev/gemini-api/docs/antigravity-agent)（已读）。博客正文没打开，日期来自搜索结果摘要 |
+---
 
-## 基本信息
+"I am a DevEx engineer at Google DeepMind," Jack Wotherspoon told the audience, and opened by asking the room who had heard of or used cloud or managed agents. The idea, Wotherspoon said, is simple: "instead of running a harness and running coding agent on your own machine, you can actually just run them in the cloud on a sandbox."
 
-- 时间地点：2026-10-14 2:55–3:13pm，Shannon Room (NY Ballroom E)，Expo Session (18 mins)（资料：日程）。Expo session 一般是赞助商场次（我的理解）
-- 讲者：Jack Wotherspoon，日程写「Member of Technical Staff, Google DeepMind」；讲者说（视频 00:12）：「I am a DevEx engineer at Google DeepMind」
-- 官方简介：「Managed agents give you a cloud sandbox, a file system, and a full agent loop in a single API call」；「Let's put it to the test by building a full team of financial agents in just a few minutes!」
-- 产品官方名称：Google 博客写「**Managed Agents in the Gemini API**」；讲者和 slide 用「Gemini Managed Agents」。文档里的预置 agent 叫 **Antigravity agent**，「a general-purpose managed agent on the Gemini API」，agent ID `antigravity-preview-09-2026`（资料：[Antigravity agent 文档](https://ai.google.dev/gemini-api/docs/antigravity-agent)）
-- 资料（时间线，来自 Google 博客的搜索摘要）：Managed Agents 2026-05-19 预览发布；Interactions API 2026-06-23 GA；2026-07-07 加入 background execution、remote MCP、custom function calling、credential refresh；之后还有一篇加 3.6 Flash 和 hooks 的更新。日期【待确认】（没打开博客正文）
+The 18-minute expo session made the case for doing that, walked through the building blocks of Google's version, Managed Agents in the Gemini API, and ended with three live demos built around financial analysis.
 
-## 1. 为什么要 cloud / managed agent
+## 1. Why an agent needs its own computer
 
-- 讲者说（视频 00:34）：cloud 或 managed agent「instead of running a harness and running coding agent on your own machine, you can actually just run them in the cloud on a sandbox」
-- slide（2/19，「01 — Why a Computer Matters」）「With a sandbox, agents verify their own work.」：「Instead of handing you untested code, an agent with its own computer runs the script, inspects the traceback, fixes the bug, and returns the verified output.」四步：Step 01 Write code（`write dcf.py`）→ Step 02 Execute code（`python3 dcf.py`）→ Step 03 Test and validate（「Spots a missing column or NaN row, patches the code, and re-runs」，`fix KeyError → retry`）→ Step 04 Deliver artifact（`chart.png ✓`）。底栏「Autonomous verification loop runs inside the cloud sandbox · Zero human prompts required」
-- 讲者说（视频 01:16）：在自己笔记本上跑验证，「sometimes it steals the browser … You start getting pop-ups」
-- slide（3/19，「02 — Local vs. Cloud」）「Your laptop doesn't scale」：「Running agents locally forces you to choose between approving every shell command by hand or exposing your personal machine.」On your laptop「Blocked on permission prompts」（`Allow bash execution & network access? [y/N]`）：Shares your personal files, SSH keys, and active sessions / Stops the moment you close your laptop lid / Can't scale to thousands of customer sessions。In a cloud sandbox「Runs & verifies autonomously」：Isolated Linux container with zero local blast radius / Runs asynchronously in the background / Scales from your daily workflow to thousands of users
-- 讲者说（视频 01:32）：「your laptop doesn't scale」：自己调好的 skills 和 coding agent 怎么分享给同事、怎么集成进 app；「You don't want your app that you're deploying to customers to be running with your own kind of subscription」
-- 讲者说（视频 02:12）：自己搭要起容器或 VM、自己做 harness engineering，「let's not even start to talk about networking or setting up firewall rules」
+![With a sandbox, agents verify their own work](../slides/10-14-1455-build-your-own-team-of-managed-agents/02.jpg)
+*Slide 2 of 19: the four-step loop an agent runs when it has a computer of its own.*
 
-## 2. 一次 API 调用：Interactions API
+The first reason is verification. The slide, headed "With a sandbox, agents verify their own work," said that "instead of handing you untested code, an agent with its own computer runs the script, inspects the traceback, fixes the bug, and returns the verified output." It laid out four steps:
 
-- slide（5/19，「04 — Gemini Managed Agents」）「Now it's a single API call.」：「The Interactions API gives you a Google-hosted Linux sandbox, a persistent filesystem, and the Antigravity agent loop out of the box.」代码：
+| Step | What happens | Example on the slide |
+| --- | --- | --- |
+| 01 Write code | Writes Python code to parse filings and compute cash flows | `write dcf.py` |
+| 02 Execute code | Runs the script inside the Linux container and captures stderr | `python3 dcf.py` |
+| 03 Test and validate | Spots a missing column or NaN row, patches the code, and re-runs | `fix KeyError → retry` |
+| 04 Deliver artifact | Verifies the chart rendered cleanly before finishing the turn | `chart.png ✓` |
+
+A footer read "Autonomous verification loop runs inside the cloud sandbox · Zero human prompts required." Running that loop on a laptop has side effects, Wotherspoon said: "sometimes it steals the browser. It starts to run things for you. You start getting pop-ups."
+
+![Your laptop doesn't scale](../slides/10-14-1455-build-your-own-team-of-managed-agents/03.jpg)
+*Slide 3: running locally means approving every command or exposing your machine.*
+
+The second reason is that "your laptop doesn't scale." The slide contrasted the two settings. On a laptop, the agent is "blocked on permission prompts" (an `Allow bash execution & network access? [y/N]` prompt), shares your personal files, SSH keys and active sessions, stops when the lid closes, and can't scale to thousands of customer sessions. In a cloud sandbox it "runs & verifies autonomously": an isolated Linux container with "zero local blast radius," running asynchronously in the background, scaling "from your daily workflow to thousands of users."
+
+Wotherspoon put it in terms of sharing: a developer who has tuned skills and a personal coding agent has no easy way to hand that setup to a colleague or build it into an app, and "you don't want your app that you're deploying to customers to be running with your own kind of subscription." Building the alternative by hand is tedious: spin up a container or VM, load it, manage it, do your own harness engineering, "and then let's not even start to talk about networking or setting up firewall rules or all the security stuff."
+
+## 2. A single call to the Interactions API
+
+![Now it's a single API call](../slides/10-14-1455-build-your-own-team-of-managed-agents/04.jpg)
+*Slide 5: the whole setup in one `interactions.create` call.*
+
+"Whether it's Gemini managed agents, Claude managed agents," Wotherspoon said, the product category "boils down to just being a single API call," and the talk would cover Google's offering in the Gemini API. The slide said the Interactions API "gives you a Google-hosted Linux sandbox, a persistent filesystem, and the Antigravity agent loop out of the box," and showed the call:
 
 ```python
 from google import genai
@@ -45,131 +55,155 @@ interaction = client.interactions.create(
 print(interaction.output_text)
 ```
 
-- 讲者说（视频 02:39）：「whether it's Gemini managed agents, Claude managed agents, we'll be talking about Gemini managed agents today, which is our offering in the Gemini API at DeepMind」（字幕作 cloud managed agents，按上下文应为 Claude）；「it boils down to just being a single API call」
-- 讲者说（视频 03:28）：Interactions API 是「our kind of new agent first version of our SDKs and client libraries」；以前 model 是一进一出，不适合 agent；interaction 可以多步、写文件、调 MCP tools；「this new interactions API that we launched and went GA earlier this year, is now our kind of home for managed agents」；把 model 换成 agent，设 `environment="remote"`
-- 资料：文档中 `environment` 有三种写法：`"remote"`（新建默认 sandbox）、已有的 environment ID（复用文件和状态）、完整 `EnvironmentConfig` 对象（自定义 sources 和网络规则）
+Wotherspoon described the Interactions API as "our kind of new agent first version of our SDKs and client libraries." The older model interface was one input, one output, which "didn't really scale to agents"; an interaction can span many steps, write files and call MCP tools. The API "went GA earlier this year" and is "now our kind of home for managed agents." Two things change from an ordinary model call: you name an agent (here the base Antigravity agent) instead of a model, and you set `environment="remote"`, which tells it "we want a managed agent that runs in the cloud." Google's documentation adds that `environment` can also take the ID of an existing environment, to reuse its files and state, or a full configuration object with custom sources and network rules.
 
-## 3. 架构和五个 building blocks
+## 3. The architecture and its building blocks
 
-- slide（6/19，「05 — Architecture Overview」）「Gemini Managed Agents」：USER「Analyze Q3 filings and create a valuation report…」→ GEMINI API（code_execution、filesystem、Skills、MCP tools；模型 GEMINI 4 ARGON）→ EXECUTE / RESULTS ↔ SANDBOX（ONLINE）：ROOTFS 里有 `AGENTS.md`、`skills/`、`mcp_tools`；TERMINAL「Isolated Linux VM · 4 vCPU · 16 GB」「Egress proxy injects credentials」；底栏「Debian · 4 vCPU · 16 GB VM · Zero-Trust Egress」。上方四个输入源：GCS、REPOSITORY、INLINE、CREDENTIALS
-- 讲者说（视频 04:32）：Gemini API 有内置的 server-side tools（Google Search、读写文件的 filesystem 工具），也可以加 custom functions 或 MCP tools；sandbox「running on kind of Google Cloud infrastructure」；可以上传 agent skills、agents.md，启动时加载 GitHub repo
-- slide（7/19，「06 — Core Primitives」）「Building blocks of managed agents」：Harness（`agent_config`）「Plans the work, calls tools, and checks its own results.」；Environment（`environment`）「Its own Linux computer with files and packages that persist.」；Tools（`tools + mcp`）「Built-in bash, files, web search, and remote MCP servers.」；Skills（`.agents/`）「Instructions in AGENTS.md and repeatable workflows in SKILL.md.」；Credentials（`credentials`）「API keys injected outside the sandbox so secrets stay safe.」；Schedule（`triggers`）「Cron schedules and background runs that work while you're away.」
-- 讲者说（视频 05:29）：harness 是 Antigravity harness，「the exact same harness that's running in our anti-gravity suite of products over at Google」；environment「is kind of its own entity」，多个 agent 可以指向同一个 sandbox；skills 就像公司里的 playbooks；credentials「is a new piece of managed agent which essentially lets us inject either kind of tokens or your MCP OAuth into the managed agent sandbox」；triggers：比如每天早上 8:30 开盘前做财务分析，结果可以通过 webhook 发 Slack，或查团队的 Jira board
-- 资料：文档说 Antigravity agent「uses the same harness as the Antigravity IDE」；内置工具 `code_execution`、`google_search`、`url_context` 默认开启，设了 environment 后自动加 filesystem 工具；remote MCP 走 streamable HTTP；可以把 `AGENTS.md` 和 `.agents/skills/` 挂进 sandbox。文档没有给出 vCPU、内存、OS（指向另一个 Environments 页面，那个 URL 返回 404），所以 slide 上的「Debian · 4 vCPU · 16 GB」**未核对**，【待确认】
-- 讲者口头说「five」个 pillar（视频 05:22 章节名「harness, environment, skills, credentials, triggers」），slide 上是六块（多了 Tools）
+![Gemini Managed Agents architecture](../slides/10-14-1455-build-your-own-team-of-managed-agents/05.jpg)
+*Slide 6: the user's request goes to the Gemini API, which drives a sandbox.*
 
-## 4. 模型：Gemini 4 Argon 和 Flash
+The architecture slide traced a request ("Analyze Q3 filings and create a valuation report…") from the user to the Gemini API, which holds the tools (`code_execution`, filesystem, skills, MCP tools) and the model, labeled Gemini 4 Argon. The API sends execute calls to the sandbox and gets results back. Inside the sandbox, the root filesystem holds `AGENTS.md`, `skills/` and `mcp_tools`, and a terminal panel reads "Isolated Linux VM · 4 vCPU · 16 GB" and "Egress proxy injects credentials." Four inputs feed the sandbox from above: GCS, a repository, inline content and credentials. (The slide's footer gives the machine as Debian, 4 vCPU and a 16 GB VM; Google's Antigravity agent documentation does not list these specs, so they rest on the slide alone.)
 
-- slide（8/19，「Harness」）「The Antigravity harness runs the loop.」：「Built on the same harness as Antigravity products. It plans multi-step work, executes tools, verifies its own output, and lets you configure the underlying model.」两个模型：`gemini-4-argon`「Deep reasoning for complex coding and financial modeling.」；`gemini-3.8-flash`「Fast, low-latency default for everyday agent workflows.」代码里 `agent_config={"type": "antigravity", "model": "gemini-4-argon"}`，input「Audit all 10-K footnotes and reconcile segment revenue across 5 years.」
-- slide（9/19）「Gemini 4 Argon: built for your hardest tasks」：「Now available in the Gemini API and Google AI Studio — purpose-built for deep coding, financial analysis, and multi-step agentic work.」三点：1「#1 on the Vals Index — Leads frontier models across finance, coding, legal, and tax work, lifting agentic code submissions at Google by 35%.」2「Long decode up to 1M tokens — Shared 1M context window (input + thinking + output) with tunable thinking_level (low, medium, high).」3「Pair with 3.8 Flash for cost and speed — Route your hardest reasoning to Argon and fast everyday turns to Gemini 3.8 Flash.」
-- 讲者说（视频 07:10）：「Yesterday we just launched Gemini 4 Argon which is our new frontier model」；快和省用 Gemini Flash，深度推理用 Argon；「It's especially good at financial tasks」，也擅长跨大量文档做数据分析，以及 multimodal
-- 讲者说（视频 08:10）：long decode：「normally models have an output token max of around 64K tokens」，Gemini 4 让 1M 的窗口「shared between input, thinking, and output」，适合极长的数学推理或财务建模输出
-- 资料：文档里 `agent_config.model` 可选 `gemini-3.8-flash`（**默认**）、`gemini-4-argon`（complex software engineering and long-horizon tasks）、`gemini-3.6-flash`、`gemini-3.5-flash-lite`；managed agent 的模型在创建时固定，「cannot override the model at interaction time」
-- 资料（二手）：Gemini 4 Argon 2026-09-30 公布（先给安全研究者）、**2026-10-13 广泛开放**，和讲者「yesterday」（10/14 讲）一致；Vals Index 第一，68.90%（[techjacksolutions](https://techjacksolutions.com/?p=96279)、[DeepLearning.AI The Batch](https://www.deeplearning.ai/the-batch/argon-a-low-hallucination-model-build-for-knowledge-work)）。Google 原文（blog.google「introducing-gemini-4-argon」）没打开，【待确认】。slide 上「lifting agentic code submissions at Google by 35%」没找到来源，【待确认】
+Wotherspoon said the API has built-in server-side tools, such as Google Search and filesystem tools for reading and writing files, and accepts custom functions and MCP tools. The sandbox runs "on kind of Google Cloud infrastructure," and can be loaded at startup with agent skills, an `agents.md` file or a GitHub repository.
 
-## 5. Interactions 和 Environments 分开，多个 agent 共用一个 sandbox
+![Building blocks of managed agents](../slides/10-14-1455-build-your-own-team-of-managed-agents/06.jpg)
+*Slide 7: six building blocks, each with the API parameter that controls it.*
 
-- slide（10/19，「Environment」）「Interactions and Environments are stateful」：「Conversation history and filesystem are both kept in state server-side separately. One agent can prepare files in the environment and a second agent can step right into that same computer with a fresh conversation.」Interactions（`previous_interaction_id`）「Keeps the conversation messages and reasoning turns.」；Environments（`environment`）「Keeps /workspace files, data, and installed packages.」代码：
+The building-blocks slide listed six pieces:
 
-```python
-# 1. Researcher saves data to /workspace
-step1 = client.interactions.create(
-    agent="market-researcher", environment="remote",
-    input="Save Q3 filings to /workspace/q3.csv",
-)
-# 2. Quant reuses the same computer with a fresh chat
-step2 = client.interactions.create(
-    agent="quant-analyst", environment=step1.environment_id,
-    input="Plot a valuation chart from /workspace/q3.csv",
-)
-```
-
-- 讲者说（视频 09:05）：「these are kind of two different stateful things on our back end」；interaction 管对话，把一个 interaction 的 ID 传给下一个就是第二轮；environment 是 sandbox 上的文件系统，可以用 API 上传下载文件。分开后，第二个 agent「has a very fresh kind of context window and conversation, but it's reusing the environment」，「Kind of a multi-agent workflow」
-
-## 6. 工具、playbook 和保存 agent
-
-- slide（11/19，「Tools」）「Built-in sandbox tools plus remote MCP.」：「Every managed agent starts with shell, filesystem, and web grounding enabled—and connects to remote HTTP MCP servers in a few lines.」code_execution「Run Bash, Python, and Node with stdout/stderr capture.」；filesystem「Read, write, edit, and search files across /workspace.」；google_search「Live web search and url_context page fetching.」；mcp_server「Attach external Model Context Protocol servers over HTTP.」代码示例接 GitHub MCP（`"url": "https://api.githubcopilot.com/mcp"`，`"credential": "github-prod"`）
-- slide（12/19，「Skills」）「Configure agents with your playbooks」：「Mount AGENTS.md, SKILL.md, Git repos, or Cloud Storage buckets directly into the sandbox — then promote your setup to a saved agent.」目录：`.agents/AGENTS.md`（Persona & rules）、`.agents/hooks.json`（Guardrails）、`.agents/skills/dcf-model/SKILL.md`、`/workspace/filings/`（Mounted from Git or GCS）。三步：1 Customize inline → 2 Save agent → 3 Invoke by ID；代码里 sources 有 `"type": "inline"`（target `.agents/AGENTS.md`，content「You are a rigorous equity analyst.」）和 `"type": "repository"`（`https://github.com/org/fin-skills` → `.agents/skills`）
-- 讲者说（视频 10:46）：内置 code execution、读写文件、Google Search；也支持 remote MCP servers（字幕作「SMTP servers」）
-- 讲者说（视频 11:40）：示例上传 agents.md、连一个 GitHub repo 让 agent 查 bug；agents API 可以 `agents.create`，调好的 agent 存下来，之后「invoke your personal agent by calling it with its agent ID」
-- 资料：文档：managed agent 由 `agents.create` 创建，参数 `base_agent` 和 `agent_config`
-
-## 7. 安全：secrets 不进 sandbox
-
-- slide（13/19，「Credentials」）「Secrets never enter the sandbox.」：「Store tokens and credentials once via client.credentials.create(). When the agent calls an allowlisted domain, the egress proxy injects the secret on the wire.」图：Container「Agent Sandbox — Calls api.polygon.io or github.com with zero tokens in memory or env.」→（No secret）→ Wire Injection「Egress Proxy — Verifies network.allowlist, attaches bearer_token or refreshes oauth2.」→（+ Bearer ····）→ Upstream「External API — Receives authenticated request; sandbox can never exfiltrate the key.」代码 `client.credentials.create(id="polygon-prod", type="bearer_token", token="pk_live_...")`，environment 里 `"network": {"allowlist": [{"domain": "api.polygon.io", "credential": "polygon-prod"}]}`
-- 讲者说（视频 12:21）：「secrets never actually enter the sandbox」；proxy 在 sandbox 和 API 之间，往 sandbox 里放一个 placeholder「dummy token」，agent 不会「go rogue and say, oh, I see that I have this GitHub token laying around」；调 GitHub API 时 proxy 匹配域名再注入真 token
-- 资料：文档：trigger 触发的运行应引用已存的 credential，「the egress proxy resolves on each run」；也支持 inline `transform` 规则
-- 出入：讲者说 sandbox 里放的是 placeholder / dummy token；slide 写「zero tokens in memory or env」。两种说法不完全一样（我的理解：可能是 sandbox 里有占位符但没有真值），【待确认】
-
-## 8. 定时触发和后台扇出
-
-- slide（14/19，「Schedule」）「Run on a schedule or fan out in the background.」：「Schedule recurring jobs with client.triggers.create() or launch non-blocking parallel runs with background=True.」代码一：`client.triggers.create(display_name="pre-market-briefing", schedule="0 7 * * 1-5", time_zone="America/New_York", interaction={"agent": "quant-analyst", "input": "Refresh morning risk report.", "environment": shared_env_id})`；代码二：`client.interactions.create(agent="quant-analyst", environment="remote", input="Run 10,000 Monte Carlo paths on NVDA.", background=True)`，然后 `client.interactions.get(id=job.id)` 轮询
-- 讲者说（视频 13:12）：每天早上的 briefing、扫邮件建议回哪些、开盘前看股市，「a way to run one of your agents on a set schedule」
-- 资料：文档：trigger 用 cron 和 IANA 时区，每次运行复用同一个 environment；状态 active / paused / disabled；默认 `max_consecutive_failures` 5、`execution_timeout_seconds` 600
-- 出入：讲者口头举例「8:30 a.m. every morning before the market opens」；slide 代码的 cron 是 `0 7 * * 1-5`（工作日 7:00）
-- slide（15/19，「07 — Team Architecture」）「One prompt, three specialized financial sandboxes.」：「Each custom agent is saved with its own AGENTS.md persona, SKILL.md workflows, and pre-installed Python packages.」Coordinator「Portfolio Lead — Splits ticker analysis across three specialized managed agents in parallel.」→ `sec-filing-researcher`「Extracts 10-K & 10-Q segment tables」→ `segments.json`；`quant-dcf-modeler`「Runs Monte Carlo & sensitivity in Python」→ `valuation.png`；`exec-report-writer`「Synthesizes thesis & risk memo」→ `memo.pdf` → Files API「Verified Briefing — Audited numbers, charts, and PDF ready for decision-makers.」
-- 讲者说（视频 13:37）：managed agent 本身就是 API 调用，所以一个 agent 可以调用别的 managed agent、fan out；拆成「niche and specific targeted agents that have one core purpose」，比给一个 agent 一个很宽的任务更可控
-
-## 9. Demo
-
-**Demo 1：SEC 研究 → quant → 报告**（slide 16/19「08 — Live Build / Let's put it to the test.」，「Re-use environments to allow agents to pick up where others left off.」，Shared Sandbox `ec57bb717224412b2157ce4cd675352b`，Ticker NVDA）
-
-- 三步：Step 01 Research `sec-filing-researcher`「Pulls quarterly revenue & segments and writes /workspace/metrics.json」；Step 02 Quant Model `quant-dcf-modeler`「Reuses environment_id, runs Python DCF on metrics.json, saves valuation.md」；Step 03 Briefing `exec-report-writer`「Reuses environment_id, reads both files, and saves investment_memo.md」
-- 屏幕上的 metrics 输出（slide 照片）：`"fiscal_quarter": "Q2 FY2027"`、`"period_ended": "2026-07-26"`、`"filing_date": "2026-08-26"`、`"sec_filing": "Form 10-Q / Form 8-K"`、revenue `"amount_millions": 96221`（`"$96.22B"`）、`"prior_year_amount_millions": 46743`、`"yoy_growth_pct": 105.85`。这些是 demo 里 agent 的输出，**没有核对 NVIDIA 实际财报**
-- valuation.md（4826 bytes）「Valuation Sensitivity Analysis」：Implied Share Price 矩阵（WACC 8.0%–10.5% × 永续增长 2.5%–4.5%），例如 WACC 8.0% / g 2.5% 为 $287.48，WACC 8.0% / g 4.5% 为 $424.69，WACC 10.5% / g 2.5% 为 $195.37；Implied Upside 矩阵从 −0.90% 到 +87.65%
-- 讲者说（视频 15:03）：每一步都存成 step trace（function result、write to file、code execution），可以追踪、优化；quant agent 从同一个 environment 里的 `metrics.json` 接手，跑 Python 做 valuation，「doing a forecast for the share price」；第三个 agent 写报告；如果接了 MCP，可以写进 Google Doc 或发 Slack
-
-**Demo 2：接 Google Drive 做数据可视化**
-
-- slide（照片）：一段视频「NIMBUS CLOUD SAAS · FY 2025 · FINANCE STORY」「08 / 12 · TREASURY PULSE」「24 settlements. $148,068 peak surge.」，三格：OPERATING SETTLEMENT & CASHFLOW PULSE（Receipts）、POST-SETTLEMENT PACE 1.5、OCTOBER OPERATING SURGE 24
-- 讲者说（视频 16:34）：managed agent 接了 Google Drive，里面是「a bunch of receipts of our annual kind of company data」，有一个 skill 告诉它怎么做 interactive report
-
-**Demo 3：AI Studio gallery 里的 Tickr**
-
-- slide（照片）：AI Studio 里的应用「Financial Research Agent [AIE]」，页面标题「Tickr, your intelligent financial document analyzer」，「Automatically finds and synthesizes recent SEC filings and public disclosures.」覆盖 Form 10-K & 10-Q、Form 8-K、Forms 3, 4, 5 & 13F；底部「Gemini can make mistakes, don't rely on it for financial advice.」
-- 讲者说（视频 17:44）：最简单的开始方式是去 AI Studio 免费用；这个 demo 输入 VOO，「this ticker agent is a bunch of our different managed agents」；最后生成 PDF 报告，带图表和引用的资源，「it actually went to the Vanguard site, found the different documents」
-- 讲者说（视频 19:33）：「And that is it on managed agents. Thank you very much.」
-
-## Q&A 精确版
-
-没有 Q&A。现场录音和视频都以「Thank you very much」结束（录音 18:20，视频 19:33），讲者在 demo 时说「since we have a few minutes」，没有留提问时间。
-
-## 勘误表（Whisper / YouTube 字幕 → 实际）
-
-| 转写 | 实际 | 依据 |
+| Block | Parameter | What it does (slide wording) |
 | --- | --- | --- |
-| Jack Witherspoon（视频字幕） | Jack Wotherspoon | 日程 |
-| Cloud Managed Agents / cloud managed agents | Claude Managed Agents（和自家产品并列提到） | 上下文（我的理解） |
-| The Gemini API, the deep one（录音） | the Gemini API at DeepMind | 视频字幕 |
-| anti-gravity harness / anti-gravity studio products | Antigravity harness / Antigravity suite of products | slide、文档 |
-| MTP tools / SMTP servers | MCP tools / MCP servers | slide |
-| in my GA earlier this year（录音） | went GA earlier this year | 视频字幕 |
-| plate books | playbooks | 视频字幕 |
-| a query for teams to do your board（录音） | queries your team's Jira board | 视频字幕 |
-| Jeremiah 4 / Gemini 4 part one（录音） | Gemini 4 / Gemini 4 Argon | 视频字幕、slide |
-| spit out a container | spin up a container | 视频字幕 |
-| SSE filing researcher | SEC filing researcher（`sec-filing-researcher`） | slide |
-| main page is the one（录音） | managed agent is the one | 视频字幕 |
-| has kind of a scale | has a skill | 视频字幕 |
-| external votes | external folks | 视频字幕 |
-| do the OO / VOO | VOO（Vanguard S&P 500 ETF 代码） | 视频字幕、上下文 |
-| Banger site | Vanguard site | 视频字幕 |
-| ticker agent is a bunch of art for managed agents | a bunch of our different managed agents | 视频字幕 |
+| Harness | `agent_config` | "Plans the work, calls tools, and checks its own results." |
+| Environment | `environment` | "Its own Linux computer with files and packages that persist." |
+| Tools | `tools + mcp` | "Built-in bash, files, web search, and remote MCP servers." |
+| Skills | `.agents/` | "Instructions in AGENTS.md and repeatable workflows in SKILL.md." |
+| Credentials | `credentials` | "API keys injected outside the sandbox so secrets stay safe." |
+| Schedule | `triggers` | "Cron schedules and background runs that work while you're away." |
 
-## 出入
+On stage Wotherspoon spoke of five pillars (harness, environment, skills, credentials, triggers), and the video's chapter title lists the same five; the slide adds Tools as a sixth. The harness is the Antigravity harness, "the exact same harness that's running in our anti-gravity suite of products over at Google." The environment "is kind of its own entity," so several agents can point at the same sandbox and build on each other's files. Skills are like a company's "playbooks." Credentials are "a new piece of managed agent" that injects tokens or MCP OAuth into the sandbox. Triggers schedule runs; Wotherspoon's example was financial analysis "8:30 a.m. every morning before the market opens," with results sent by webhook to Slack, or an agent that "queries your team's Jira board every morning."
 
-1. **building blocks 数量**：口头和视频章节是五个（harness、environment、skills、credentials、triggers），slide 是六块（加 Tools）
-2. **默认模型**：讲者说快的用「Gemini Flash」；slide 和文档写明是 `gemini-3.8-flash`，而且文档说它是**默认模型**，Argon 要显式指定；文档还说 managed agent 的模型创建后不能在单次 interaction 里改
-3. **sandbox 里有没有 token**：口头说放一个 placeholder / dummy token；slide 说「zero tokens in memory or env」
-4. **触发时间例子**：口头 8:30am，slide 代码 cron 是工作日 7:00 America/New_York
-5. **Argon 的数字**：「#1 on the Vals Index」二手报道支持（68.90%）；「lifting agentic code submissions at Google by 35%」没找到来源
-6. **sandbox 规格**：slide 写 Debian · 4 vCPU · 16 GB，文档 Antigravity agent 页没有写规格
+## 4. The harness and the models behind it
 
-## 【待确认】清单
+![The Antigravity harness runs the loop](../slides/10-14-1455-build-your-own-team-of-managed-agents/07.jpg)
+*Slide 8: the model is one parameter in `agent_config`.*
 
-1. sandbox 规格「Debian · 4 vCPU · 16 GB」（Environments 文档页 404）
-2. 「lifting agentic code submissions at Google by 35%」的出处
-3. Gemini 4 Argon 发布日期和 Vals Index 名次（只有二手报道，Google 原文没打开）
-4. Managed Agents / Interactions API GA 等日期（只看到 Google 博客的搜索摘要）
-5. sandbox 里是 placeholder token 还是没有 token
-6. slide 第 1、4、17–19 页内容（没拍到）
+The harness slide said it is "built on the same harness as Antigravity products. It plans multi-step work, executes tools, verifies its own output, and lets you configure the underlying model." The model is set in one line, `agent_config={"type": "antigravity", "model": "gemini-4-argon"}`, with the example input "Audit all 10-K footnotes and reconcile segment revenue across 5 years." Two models were offered: `gemini-4-argon` for "deep reasoning for complex coding and financial modeling," and `gemini-3.8-flash`, a "fast, low-latency default for everyday agent workflows." Wotherspoon framed the choice as Flash for speed and efficiency, Argon for deep reasoning or heavy analysis. Google's documentation confirms Flash is the default, so Argon must be chosen explicitly, and says a managed agent's model is fixed when the agent is created.
+
+"Yesterday we just launched Gemini 4 Argon which is our new frontier model," Wotherspoon said. "It's especially good at financial tasks," as well as data analysis across many documents and multimodal work. The next slide (slide 9; the author's photo of it is not in the set) made three claims for Argon:
+
+| Claim | Slide text |
+| --- | --- |
+| #1 on the Vals Index | "Leads frontier models across finance, coding, legal, and tax work, lifting agentic code submissions at Google by 35%." |
+| Long decode up to 1M tokens | "Shared 1M context window (input + thinking + output) with tunable thinking_level (low, medium, high)." |
+| Pair with 3.8 Flash for cost and speed | "Route your hardest reasoning to Argon and fast everyday turns to Gemini 3.8 Flash." |
+
+Press coverage reports Argon at the top of the Vals Index; no source was found for the 35% figure, which appears only on the slide. Wotherspoon explained long decode: "normally models have an output token max of around 64K tokens," while with Gemini 4 "the 1 million kind of context window or token limit is now shared between input, thinking, and output," so for math reasoning or financial modeling "where the output might be pages and pages and pages long, the model can actually go and do that."
+
+## 5. Conversations and sandboxes are separate state
+
+![Interactions and Environments are stateful](../slides/10-14-1455-build-your-own-team-of-managed-agents/08.jpg)
+*Slide 10: one agent writes to `/workspace`; a second picks up the same machine with a fresh conversation.*
+
+Wotherspoon called interactions and environments "two different stateful things on our back end." An interaction holds the conversation (messages and reasoning turns); passing one interaction's ID as `previous_interaction_id` to the next makes a second turn. An environment is the sandbox's filesystem, the `/workspace` files, data and installed packages, and files can be uploaded or downloaded through the API.
+
+Keeping them apart enables multi-agent work. In the slide's code, a `market-researcher` agent saves Q3 filings to `/workspace/q3.csv` in a new remote environment; a `quant-analyst` agent is then started with `environment=step1.environment_id` and asked to plot a valuation chart from the same file. The second agent "has a very fresh kind of context window and conversation, but it's reusing the environment," Wotherspoon said. "Kind of a multi-agent workflow."
+
+## 6. Tools, playbooks and saved agents
+
+![Built-in sandbox tools plus remote MCP](../slides/10-14-1455-build-your-own-team-of-managed-agents/10.jpg)
+*Slide 11: four built-in tools, and a GitHub MCP server attached in a few lines.*
+
+Every managed agent "starts with shell, filesystem, and web grounding enabled," the tools slide said:
+
+| Tool | What it does |
+| --- | --- |
+| `code_execution` | Run Bash, Python and Node with stdout/stderr capture |
+| `filesystem` | Read, write, edit and search files across `/workspace` |
+| `google_search` | Live web search and `url_context` page fetching |
+| `mcp_server` | Attach external Model Context Protocol servers over HTTP |
+
+The code example attached GitHub's MCP server (`https://api.githubcopilot.com/mcp`) using a stored credential named `github-prod`, and asked the agent to open a tracking issue with DCF findings from `/workspace`. Remote MCP lets users "hook up to your favorite services," Wotherspoon said.
+
+![Configure agents with your playbooks](../slides/10-14-1455-build-your-own-team-of-managed-agents/11.jpg)
+*Slide 12: mount instructions, skills and data into the sandbox, then save the setup as an agent.*
+
+The skills slide said you can "mount AGENTS.md, SKILL.md, Git repos, or Cloud Storage buckets directly into the sandbox — then promote your setup to a saved agent." Its file tree showed `.agents/AGENTS.md` (persona and rules), `.agents/hooks.json` (guardrails), `.agents/skills/dcf-model/SKILL.md`, and `/workspace/filings/` mounted from Git or GCS. The code put two sources into the environment: an inline `AGENTS.md` reading "You are a rigorous equity analyst," and a repository (`https://github.com/org/fin-skills`) mounted at `.agents/skills`. Three tabs above the code named the workflow: customize inline, save the agent, invoke it by ID.
+
+The playbooks your agents follow on a personal machine can run the same way in the cloud, Wotherspoon said, without the risk of "overriding any files or messing up things on your machine." Once a workflow works, `agents.create` saves it, and "you can just easily invoke your personal agent by calling it with its agent ID."
+
+## 7. Secrets never enter the sandbox
+
+![Secrets never enter the sandbox](../slides/10-14-1455-build-your-own-team-of-managed-agents/12.jpg)
+*Slide 13: an egress proxy attaches the token on the way out.*
+
+The credentials slide said: "Store tokens and credentials once via client.credentials.create(). When the agent calls an allowlisted domain, the egress proxy injects the secret on the wire." Its diagram had three boxes. The agent sandbox calls `api.polygon.io` or `github.com` "with zero tokens in memory or env"; the egress proxy "verifies network.allowlist, attaches bearer_token or refreshes oauth2"; the external API "receives authenticated request; sandbox can never exfiltrate the key." The code stored a bearer token as `polygon-prod` and allowlisted `api.polygon.io` with that credential.
+
+Wotherspoon described the proxy as a layer between sandbox and API that "puts a placeholder kind of dummy token into the sandbox so that the agent can never kind of go rogue and say, 'Oh, I see that I have this GitHub token laying around. Let me just see what else is on there.'" When the agent calls the GitHub API, the proxy matches the domain and injects the real token. (The spoken account mentions a placeholder token in the sandbox; the slide says "zero tokens." Both agree the real secret stays outside.)
+
+## 8. Schedules, background runs and a team of agents
+
+![Run on a schedule or fan out in the background](../slides/10-14-1455-build-your-own-team-of-managed-agents/13.jpg)
+*Slide 14: a weekday cron trigger, and a non-blocking background job.*
+
+The schedule slide showed two patterns. A trigger created with `client.triggers.create()` named `pre-market-briefing` runs the `quant-analyst` agent on cron `0 7 * * 1-5` in `America/New_York` (7:00am on weekdays; the spoken example was 8:30am) with the input "Refresh morning risk report," reusing a shared environment. A background job, `background=True`, asks the agent to "Run 10,000 Monte Carlo paths on NVDA" and is polled with `client.interactions.get(id=job.id)`. Wotherspoon suggested uses such as a daily briefing, scanning email and suggesting replies, or checking the market before it opens.
+
+![One prompt, three specialized financial sandboxes](../slides/10-14-1455-build-your-own-team-of-managed-agents/14.jpg)
+*Slide 15: a coordinator fans the work out to three specialist agents.*
+
+Because a managed agent is just an API call, one agent can call others and fan work out. The team-architecture slide showed a coordinator, "Portfolio Lead," that "splits ticker analysis across three specialized managed agents in parallel," each saved with its own `AGENTS.md` persona, `SKILL.md` workflows and Python packages:
+
+| Agent | Job | Output |
+| --- | --- | --- |
+| `sec-filing-researcher` | Extracts 10-K and 10-Q segment tables | `segments.json` |
+| `quant-dcf-modeler` | Runs Monte Carlo and sensitivity analysis in Python | `valuation.png` |
+| `exec-report-writer` | Synthesizes thesis and risk memo | `memo.pdf` |
+
+The outputs go through the Files API into a "Verified Briefing" of "audited numbers, charts, and PDF ready for decision-makers." Wotherspoon argued for "niche and specific targeted agents that have one core purpose" over "a super super broad … task to an agent" with "no way of kind of measuring what it's actually doing."
+
+## 9. Three demos
+
+![Let's put it to the test](../slides/10-14-1455-build-your-own-team-of-managed-agents/15.jpg)
+*Slide 16: the live build, with the researcher's output for NVIDIA streaming in.*
+
+**Research, model, report.** The live build ran three agents in sequence against one shared sandbox for the ticker NVDA, under the line "Re-use environments to allow agents to pick up where others left off." Step 1, `sec-filing-researcher`, pulls quarterly revenue and segments and writes `/workspace/metrics.json`. Step 2, `quant-dcf-modeler`, reuses the environment ID, runs a Python DCF on that file and saves `valuation.md`. Step 3, `exec-report-writer`, reads both files and saves `investment_memo.md`.
+
+The researcher's output on screen gave the fiscal quarter as Q2 FY2027 (period ended 2026-07-26, filed 2026-08-26, from Form 10-Q / Form 8-K), revenue of $96,221 million ($96.22B) against $46,743 million a year earlier, and year-over-year growth of 105.85%. These are the agent's demo output and were not checked against NVIDIA's filings.
+
+![The valuation sensitivity table](../slides/10-14-1455-build-your-own-team-of-managed-agents/16.jpg)
+*The quant agent's `valuation.md`: implied share price and upside across discount rates and growth rates.*
+
+The quant agent's `valuation.md` (4,826 bytes) held a "Valuation Sensitivity Analysis." Its implied share price matrix crossed the discount rate (WACC) with the perpetual terminal growth rate:
+
+| WACC \ growth | 2.5% | 3.0% | 3.5% | 4.0% | 4.5% |
+| --- | --- | --- | --- | --- | --- |
+| 8.0% | $287.48 | $311.49 | $340.84 | $377.52 | $424.69 |
+| 8.5% | $262.89 | $282.53 | $306.11 | $334.92 | $370.93 |
+| 9.0% | $242.10 | $258.42 | $277.70 | $300.85 | $329.13 |
+| 9.5% | $224.29 | $238.02 | $254.04 | $272.98 | $295.70 |
+| 10.0% | $208.86 | $220.55 | $234.03 | $249.77 | $268.36 |
+| 10.5% | $195.37 | $205.41 | $216.89 | $230.13 | $245.58 |
+
+A second matrix gave the implied upside, from −0.90% (9.5% WACC, 2.5% growth) to +87.65% (8.0% WACC, 4.5% growth) in the visible rows. Wotherspoon pointed out that every step is saved as a step trace (function results, file writes, code execution) that can be followed and optimized, and that the quant agent "can pick up its task and its job from that metrics.json" because it shares the sandbox, "doing a forecast for the share price."
+
+![The report writer at work](../slides/10-14-1455-build-your-own-team-of-managed-agents/17.jpg)
+*Step 3 running: the report writer reads `valuation.md` and `dcf_model.py` from the shared workspace.*
+
+The third agent turned the "research and knowledge dump" into a report; its trace showed it viewing `/workspace/valuation.md`, listing `/workspace` and reading `dcf_model.py`. With MCP servers attached, Wotherspoon said, it could write to a Google Doc or post to Slack.
+
+![A finance story built from Google Drive data](../slides/10-14-1455-build-your-own-team-of-managed-agents/18.jpg)
+*Second demo: an interactive report built from a company's receipts in Google Drive.*
+
+**A report from Google Drive.** The second demo showed a managed agent built into an app and connected to a Google Drive "where we dumped in a bunch of receipts of our annual kind of company data." A skill told it how to build an interactive report. The result on screen, "Nimbus Cloud SaaS · FY 2025 · Finance Story," was on panel 8 of 12, "Treasury Pulse": "24 settlements. $148,068 peak surge," with an operating settlement and cash-flow chart, a post-settlement pace of 1.5 and an October operating surge of 24. Anything you can do with a personal coding agent, Wotherspoon said, can become a managed agent run for the company daily or inside your own apps.
+
+![Tickr in AI Studio](../slides/10-14-1455-build-your-own-team-of-managed-agents/19.jpg)
+*Third demo: Tickr, a financial document analyzer from the AI Studio gallery.*
+
+**Tickr in AI Studio.** "The easiest way to get started today is to go over to AI Studio and get started for free," Wotherspoon said, before a last demo from the AI Studio gallery, an app called "Financial Research Agent [AIE]." Its page read "Tickr, your intelligent financial document analyzer," which "automatically finds and synthesizes recent SEC filings and public disclosures," covering Forms 10-K and 10-Q, 8-K, and 3, 4, 5 and 13F, with the footer "Gemini can make mistakes, don't rely on it for financial advice." Wotherspoon entered VOO; "this ticker agent is a bunch of our different managed agents" that each look for a different analysis. The final agent produced a PDF report with analysis, key takeaways, charts and links to its sources: "it actually went to the Vanguard site, found the different documents, read them in, and then did analysis on it."
+
+"And that is it on managed agents," Wotherspoon said. "Thank you very much."
+
+---
+
+**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=970f672e-f351-46bb-9790-78c6b1baf81d) · [Video](https://www.youtube.com/watch?v=Y_p3y6zP5QE) · [Introducing Managed Agents in the Gemini API](https://blog.google/innovation-and-ai/technology/developers-tools/managed-agents-gemini-api) · [Interactions API: our primary interface for Gemini models and agents](https://blog.google/innovation-and-ai/technology/developers-tools/interactions-api-general-availability) · [Expanding Managed Agents in Gemini API](https://blog.google/innovation-and-ai/technology/developers-tools/expanding-managed-agents-gemini-api/) · [Antigravity agent documentation](https://ai.google.dev/gemini-api/docs/antigravity-agent)
+
+This write-up is based on the official video captions, the author's room recording, slide photos (slides 1, 4 and 17–19 of the deck were not photographed) and Google's documentation. The talk ended without a Q&A. The [precise notes](precise/10-14-1455-build-your-own-team-of-managed-agents.md) (Chinese) keep timestamps and the full list of corrections and open questions.

@@ -1,139 +1,128 @@
-# A/B Testing AI Products Is Weird：精确版
+# A Winning A/B Test Is Where an AI Feature's Ship Decision Starts, Not Where It Ends
 
-> Precise notes for this session, compiled from the official video captions where available, the author's room recording, slide photos and the primary sources linked inline. Written in Chinese with English terms and quotes. Source tags: slide, 讲者说 (said in a recording), 资料 (primary source), 我的理解 (inference), 【待确认】 (unverified).
+*At AI Engineer NYC 2026, Bumble product manager Supriya Subudhi used the dating app's AI photo feedback feature to show five ways a positive A/B test can still leave the question of whether to ship unanswered.*
 
-状态（2026-10-27）：素材整理完，和讲者本人的 DEV 文章逐条对过。**录音里没有 Q&A**。
+**Breakout · Wednesday, October 14, 2026 · 12:20–12:38pm · Turing Room (Riverside Ballroom)**
+**Speaker:** Supriya Subudhi, Staff Product Manager, Bumble Inc
 
-## 素材盘点
+![Title slide: A/B Testing AI Products Is Weird](../slides/10-14-1220-ab-testing-ai-products-is-weird-what-cha/01.jpg)
+*The title slide: "What changes when the product is probabilistic."*
 
-| 素材 | 情况 |
-| --- | --- |
-| slide | 作者拍的 8 张（IMG_0647–0654），全部是本场，没有混入别场。前排观众的头挡住了部分文字，最后几张右侧被裁掉，缺字处按上下文和讲者口述补，补的地方标出 |
-| 视频 | 没有 |
-| 讲者文章 | DEV Daily Context：「A/B testing AI products is weird」（副标题「Why a Winning A/B Test Isn't Enough to Ship an AI Feature」），https://dev.to/dailycontext/ab-testing-ai-products-is-weird-576h 。第一人称，覆盖全部五点，有一处结论和现场说法不同（见「出入」） |
-| 其他一手资料 | TechCrunch 2026-02-26「Bumble adds AI-powered photo feedback and profile guidance tools」：https://techcrunch.com/2026/02/26/bumble-adds-ai-powered-photo-feedback-and-profile-guidance-tools （只看到标题和导语，细节来自二手转述）；Bumble 帮助页 https://support.bumble.com/hc/en-us/articles/32422047589277-Providing-feedback-on-your-photos （搜索摘要） |
+---
 
-## 基本信息
+Supriya Subudhi opened with a definition: A/B testing is "a method used to evaluate two versions of something with each other and see which is better." Then a show of hands: "Who thinks that if an A/B test comes back positive, that the feature should actually ship?" Judging by the response, Subudhi said, "a lot of you are smart and already know that when it comes to AI, things can get a little weird."
 
-- 时间地点：2026-10-14 12:20–12:38pm，Turing Room (Riverside Ballroom)，Breakouts
-- 讲者：Supriya Subudhi，Staff Product Manager，Bumble Inc（slide 封面：「Supriya Subudhi, Staff Product Manager, Bumble Inc · AIE NYC 2026」）。官方 bio：约 10 年经验，跨工程、fintech、ad-tech、消费科技；早年在 Microsoft 做软件和数据工程师；跑过上千万用户规模的多国 A/B test
-- 讲者说 [11:37]：「I'm from London」
-- 官方简介的四个失败模式是 metric selection、novelty effects、premature conclusions、misleading behavioural signals；**现场讲的五点和简介不同**，novelty effect、peeking 这些经典话题现场没讲（我的理解，按录音和 slide 对比）
-- 讲的产品是 Bumble 的 **AI photo feedback**：用户上传资料照片，AI 给出改进照片组合的建议（讲者说 [01:59]；文章同）
-- 资料：TechCrunch 2026-02-26 报道 Bumble 推出 AI photo feedback 和 profile guidance；按二手转述，profile guidance 全球上线、photo feedback 只在美国。Bumble 帮助页说 photo feedback「we're currently testing this feature」，且不使用 facial recognition 或生物识别（搜索摘要，【待确认】原文）
+In an article published alongside the talk, Subudhi described the rule of thumb behind that question: "If an A/B test wins, you ship it. I've followed it for most of my career." With generative AI, it "stopped holding up." The tests were well designed and the results accurate, "but they just didn't answer the question I needed answered, which was whether we should ship it!"
 
-## 开场：A/B test 赢了只是开始
+## The setup: Bumble's AI photo feedback
 
-- slide 封面：「A/B Testing AI Products Is Weird — What changes when the product is probabilistic」
-- slide「When it comes to A/B testing AI features, it gets weird!」副标题「**A positive result is where the decision journey begins, not where it ends.**」五点：1 Users asked for it, then ignored it；2 The average win hides the tail；3 Green dashboard, red bill；4 Swap the model, flip the result；5 There may not be a global rollout
-- 讲者说 [00:00]：A/B testing 是「a method used to evaluate two versions of something with each other and see which is better」；现场举手调查「Who thinks that if an A-B test comes back positive, that the feature should actually ship?」
-- 讲者说 [00:56]：「a positive result from an A/B test is actually just where the journey begins」；五点是「problems that we have to overcome」
-- 讲者说 [00:56]：「Bumble is a dating app with over 20 billion monthly active users」——**数字明显不对**（转写或口误），见「出入」
-- 讲者说 [01:29]：PM 代表用户，同时「still being responsible for the P&L of the company, because we don't have unlimited resources」
-- 资料（文章）开头：「If an A/B test wins, you ship it. I've followed it for most of my career… Then came the AI era… it stopped holding up.」「Our tests were well designed, our results were accurate, but they just didn't answer the question I needed answered, which was whether we should ship it!」
+![When it comes to A/B testing AI features, it gets weird](../slides/10-14-1220-ab-testing-ai-products-is-weird-what-cha/02.jpg)
+*"A positive result is where the decision journey begins, not where it ends," followed by the five problems.*
+
+The overview slide put the thesis on top: "A positive result is where the decision journey begins, not where it ends." Below it were five problems: users asked for it, then ignored it; the average win hides the tail; green dashboard, red bill; swap the model, flip the result; and there may not be a global rollout. These were problems "that I specifically discovered," Subudhi said, "that we have to overcome." (The session description had listed a different set of failure modes, including novelty effects and premature conclusions; the talk did not cover those.)
+
+Subudhi framed the job of a product manager as representing users and solving their problems "while still being responsible for the P&L of the company, because we don't have unlimited resources." The example throughout was a feature Bumble shipped: AI photo feedback. Everyone on a dating app needs a profile and adds pictures without knowing how they come across. Bumble took its own knowledge of what works in a dating profile and used AI to generate suggestions for improving the pictures people add.
 
 ## 1. Users asked for it, then ignored it
 
-- slide 主旨：「General openness to AI doesn't predict whether people will use a specific AI feature」
-  - What happened：Our research showed that users were open to AI tips from Bumble. / When we shipped the AI photo feedback, not many actually used it.
-  - What to do：Carefully integrate AI into the new user flows with education & awareness as well. / **Always measure what people do, not what they say they will.**
-- 讲者说 [02:20]–[02:55]：用户研究里几乎一致的痛点是「they didn't know whether their dating profile was good enough」，也得不到平台的反馈
-- 讲者说 [03:25]：「Almost **78%** of the people that we spoke to came back and said they would love getting feedback」；A/B test 50/50 分流后，「we only saw **10% to 15%** of people actually using the feature」（这两个数字只在口述里，slide 和文章都没有）
-- 讲者说 [03:56]：不再做一个要用户自己找的 standalone 功能，而是嵌进已有流程：加照片时问「do you want feedback?」；用户「hitting a wall」、找不到 match 时提示去看资料反馈。「that drove up adoption」
-- 资料（文章）：研究显示用户愿意让 AI 帮忙改进资料，「as long as it was not generated by the AI」；「Saying you're open to AI and choosing to tap a button in the middle of your evening swiping session are just very different things」；「what made the difference wasn't the model. It was where the feature showed up in the flow」；AI 功能要比普通功能「even more descriptive about what the feature will do」以建立信任
+![1. Users asked for it, then ignored it](../slides/10-14-1220-ab-testing-ai-products-is-weird-what-cha/03.jpg)
+*"General openness to AI doesn't predict whether people will use a specific AI feature."*
+
+| What happened | What to do |
+| --- | --- |
+| Our research showed that users were open to AI tips from Bumble. | Carefully integrate AI into the new user flows with education and awareness as well. |
+| When we shipped the AI photo feedback, not many actually used it. | Always measure what people do, not what they say they will. |
+
+Product work starts with discovery through surveys and customer interviews. In Bumble's research, one almost unanimous complaint was that people "didn't know whether their dating profile was good enough" and got no help from Bumble in finding out. When the team showed users examples of AI guidance, "almost 78% of the people that we spoke to came back and said they would love getting feedback." But in the A/B test, with half of users getting the feature, "we only saw 10% to 15% of people actually using the feature." (Those two figures come only from the talk; the slide and the article say "not many.") "Openness to AI doesn't actually predict whether people are going to use the feature."
+
+The fix was "product management 101." Instead of a standalone feature people had to find, Bumble put it into flows people already used. When users added pictures, the app asked whether they wanted feedback. When they were "hitting a wall," not finding matches, it suggested checking the feedback on their profile. "That drove up adoption." In the article, Subudhi wrote that "what made the difference wasn't the model. It was where the feature showed up in the flow," and that AI features need to be "even more descriptive about what the feature will do" to earn trust.
 
 ## 2. The average win hides the tail
 
-- slide 主旨：「A positive average can sit on top of individual outputs that are wrong. So success evaluation itself changes.」
-  - What happened：The top-line results looked fine. / Some people got weird feedback, like being told to smile more in a photo where they were already smiling.
-  - What to do：Be strict where the feature can do harm if wrong. / Read real outputs (Evals can be very helpful here) / Check the longtail of data and split by segments, not just the average.
-- 讲者说 [05:01]：top line 很好：加照片的人更多，改资料的次数也比对照组多；细看发现 AI 建议已经在笑的人「smile more」
-- 讲者说 [05:35]：两个对比例子：Spotify 的 AI DJ（生成歌单），四首里两首不好也可以接受；理财 app 让你花 $2,000 而你花不起就不行。「The scope of error is quite different」（Spotify AI DJ 未另行核对）
-- 讲者说 [06:05]：先定 guardrails：「We couldn't be telling people to change things that they can't control, their skin color, their height. These are things that the AI should not touch.」
-- 讲者说 [06:38]：然后「reading real outputs」，用 eval 工具看真实用户收到的反馈，判断 prompt 是否做得好；成功标准从整体对比变成看 long tail：女性和男性的反应是否一样？不同国家、不同语言是否一样？「maybe the language generated in French is different from the language generated in English」
-- 资料（文章）：「With a normal feature, everyone in a test arm sees the same thing. With a generative one, everyone sees something slightly different.」「You only find it by reading the actual outputs, and then setting up evals so you can keep reading them once there are too many to check by hand.」
+![2. The average win hides the tail](../slides/10-14-1220-ab-testing-ai-products-is-weird-what-cha/04.jpg)
+*"A positive average can sit on top of individual outputs that are wrong. So success evaluation itself changes."*
+
+| What happened | What to do |
+| --- | --- |
+| The top-line results looked fine. | Be strict where the feature can do harm if wrong. |
+| Some people got weird feedback, like being told to smile more in a photo where they were already smiling. | Read real outputs (evals can be very helpful here). |
+| | Check the long tail of data and split by segments, not just the average. |
+
+The top line was good: more people added pictures, and people who got feedback made more changes to their profiles than those who didn't. In the details, "there were weird things happening." The AI told people to smile more in pictures where they were already smiling.
+
+Subudhi contrasted two products to show how the stakes differ. With Spotify's AI DJ, which generates playlists, "it's okay if two out of four of the songs that are generated by AI are not good. But it's not okay if [a banking] app is telling you to spend $2,000 when you really can't."
+
+Bumble started with guardrails on what the feedback could and could not say: "We couldn't be telling people to change things that they can't control, their skin color, their height. These are things that the AI should not touch." Next came reading real outputs, using eval tools to see what real users were receiving and whether the prompt was doing a good job. The success criteria shifted from the overall comparison to the long tail: "Are women responding the same way to our feedback as men?" Do people in different countries respond the same way, "because maybe the language generated in French is different from the language generated in English"? The article explained why this is new: "With a normal feature, everyone in a test arm sees the same thing. With a generative one, everyone sees something slightly different."
 
 ## 3. Green dashboard, red bill
 
-- slide 主旨：「[With] generative AI, success makes the bill bigger.」（左侧被裁）
-  - 示意图：x 轴 Users；「Generative feature: cost grows with every use」（陡线）vs「Recommendation model: cost grows slowly with users」（缓线）；左下角小字「Illus…」被挡（【待确认】是否为「Illustrative」，即示意而非实际数据）
-  - What happened：The LLM route worked, but it cost about 10x more than a simpler approach. / Add to that the cost of running evals [on] the gen AI feedback（右侧被裁，按口述补）
-  - What to do：Don't jump to using the best model [from] the start. / Measure the return on short term [and] long term together（被裁处按口述补）
-- 讲者说 [07:28]：一开始想要最好的质量和准确率，「we went with the best [LLM]」，「about **10x** more expensive than a simpler approach」，加上跑 eval 的成本，「That was just too much」
-- 讲者说 [08:00]：Bumble 的匹配算法也是 AI，但传统 ML 的成本结构不同：前期 compute 和训练成本高，「after it's working, the incremental cost for every user to use it is not that much」；生成式 AI「the more successful your product, the more people that use it, and the more often they use it, the more your bill increases」
-- 讲者说 [08:52]：要先弄清为什么用 AI；很多同行「have just gotten mandates from their companies to use AI」。例子是 Amazon 的购物助手（她没说名字；Amazon 的购物助手叫 Rufus，我的理解，未核对）：短期看推荐带来购买和收入；长期看「having an assistant that you can rely on might make people choose Amazon over other e-commerce companies」，即 brand equity。预算从这个目的来：短期收益可以快速算 ROI，长期收益「maybe it's worth getting that extra budget」
-- 资料（文章）：「every time someone uses the feature, you pay for a new generation, so the more it succeeds, the more it costs」；「That's an uncomfortable meeting to sit in, because the dashboard is green and the answer is still no.」
+![3. Green dashboard, red bill](../slides/10-14-1220-ab-testing-ai-products-is-weird-what-cha/05.jpg)
+*"With generative AI, success makes the bill bigger." The chart shows the shape of the two cost curves, with no numbers.*
+
+The slide's chart plotted cost against users with two lines: a steep one labeled "Generative feature: cost grows with every use" and a shallow one labeled "Recommendation model: cost grows slowly with users." Beside it (the right edge of the photo is cut off):
+
+| What happened | What to do |
+| --- | --- |
+| The LLM route worked, but it cost about 10x more than a simpler approach. | Don't jump to using the best model from the start. |
+| Add to that the cost of running evals on the gen AI feedback. | Measure the return on short term and long term together. |
+
+Because the problem mattered so much to users, Bumble wanted the best quality and accuracy and "went with the best LLM," which was "about 10x more expensive than a simpler approach." Add the cost of running evals: "That was just too much."
+
+Bumble already uses AI in its matching algorithm, but traditional ML has a different cost structure: high upfront compute and training costs, after which "the incremental cost for every user to use it is not that much." With generative AI, "the more successful your product, the more people that use it, and the more often they use it, the more your bill increases."
+
+Subudhi argued that teams need to know why they are using AI at all; many peers "have just gotten mandates from their companies to use AI." The example was Amazon's shopping assistant. In the short term, good recommendations may lead to more purchases. In the long term, "having an assistant that you can rely on might make people choose Amazon over other e-commerce companies," a matter of brand equity and keeping users on the platform. The budget follows from that purpose: for a short-term benefit, the ROI can be a quick decision; for a long-term one, "maybe it's worth getting that extra budget." The article described the moment bluntly: "That's an uncomfortable meeting to sit in, because the dashboard is green and the answer is still no."
 
 ## 4. Swap the model, flip the result
 
-- slide 主旨：「[A] winning result belongs to the model, not the feature.」
-  - What happened：We switched to a cheaper LLM, and alternative ML models. / Costs went down, and so did the impact to results.
-  - What to do：Test cheaper and non-AI versio[ns] from the start. / Re-test every time you swap th[e] model. / Find the cheapest option that keeps the result.
-- 讲者说 [10:14]：换便宜模型后，「as the cost went down, so did the impact of the results because the accuracy went down as well」；说明 A/B 的结果「was due to the model that we were testing, not the concept [of] feedback itself」
-- 讲者说 [10:44]：要多测、数据驱动；eval 让他们能快速比较不同模型在不同数据集上的效果和成本差异，并快速重测不同版本、prompt；「**ultimately we resulted in the cheapest option which helped us get the good result**」
-- 资料（文章）：「We moved to cheaper models and mixed in some conventional machine learning. Costs went down, and so did the impact.」「a winning result also belonged to that particular model, not to the idea itself. **Now we were back to square one** to find and test a version that would fit within budget and also test positively.」（和现场结论不同，见「出入」）
+![4. Swap the model, flip the result](../slides/10-14-1220-ab-testing-ai-products-is-weird-what-cha/06.jpg)
+*"A winning result belongs to the model, not the feature."*
+
+| What happened | What to do |
+| --- | --- |
+| We switched to a cheaper LLM, and alternative ML models. | Test cheaper and non-AI versions from the start. |
+| Costs went down, and so did the impact to results. | Re-test every time you swap the model. |
+| | Find the cheapest option that keeps the result. |
+
+The cost of the best model couldn't scale, so Bumble switched to a cheaper one. "As the cost went down, so did the impact of the results because the accuracy went down as well." That showed the A/B result "was due to the model that we were testing, not the concept [of] feedback itself."
+
+The lesson was to test a lot and stay data-driven. Eval setups let the team compare how different models performed on different data sets and what they cost, and retest versions and prompts quickly. On stage, Subudhi said that "ultimately we resulted in the cheapest option which helped us get the good result." The article tells it differently: after the switch, "we were back to square one to find and test a version that would fit within budget and also test positively," without saying such a version was found.
 
 ## 5. There may not be a global rollout
 
-- slide 主旨：「[Re]gulations are constantly changing and can stop a feature that works in one [cou]ntry from shipping in another.」
-  - What happened：Photo feedback was live in the US. [I]t was blocked in most other countries until we had cleared them legally.
-  - What to do：Bring legal and compliance in before the experiment. / Decide early which markets and versions you are building for. / Be ready to steer clear of some markets till the end
-- 讲者说 [11:37]：「Meta recently launched Muse AI… I'm from London, so I haven't yet… Muse AI is only available in the U.S. and Canada」，因为 AI 监管各地不同且一直在变，不合规有财务和法律风险
-- 资料：Meta 的 Muse（独立的个人 AI agent app）2026 年 9 月在美国上线（iOS、Android、muse.ai），之后有一家媒体引 Meta 在 X 上的消息说扩展到加拿大（单一来源，【待确认】）；另有 Meta 2026 年 4 月发布的 Muse Spark 模型，在 Ray-Ban Meta / Oakley Meta 眼镜上先在美国和加拿大推出（https://about.fb.com/news/2026/04/introducing-muse-spark/ ，搜索摘要）。讲者说的「Muse AI」指哪一个，按「recently launched」推测是 9 月的 Muse app（我的理解）
-- 讲者说 [11:37]：「we started in the U.S. We shipped in the U.S., but then that's it… We were not able to ship the feature that was available in the U.S. as is to other countries」
-- 讲者说 [12:16]：不管是不是 PM，「an aspiring product engineer, a forward deployed engineer, everyone needs to start being a generalist and thinking about compliance and legal… early on. It can't come later」。两种做法：一开始就按所有市场的限制来做；或者在影响最大的美国做最好的版本、其他市场不上。中间是一条决策光谱；还可以付出额外成本做一个分国家不同行为的版本。「If you build the best thing, which you can't get in the hands of users, it doesn't mean anything.」
-- 资料（文章）：「our feature stayed blocked in most countries until each one was cleared」；「You can only learn where you're allowed to test, so a result in one market doesn't tell you much about the next.」
-- 资料：TechCrunch 报道（二手转述）photo feedback 只在美国、profile guidance 全球，与此一致
+![5. There may not be a global rollout](../slides/10-14-1220-ab-testing-ai-products-is-weird-what-cha/07.jpg)
+*"Regulations are constantly changing and can stop a feature that works in one country from shipping in another."*
 
-## 总结：五个问题
+| What happened | What to do |
+| --- | --- |
+| Photo feedback was live in the US. | Bring legal and compliance in before the experiment. |
+| It was blocked in most other countries until we had cleared them legally. | Decide early which markets and versions you are building for. |
+| | Be ready to steer clear of some markets till the end. |
 
-- slide「[T]o scale AI features – ask these 5 questions?」（左右两侧被裁，括号内按口述补）：
-  1. [A]re people [u]sing it, or [o]nly saying [th]ey want it?
-  2. Have you read real outputs, not only the average?
-  3. Does it still pay off after factoring in all costs?
-  4. Is a win on the best model something you can afford?
-  5. Are you c[lear] legally on which markets [you] can ship?
-- 讲者说 [13:28]：同上五问；结尾「the question is not just did the feature win [A/B tests] anymore」
-- 资料（文章）结尾：「Randomised tests are still the most honest way I know to learn what a feature does to real people. I've just stopped treating a positive result as the finish line now!」「"Did it win?" is still where I start. It's just not where I stop anymore.」
+Subudhi pointed to Meta's recently launched Muse AI: "I'm from London, so I haven't yet [used it]," because it is "only available in the U.S. and Canada." AI regulation differs around the world and keeps changing, and non-compliance carries financial and legal risk. (Reports describe a U.S. launch for Meta's Muse app in September 2026; a Canadian expansion appears in only one report.)
 
-## Q&A 精确版
+Bumble's feature followed the same path: "We shipped in the U.S., but then that's it. Like, we had to stop." The feature could not ship as-is to other countries. (TechCrunch's February 2026 coverage of Bumble's AI tools also described photo feedback as U.S.-only.) The conclusion: "Whether you're a product manager or not, whether you're an aspiring product engineer, a forward deployed engineer, everyone needs to start being a generalist and thinking about compliance and legal… early on. It can't come later."
 
-录音里没有。讲者在 [14:00] 讲完、[14:46] 致谢，录音随即结束。是否有 Q&A 而没录到，【待确认】。
+Subudhi described a spectrum of choices. A team can plan to ship worldwide from the start and build within every market's restrictions. It can build the best possible version for the U.S., where the impact is greatest, "and then maybe not anywhere else." Or it can pay the extra cost of a version that behaves differently by country. "If you build the best thing, which you can't get in the hands of users, it doesn't mean anything." The article added a point about learning: "You can only learn where you're allowed to test, so a result in one market doesn't tell you much about the next."
 
-## 勘误表（Whisper 转写 → 实际）
+## Five questions before scaling
 
-| 转写 | 实际 | 依据 |
-| --- | --- | --- |
-| AD testing / A-B test / agent test / AD guests | A/B testing / A/B test | slide、上下文 |
-| AI teachers / consumer tech teachers | AI features / consumer tech features | 上下文 |
-| shift（the feature should actually shift / when we shift the A-B test / shift this feature） | ship | 上下文 |
-| hit the table | hides the tail | slide |
-| regenerative AI | generative AI | slide |
-| the best element | the best LLM | slide（「The LLM route」） |
-| burdens（retest different burdens） | versions | 上下文 |
-| come into case | come into play | 上下文 |
-| forward deploy engineer | forward deployed engineer | 上下文 |
-| two versions of the DNA… getting more mixed | 【待确认】（可能是 two versions of the app… more matches） | — |
-| overall results between versus red | 【待确认】（可能是 between green versus red / between variants） | — |
-| central decision | 【待确认】（可能是 sensible decision） | — |
-| for a long-term day | 【待确认】（可能是 long-term play） | — |
-| 20 billion monthly active users | 数字有误，见「出入」 | 资料 |
+![To scale AI features, ask these 5 questions](../slides/10-14-1220-ab-testing-ai-products-is-weird-what-cha/08.jpg)
+*The closing slide's five questions, one per problem (edges cut off in the photo).*
 
-## 出入
+Subudhi closed with one question for each problem:
 
-1. **第 4 点的结局**：现场说「ultimately we resulted in the cheapest option which helped us get the good result」（找到了又便宜又保住结果的方案）；讲者自己的文章说「Now we were back to square one to find and test a version that would fit within budget and also test positively」，没有说找到了。slide 只写了「Find the cheapest option that keeps the result」作为建议。两种说法哪个反映最终状态，【待确认】
-2. **Bumble 的用户规模**：录音转写「over 20 billion monthly active users」，不可能成立（全球人口约 80 亿）。Bumble 不公开发布 MAU；公司财报只给付费用户：Bumble App 2026 Q1 付费用户 2.082M（Bumble Inc. Q1 2026 results，https://www.nasdaq.com/press-release/bumble-inc-announces-first-quarter-2026-results-2026-05-05 ，搜索摘要）。第三方估计的 MAU 从约 12M 到 50M 不等，来源不明。讲者原话可能是「20 million」或别的数字，【待确认】，写文时不要引用这个数
-3. **78% 和 10–15%** 只在口述里，slide 和文章都只说「not many actually used it」。数字可用，但只有录音这一个来源
-4. **成本倍数 10x**：slide 和口述一致（「about 10x more than a simpler approach」）；第 3 点的成本曲线图是示意（小字被挡，【待确认】是否标 Illustrative），不是实际数据
-5. **「Muse AI only available in the U.S. and Canada」**：查到的资料是 Muse app 先在美国上线、之后一家媒体报道扩展到加拿大；Muse Spark 模型在眼镜上美加同步推出。大方向一致，细节（是否仅限美加）只有二手来源
-6. **官方简介 vs 现场内容**：简介列的失败模式（metric selection、novelty effects、premature conclusions、misleading behavioural signals）和现场五点不同，novelty effect 等现场没讲
+| Problem | Question |
+| --- | --- |
+| Users asked for it, then ignored it | Are people using it, or only saying they want it? |
+| The average win hides the tail | Have you read real outputs, not only the average? |
+| Green dashboard, red bill | Does it still pay off after factoring in all costs? |
+| Swap the model, flip the result | Is a win on the best model something you can afford? |
+| There may not be a global rollout | Are you clear legally on which markets you can ship? |
 
-## 【待确认】汇总
+"Because the question is not just did the feature win A/B tests anymore," Subudhi said. The article ended on the same note: "'Did it win?' is still where I start. It's just not where I stop anymore."
 
-1. TechCrunch 原文细节（只看到标题和导语）和 Bumble 帮助页原文
-2. 第 3 点示意图左下角小字是否为「Illustrative」
-3. Meta「Muse AI」指 9 月的 Muse app 还是 Muse Spark；加拿大上线只有单一来源
-4. 第 4 点最终是否找到了「最便宜且保住结果」的方案（现场 vs 文章）
-5. 「20 billion monthly active users」的原话
-6. 是否有 Q&A 没录到
-7. 勘误表里四处听不清的原话（DNA/mixed、between versus red、central decision、long-term day）
+---
+
+**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=11fef189-97e8-4c8e-87e8-dac43d800846) · [A/B testing AI products is weird](https://dev.to/dailycontext/ab-testing-ai-products-is-weird-576h) (Supriya Subudhi, DEV) · [Bumble adds AI-powered photo feedback and profile guidance tools](https://techcrunch.com/2026/02/26/bumble-adds-ai-powered-photo-feedback-and-profile-guidance-tools) (TechCrunch) · [Providing feedback on your photos](https://support.bumble.com/hc/en-us/articles/32422047589277-Providing-feedback-on-your-photos) (Bumble help center)
+
+No video of this session had been published at the time of writing. This write-up is based on the author's room recording, all eight of the author's slide photos, and the speaker's own article. The recording ends with Subudhi's thanks and contains no Q&A. A user-count figure Subudhi gave for Bumble is omitted because the transcript's version of it cannot be right. The [precise notes](precise/10-14-1220-ab-testing-ai-products-is-weird-what-cha.md) (Chinese) keep timestamps and the record of where the talk and the article differ.

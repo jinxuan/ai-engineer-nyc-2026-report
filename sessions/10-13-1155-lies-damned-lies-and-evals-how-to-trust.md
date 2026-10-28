@@ -1,157 +1,155 @@
-# Lies, Damned Lies, and Evals：精确版
+# How Not to Trust Your Agents: Evaluate the Configuration, the Trace and the Scorer
 
-> Precise notes for this session, compiled from the official video captions where available, the author's room recording, slide photos and the primary sources linked inline. Written in Chinese with English terms and quotes. Source tags: slide, 讲者说 (said in a recording), 资料 (primary source), 我的理解 (inference), 【待确认】 (unverified).
+*At AI Engineer NYC 2026, Omni's Stephanie Jarmak, a former astronomer, argued that agent evaluations should be run like scientific experiments built around a decision, and showed how cost savings, benchmark rankings, scoring rules, quality gates and even traces can mislead.*
 
-状态（2026-10-27）：素材整理完、slide 数字逐一读过并验算。**没有 Q&A**。日程简介承诺的几个核心案例（+5.4 → +0.35 等）**演讲里没有出现**，见「出入」第 1 条。
+**Breakout (Evaluations track) · Tuesday, October 13, 2026 · 11:55am–12:13pm · Turing Room (Riverside Ballroom)**
+**Speaker:** Stephanie Jarmak, AI Engineer, Omni Analytics (previously Sourcegraph; physics PhD; research affiliate, Center for Astrophysics | Harvard & Smithsonian; maintainer of the open-source agent orchestration system Gas City)
 
-## 素材盘点
+---
 
-| 素材 | 情况 |
+Stephanie Jarmak introduced herself as "an AI engineer as of a couple weeks ago at Omni Analytics," whose platform offers "a governance semantic layer to have a shared understanding of business data" through its agent, Blobby. Before that Jarmak spent a year at Sourcegraph as a solutions engineer for Amp, a coding agent, then moved into a role running Sourcegraph's evaluation platform, where Jarmak "built a very large public benchmark called CodeScaleBench to understand how agents are working across very complex code bases." Before that, Jarmak was an astronomer.
+
+"I come from this from a research scientist point of view, where I relentlessly question everything, hence the title of Lies, Damned Lies, and Evals," Jarmak said. "It says how to trust your agents, but I think largely this talk is mainly about how to not trust your agents."
+
+Every slide carried a citation in its footer, most often to chapters of Jarmak's book *Engineering Reliable Coding Agents: Evaluating and Operating the System Around the Model*.
+
+## 1. Cheaper, but the failure remained
+
+![Lower cost. The retrieval failure remained.](../slides/10-13-1155-lies-damned-lies-and-evals-how-to-trust/01.jpg)
+*A 28% cost reduction with no meaningful score change, while the retrieval failure persisted.*
+
+The first example came from Sourcegraph, where Jarmak was testing the company's code search MCP tool and trying to work out "why isn't this coding agent actually using the tool that I'm trying to get it to use?" Jarmak changed the agent's initial prompt and reran the evaluation. The slide showed the results:
+
+| Measure | Result |
 | --- | --- |
-| 视频 | 有：[Don't Trust Your AI Agents. Test Them Like a Scientist](https://www.youtube.com/watch?v=A3FL_zTQKU0)（YouTube ID A3FL_zTQKU0）。自动字幕是正文主要来源，标「视频 mm:ss」。视频在 [17:04] 掌声处结束，无 Q&A。视频时间比录音时间晚约 15–45 秒 |
-| slide | 作者拍的 12 张（IMG_0407–0418），全部属于本场。slide 右下角有页码：拍到 02–09、11、12（无页码）、13、14；**缺 01（标题页）和 10**（讲「1% false alarm → 10,000 reviews」那页） |
-| 讲者资料 | 专著 *Engineering Reliable Coding Agents: Evaluating and Operating the System Around the Model*（[arXiv:2608.13867](https://arxiv.org/abs/2608.13867)，2026-08-14；[在线版](https://www.sjarmak.ai/books/engineering-reliable-coding-agents)）；技能仓库 [github.com/sjarmak/coding-agent-workflows](https://github.com/sjarmak/coding-agent-workflows)。slide 每页底注都引用书的章节 |
-| 其他一手资料 | Li et al. [Finding the Right Fit](https://arxiv.org/abs/2610.00917)（harness 对比的出处）；Hardy et al. Agent Evaluation Reliability；Omni 文档 |
+| Observed cost (on the affected task family) | −28% |
+| Primary evaluation score | Δ +0.0048 (t = 0.27) |
+| Elapsed time | +3.9% |
 
-## 基本信息
+"It was 28% cheaper. That's interesting," Jarmak said. "But that shouldn't really change any of my decisions around what I'm actually interested in measuring, … because it still didn't use the tool." The cost drop might be worth exploring as its own question about variance, but the underlying problem was untouched: the search missed relevant evidence, and the agent trusted the empty result, "just trusting that that information wasn't there. And that was purely because it didn't use that tool." The slide's footnote: "Little evidence of score improvement does not establish equivalent quality."
 
-- 时间地点：2026-10-13 11:55am–12:13pm，Turing Room (Riverside Ballroom)，Breakouts，Evaluations Track
-- 讲者：Stephanie Jarmak。讲者说（视频 [00:12]）：「an AI engineer as of a couple weeks ago at Omni Analytics」，Omni 的平台有「a governance semantic layer to have a shared understanding of business data using our beloved agent Blobby」；之前在 Sourcegraph 一年，「a solutions engineer for Amp, a coding agent」，后来主要做评测平台，「I built a very large public benchmark called CodeScaleBench」；再之前是天文学家
-  - 资料：Blobby 是 Omni 的 AI 查询助手（[Omni 文档](https://docs.omni.co/docs/ai/queries)）
-  - 资料（日程 bio）：物理学 PhD；开源 agent 编排系统 Gas City 的维护者；Center for Astrophysics | Harvard & Smithsonian 的 research affiliate
-- 讲者说（视频 [01:04]）：「It says how to trust your agents, but I think largely this talk is mainly about how to not trust your agents」
-- 每页 slide 的底注引用了书的章节号，下面各节一并记录
+## 2. The ranking changes with the harness
 
-## 1. 便宜了 28%，但检索失败还在（slide 02）
+![The ranking changes with the harness](../slides/10-13-1155-lies-damned-lies-and-evals-how-to-trust/02.jpg)
+*The same 63 tasks, two models, two harnesses: the winner flips.*
 
-- slide 02「Lower cost. The retrieval failure remained.」：OBSERVED COST **−28%** on the affected task family；PRIMARY EVALUATION SCORE **Δ +0.0048**（t = 0.27）；ELAPSED TIME **+3.9%**。流程：Search missed relevant evidence → Agent trusted the empty result。底注：「The retrieval failure remained. Little evidence of score improvement does not establish equivalent quality.」引 Jarmak · Engineering Reliable Coding Agents, ch. 18
-- 讲者说（视频 [01:11]，录音 [00:55]）：在 Sourcegraph 测「their code search MCP tool」，想搞清楚「why isn't this coding agent actually using the tool」；她改了 agent 的初始 prompt 再跑，「it was 28% cheaper. That's interesting. But … that shouldn't really change any of my decisions … because it still didn't use the tool」；agent 收到空结果后「just trusting that that information wasn't there … purely because it didn't use that tool」
-
-## 2. 换 harness，排名就反过来（slide 03）
-
-- slide 03「The ranking changes with the harness」：Same 63 tasks requiring no GPU. Different harness.
+The second example came from a third-party study of the effect of the harness: 63 tasks requiring no GPU from Terminal-Bench 4, "a pretty popular, widely used benchmark for coding agents." Suppose you are choosing which model to put into your harness. The study compared Claude Opus 5 and GPT-6 Astra:
 
 | Harness | Claude Opus 5 | GPT-6 Astra |
 | --- | --- | --- |
-| OpenHands | 36/63（57.1%） | 31/63（49.2%） |
-| PI | 19/63（30.2%） | 38/63（60.3%） |
+| OpenHands | 36/63 (57.1%) | 31/63 (49.2%) |
+| PI | 19/63 (30.2%) | 38/63 (60.3%) |
 
-  「Compare the configuration you will actually run.」底注：One scored run per task / configuration, after infrastructure retries. 引 Li et al. · Finding the Right Fit；Hardy et al. · Agent Evaluation Reliability
-- 讲者说（视频 [02:57]）：「from a third-party source where they had 63 or so tasks on Terminal-Bench 4」；OpenHands 下 Opus 5 赢，「when they swapped just the harness itself, then they saw that Astra did a much better job … like 30-plus percent sort of difference」；结论「evaluating the closest configuration that you can」
-- 资料（出处论文）：Yixuan Li 等，[Finding the Right Fit: Model-Harness Interactions across Agent Tasks](https://arxiv.org/abs/2610.00917)（arXiv:2610.00917，2026-10-01）。四个可配置 harness（OpenHands、DeepSeek Harness、PI、openJiuwen）× 五个模型（Claude Opus 5、GPT-6 Astra、GLM-5.3、Kimi K3、DeepSeek V4 Pro）× 三个 benchmark（TUA-Bench、ALE-CLI、Terminal-Bench 4），加上 Codex-GPT、Claude Code-Claude 两个原生组合，共 66 个配置；「63-task non-H100 (CPU-only) subset」of Terminal-Bench 4 v4.0.0。论文原文「Claude records 36/63 in OpenHands and GPT records 31/63」，PI「records 19/63 and 38/63」，**与 slide 完全一致**。摘要结论：「Model rankings reverse across harnesses」；vendor 自家 harness 不一定最好；花费更高不一定分更高
-- 资料（Hardy et al.）：Michael Hardy、Ruhana Azam、Anka Reuel、Mykel Kochenderfer、Sanmi Koyejo，*Agent Evaluation Reliability: More Tasks Won't (Always) Fix An Agent Leaderboard*（2026-09/10）。用 Bayesian 方差分解看 22 个 benchmark：固定 model-scaffold 系统的排名可靠性 0.935–0.994，「底层模型」排名可靠性只有 0.148–0.841；scaffold 覆盖不足时，再加同类任务也最多提高 0.097。arXiv 编号（二手资料给的是 2610.00651）没在 arXiv 上核对，【待确认】
+With OpenHands, one of the open harnesses, Opus 5 won. "When they swapped just the harness itself, then they saw that Astra did a much better job," Jarmak said, "like 30-plus percent sort of difference." (Under PI, Astra led by about 30 points; under OpenHands, Opus 5 led by about 8.) The source paper, Li et al.'s "Finding the Right Fit," reports the same figures and summarizes that model rankings reverse across harnesses. The slide also cited Hardy et al.'s "Agent Evaluation Reliability," which finds that rankings of fixed model-and-scaffold systems are far more reliable than rankings of the underlying models alone.
 
-## 3. public benchmark vs 内部 evaluation（slide 04）
+The slide's lesson: "Compare the configuration you will actually run." "You might see all these benchmarks and see the fancy results, but it might not do what you expect it to do within your actual environment," Jarmak said.
 
-- slide 04「Public benchmarks and internal evaluation」：Benchmark: a standardized reference for comparison。LANDSCAPE AND SHORTLIST：Reference + reported protocol → Candidate shortlist（Results depend on the task mix and evaluation protocol.）；PRODUCT AND PROCESS IMPROVEMENT：Compare on target work → Product/process change，回环（Diagnose, change and retest. Communicate value against a baseline.）。「Internal benchmarks exist. Public benchmarks can be used internally.」底注：「Public and internal describe visibility, not exclusive purposes. The decision determines what evidence we need.」引书 chs. 2–3
-- 讲者说（视频 [04:12]）：「an evaluation is you're making measurements to make a decision about your product or process」；public benchmark 用来「have a broader understanding of … the larger landscape and get a short list」，不要 over-index，「because of the spiky nature of all of the training of these different models」
-- 讲者说（视频 [04:47]）：「if you are a law firm, you don't want to necessarily be looking at like the Terminal-Bench results unless of course you are looking at incorporating coding agents with your devs」
-- 讲者说（视频 [05:16]）：组织内部也可以建 benchmark，「this sort of iterative flywheel process where you are … increasingly sort of hill climbing」
+## 3. Public benchmarks versus internal evaluation
 
-## 4. 围绕决策设计实验（slide 05）
+![Public benchmarks and internal evaluation](../slides/10-13-1155-lies-damned-lies-and-evals-how-to-trust/03.jpg)
+*Public benchmarks for the landscape and a shortlist; internal comparison on target work for product decisions.*
 
-- slide 05「Design the experiment around the decision」：Report quality, reliability, people's time and total cost together。
-  - TASKS · Workload coverage：Family A / B / C → task i / j / k
-  - REPEATS · Variation between runs：Same task run 1 / run 2 / run 3
-  - CONFIGURATIONS · How results depend on the pairing：Model A/B × Harness A/B 四格
-  - 底部公式：**Total operating cost ÷ Independently accepted outcomes**
-  - 底注：「Repeated runs are not independent tasks. A better relative score does not establish that either system is reliable enough.」引书 chs. 1–2；Hardy et al.
-- 讲者说（视频 [05:54]）：任务要能代表真实负载，可以按 family 聚类；她做 CodeScaleBench 的原因是「at the time it was largely like SWE-bench was just bug fixing, but there's a whole other different swath of tasks … across the software development life cycle」；「a model might be more effective at code understanding than it is at actually fixing a bug」
-- 讲者说（视频 [06:30]）：要决定跑多少次，「these systems are non-deterministic」；model 和 harness 的组合有「interaction type effects」
+Jarmak drew a distinction. "An evaluation is you're making measurements to make a decision about your product or process." A benchmark is "a standardized reference for comparison." The slide showed two uses. For the landscape and a shortlist, a reference benchmark with its reported protocol produces a candidate shortlist, with the caveat that "results depend on the task mix and evaluation protocol." For product and process improvement, you compare candidates on your target work, make a change, and loop: "Diagnose, change and retest. Communicate value against a baseline."
 
-## 5. 追踪证据如何变成结论（slides 06–07）
+Public benchmarks help "have a broader understanding of the larger landscape and get a short list," Jarmak said, but you shouldn't over-index on them "because of the spiky nature of all of the training of these different models." The example: "If you are a law firm, you don't want to necessarily be looking at the Terminal-Bench results, unless of course you are looking at incorporating coding agents with your devs."
 
-- slide 06「Trace where evidence becomes a conclusion」：Available → Called → Returned → **Interpreted**。RECORD THE SEARCH：Where and how you searched / Gaps or incomplete results / What you couldn't check。SEARCH-LIMITS TEST：Same empty result, make the search limits explicit。EVIDENCE TEST：Same agent and settings, supply known relevant evidence。底注：「A trace tells us where to investigate. These proposed tests have not yet demonstrated a repair.」引书 chs. 2 & 18
-- 讲者说（视频 [07:05]）：「retain all of your traces」；先看「was that tool even available? … if it wasn't, then you stop there」，再看有没有被调用、返回了什么，「keep going along the pipeline of available information」
-- slide 07「Better evidence can still go unused」：Test the evidence and the agent's use of it separately。Evidence source（CONTROL A：Substitute trusted information）→ Component using the evidence（CONTROL B：Bypass the component using the evidence）→ Outcome。Deployment comparison：Keep non-use and failed attempts in the result。底注：「Simulation result; production effects remain untested. Tool use alone does not identify the tool's causal effect.」引 Alzahrani · Verify Claims, Not Scores（【待确认】，没找到这篇）；书 ch. 2
-- 讲者说（视频 [07:57]）：工具终于被用上了，「but then the actual outcome that you care about at the end of the task, like that still doesn't change」；「keep all of these different things in mind like the non-use and the failed attempts … be a detective」
+The distinction is about visibility, not purpose: "Internal benchmarks exist. Public benchmarks can be used internally." Organizations can build their own benchmarks that reflect real workloads and use them in "this sort of iterative flywheel process where you are increasingly hill climbing" on configurations. The footnote: "The decision determines what evidence we need."
 
-## 6. 审计打分规则和答案 key（slide 08）
+## 4. Design the experiment around the decision
 
-- slide 08「Audit the scoring rule and the answer key」：
-  - RECORDED OUTPUT：**295** files returned；**6** reference files found；**289** outside the reference set
-  - SCORING RULE：RECALL **1.0**；PRECISION **0.020339**（about 2.0%）；ACTUAL F-BETA SCORE **0.025295**（beta = 0.5）
-  - PROPOSED CHALLENGES：Known-good answer / Empty answer / Return-everything answer / Valid alternative absent from the key
-  - AUDITABLE RESULT RECORD：Scoring rule / Reference version / Run identity
-  - 底注：「One output, measured against one reference set. The score was precision-sensitive; intent and prevalence are not established.」引 Jarmak · CodeProbe trial e5d7a4e7 / commit 2495927
-  - 我的理解（验算）：precision = 6/295 = 0.020339；F0.5 = 1.25·P·R / (0.25·P + R) = 0.025295，与 slide 一致
-- 讲者说（视频 [08:58]）：「I was interested in optimizing for like a better basically like an F1 score balancing for precision in addition to recall」；「in this example was with like grep … Claude went out and got like 295 files returned when it only really needed six」；如果只在乎不漏，「then maybe a recall of one is sufficient」
-- 讲者说（视频 [09:37]）：看 public benchmark 的单一分数时要问「what was the actual validator measuring and why did they consider that to be important?」
-- 资料：CodeProbe 是讲者的开源工具，用自己仓库已合并的 PR 做评测（[github.com/sjarmak/codeprobe](https://github.com/sjarmak/codeprobe)，来自 prep 记录，未再次打开核对）
+![Design the experiment around the decision](../slides/10-13-1155-lies-damned-lies-and-evals-how-to-trust/04.jpg)
+*Tasks, repeats and configurations, with cost measured per independently accepted outcome.*
 
-## 7. 质量门：flag 和执行要分开（slide 09）
+Once the configurations are shortlisted, Jarmak said, approach the evaluation "as a scientist" and decide which variables to change. The slide named three, and asked for quality, reliability, people's time and total cost to be reported together:
 
-- slide 09「Test whether the gate changes execution」：My approval-queue audit found paths that allowed execution when required components were missing。PROPOSED ENFORCEMENT TEST：Request → **Approval + required checks** → Execution → Observed effect。DELIBERATELY BREAK A CONTROL：Reject or cancel / Remove a required component / Change the proposal after approval。MEASURE OUTCOMES SEPARATELY：Authorized completion / Safe stop / People's repair work。底注：「Deliberately break a control next. Also measure false blocks on legitimate work; this audit did not establish unauthorized production writes.」引书 chs. 4 & 17
-- 讲者说（视频 [10:11]）：她在实验一个「software factory」，有 approval queues，「I want to automate as much as possible … but I also do not trust these systems like at all」；审计发现「the agent noticed things were going wrong, but then there was no mechanism in place for it to actually like enforce a stopping situation」；所以要把 agent「flagging something」和「actually enforcing that gate within the code itself」分开
-
-## 8. 人工审核负担（slide 10，没拍到）
-
-- 讲者说（视频 [11:14]，录音 [10:42]）：例子来自「auditing and repairing LLM as a judge failures that were happening in a separate system」，「a 1% false alarm rate. And if all of those … go to a human, that would result in 10,000 reviews」；「does your organization actually have the capacity for domain experts」
-- 我的理解：1% 误报对应 10,000 次复核，意味着总量约 100 万条；讲者没说总量，【待确认】
-
-## 9. trace 本身也可能不可信（slide 11）
-
-- slide 11「Some evidence needs another observer」：For security claims, test missed detections, false alarms and blind spots。Model → Harness → Tool → Destination；对应三种记录：**Independent record of model traffic** / Self-written harness record / Record of the resulting state。Own record passed the hash check **28/28**；Independent record comparison detected **28/28**。底注：「28 deliberately introduced changes. Detection beyond this scope is untested; model traffic does not prove execution or destination state.」引 Dai et al. · Hearsay
-- 讲者说（视频 [12:21]）：研究者往 agent 里注入安全问题，「they had like a hash check in place to check for like any sort of tampering … everything passed. It didn't notice any of those injected security issues」；用独立记录比对「all of the traffic history」，「then they were able to detect everything」
-- 资料：「Dai et al. · Hearsay」没找到。主题相近的一篇是 arXiv:2609.30266《LLM Agents Can Easily Tamper With Their Own Traces》（Qin、Schmotz 等，2026-09-24），建议用 agent 控制不到的独立拦截机制记录 trace。**不确定是否就是 slide 引用的那篇**，【待确认】
-
-## 10. 一次检索升级，她会怎么做实验（slide 12）
-
-- slide 12「A retrieval upgrade: the experiment I would run」：PROPOSED EVALUATION WORKFLOW：Matched target-work comparison → Independent challenge → Run alongside current work. Test state changes in isolation.（Can an independent challenger find the decisive evidence?）AFTER DEPLOYMENT：Completion, repair, latency, cost / Audit accepted work and failures / Check traces against real outcomes / Watch workload and version changes / Owner, intervention, regression tests（Do scores predict real outcomes?）。底注：「Set restriction or rollback triggers before deployment. The monitoring loop and independent-review tests are proposed.」引书 chs. 16–17；Google SRE: monitoring and alerting
-- 讲者说（视频 [13:42]）：在 Omni 做评测 harness，看内部生产数据，把用户和 agent 的交互分类：「Q&A, which may be easy questions to harder questions. Or it could be dashboard building and app building」；[14:36]「ultimately like production is truth」；可以在 shadow 模式下收集，「if … you have a higher blast radius」
-
-## 11. 把下一步自主权的决定说清楚（slide 13）
-
-- slide 13「Make the next autonomy decision explicit」（左侧被裁）：PROPOSED AUTONOMY DECISION：Additional action + operating scope + human check removed。[EV]IDENCE BAR：[R]epresentative repeated outcomes；[To]lerable failures and total burden。VALIDATED EVALUATOR + EXECUTION CONTROLS：Accept good work, detect defects and enforce the operating boundary。[H]uman owner: acceptable risk and conflicting business values。三个出口：Expand within the tested boundary / Retain review / **Stop and escalate**（…for missing evidence, a failed gate or changed scope）。底注：「[Domai]n-specific standard to test. Procedures support the work; they do not establish reliability or supply missing evidence.」引书 closing
-- 讲者说（视频 [15:22]）：「what level of risk you are going to be willing to accept」；在她的 software factory 里，agent 要写明下一步动作、为什么需要人来判断、操作范围、建议去掉哪项人工检查；要定出「when is it safe to autonomously deploy versus stop and escalate to the human」
-
-## 12. 资源（slide 14）
-
-- slide 14「Evaluation procedures and references」：Coding Agent Workflows（二维码，github.com/sjarmak/coding-agent-workflows）；THREE PROCEDURES：Evaluation design / Harness traceability / Reliability procedures；BOOK AND PAPER：*Engineering Reliable Coding Agents: Evaluating and Operating the System Around the Model*，sjarmak.ai/books/engineering-reliable-coding-agents，arxiv.org/abs/2608.13867
-- 讲者说（视频 [16:31]）：「a GitHub repo with a bunch of the different skills … direct relevance to evaluation design and harness traceability and reliability procedures」；「this like monstrous 300-page archive tome that you can point your agents at」
-- 资料：arXiv:2608.13867，作者 Stephanie Jarmak，2026-08-14 提交，cs.SE。摘要首句「AI coding agents are commonly evaluated as models but deployed as systems.」；包含 206 条 reliability records 的目录、evidence ledger、五个可复用 agent skills。在线版 19 章，分六部分（评测测量与实验设计 / 评测与打分系统 / 隔离与恢复 / context engineering / 人工审核与问责 / 研究议程）
-- 资料：coding-agent-workflows 仓库，MIT，派生自 Everything Claude Code；把 skills、角色、workflow 渲染成 Claude Code、Codex、Amp 的原生配置；「Agent systems」一类是「eval design, traceability, and reliability protocols」
-
-## Q&A 精确版
-
-无。视频在 [17:04] 掌声处结束；作者录音转写到 [16:18] 只有一句听不清的观众插话（"I'll be sure to get one. Yeah, yeah, yeah."，【待确认】是否有人追问资源链接），之后录音结束。
-
-## 勘误表（字幕 / 录音转写 → 实际）
-
-| 转写 | 实际 | 依据 |
+| Dimension | Question | What the slide showed |
 | --- | --- | --- |
-| Balabi（录音）/ Bloopy（视频） | Blobby（Omni 的 agent） | Omni 文档 |
-| Sourcecraft（录音） | Sourcegraph | 视频 |
-| collusion engineer for AM（录音） | solutions engineer for Amp | 视频 |
-| code scale bench | CodeScaleBench | 日程 bio、上下文 |
-| lies and lies and emails（录音） | Lies, Damned Lies, and Evals | 题目 |
-| turtle benchmarks（录音）/ Turbo Bench 4（视频） | Terminal-Bench 4 | 论文 |
-| Opus 5 then and Astra | Claude Opus 5 and GPT-6 Astra | slide |
-| third free source（录音） | third-party source | 视频 |
-| SDV bench / STB bench | SWE-bench | 上下文 |
-| EBRX（录音）/ grep（视频） | grep | 视频 |
-| 28 cheaper（录音） | 28% cheaper | slide |
-| elements judge（录音） | LLM-as-a-judge | 视频 |
-| student number scores（录音） | single number scores | 视频 |
-| harness disability（录音） | harness traceability | slide |
-| 300 page archive tome | 300-page arXiv tome（arXiv:2608.13867） | slide |
+| Tasks | Workload coverage | task families A, B, C, each with tasks |
+| Repeats | Variation between runs | the same task run three times |
+| Configurations | How results depend on the pairing | a 2×2 grid of models A/B and harnesses A/B |
 
-## 出入（来源之间不一致的地方）
+Below them sat a single metric: total operating cost divided by independently accepted outcomes.
 
-1. **日程简介承诺的内容没讲**：简介说要「put one convincing score on trial」，让观众在两个 release candidate 间投票，并揭示三件事：「a +5.4-point win in my own repository-level eval that shrank to +0.35 after repeated runs」、一个被 sponsor 停止报告的流行 coding benchmark（「flawed tasks and contamination」）、「model graders that agreed with one another while missing the defects」；最后围绕五个检查重建决策（这个分数能改变什么决定 / run-to-run variance 多大 / 任务分布是否匹配真实负载 / evaluator 能检测哪些失败 / grader 在选定阈值下的 TPR 和 FPR）。**视频字幕和 12 张 slide 里都没有这些内容**（没有投票、没有 +5.4/+0.35、没有 grader 的 TPR/FPR）。实际演讲是 slide 02–14 的结构。【待确认】现场是否有没拍到的页面讲过（slide 01 和 10 没拍到，但视频字幕里也没有）
-2. **F1 还是 F-beta**：讲者说「like an F1 score」；slide 08 写的是 F-beta，beta = 0.5（偏向 precision），数值 0.025295 是 F0.5。以 slide 为准
-3. **harness 差距的说法**：讲者说「30-plus percent sort of difference」。slide 上同一 harness 内的差距：PI 下 Astra 比 Opus 5 高 30.1 个百分点；OpenHands 下 Opus 5 比 Astra 高 7.9 个点。Opus 5 从 OpenHands 换到 PI 掉了 26.9 个点。「30-plus」只对 PI 内的差距大致成立
-5. **295 个文件是谁返回的**：讲者说「Claude went out and got like 295 files」；slide 08 只写 recorded output，引的是 CodeProbe trial，没写是哪个 agent
-6. **「28% cheaper」的对象**：slide 写「on the affected task family」，讲者口头没限定范围
+On tasks, pick ones that reflect real work, possibly clustered into families. Jarmak built CodeScaleBench because "at the time it was largely like SWE-bench was just bug fixing, but there's a whole other different swath of tasks that are relevant to developers across the software development life cycle." A model "might be more effective at code understanding than it is at actually fixing a bug." On repeats: "these systems are non-deterministic," so decide how many runs you need. On configurations: model and harness have "interaction type effects." The footnote warned: "Repeated runs are not independent tasks. A better relative score does not establish that either system is reliable enough."
 
-## 【待确认】汇总
+## 5. Trace where evidence becomes a conclusion
 
-1. 日程简介里的 +5.4 → +0.35、benchmark 被 sponsor 停报、grader 一致却漏检，现场是否讲过（视频里没有）
-2. slide 01、10 的内容
-3. Pi 被 Earendil 收购（只见二手资料）
-4. Hardy et al. 的 arXiv 编号
-5. 「Alzahrani · Verify Claims, Not Scores」的出处
-6. 「Dai et al. · Hearsay」的出处，及其与 arXiv:2609.30266 的关系
-7. 1% 误报 → 10,000 次复核对应的总量
-8. 结尾观众插话的内容
+![Trace where evidence becomes a conclusion](../slides/10-13-1155-lies-damned-lies-and-evals-how-to-trust/05.jpg)
+*Available, called, returned, interpreted: and two proposed tests.*
 
+"Gather as much observability data as possible. … Retain all of your traces," Jarmak said. Returning to the unused search tool, the slide broke the path into four stages: available, called, returned and interpreted. First ask whether the tool was even available: "if it wasn't, then you stop there" and fix that. Then whether it was called, and what it returned, and so on "along the pipeline of available information."
+
+The slide suggested recording the search (where and how you searched, gaps or incomplete results, what you couldn't check) and two tests: a search-limits test (the same empty result, with the search limits made explicit) and an evidence test (the same agent and settings, supplied with known relevant evidence). The footnote was careful: "A trace tells us where to investigate. These proposed tests have not yet demonstrated a repair."
+
+![Better evidence can still go unused](../slides/10-13-1155-lies-damned-lies-and-evals-how-to-trust/06.jpg)
+*Test the evidence source and the agent's use of it separately.*
+
+Even when a better tool is in place, the result can stay the same. Suppose "it finally uses the much better tool. But then the actual outcome that you care about at the end of the task, that still doesn't change," Jarmak said. The slide proposed testing the two halves separately: control A substitutes trusted information at the evidence source; control B bypasses the component that uses the evidence; then look at the outcome. In any deployment comparison, "keep non-use and failed attempts in the result." Jarmak's advice: keep all of that in mind "when you're trying to basically be a detective in understanding what is actually going on in your system." The slide's footnote said this was a simulation result with production effects untested, and that "tool use alone does not identify the tool's causal effect." (It cited a source listed as "Alzahrani · Verify Claims, Not Scores," which the author could not locate.)
+
+## 6. Audit the scoring rule and the answer key
+
+![Audit the scoring rule and the answer key](../slides/10-13-1155-lies-damned-lies-and-evals-how-to-trust/07.jpg)
+*295 files returned, 6 relevant: perfect recall, 2% precision.*
+
+"You also want to really control what the measurement is that you're making," Jarmak said. In comparing search tools, Jarmak wanted a score that balanced precision with recall. With grep, the agent was "pulling in the entire kitchen sink": in this example, "Claude went out and got like 295 files returned when it only really needed six." The slide's numbers, from one trial of Jarmak's CodeProbe tool:
+
+| Recorded output | Scoring rule |
+| --- | --- |
+| 295 files returned | Recall 1.0 |
+| 6 reference files found | Precision 0.020339 (about 2.0%) |
+| 289 outside the reference set | Actual F-beta score 0.025295 (beta = 0.5) |
+
+(Jarmak described it on stage as "like an F1 score"; the slide specifies F-beta with beta = 0.5, which weights precision more heavily. The figures check out: 6/295 = 0.020339.) If all you care about is not missing anything relevant, "then maybe a recall of one is sufficient," but Jarmak was optimizing for something else.
+
+The slide proposed challenges for any scorer: a known-good answer, an empty answer, a return-everything answer, and a valid alternative absent from the key. And it asked for an auditable result record: the scoring rule, the reference version and the run identity. The lesson for public benchmarks' single-number scores: ask "what was the actual validator measuring, and why did they consider that to be important? Because what you might want is going to be dependent entirely on your business needs."
+
+## 7. Test whether the gate changes execution
+
+![Test whether the gate changes execution](../slides/10-13-1155-lies-damned-lies-and-evals-how-to-trust/08.jpg)
+*An approval-queue audit found paths that allowed execution when required components were missing.*
+
+Evals overlap with quality gates and reviews, Jarmak said. Jarmak has been experimenting with a "software factory" with approval queues: "I want to automate as much as possible for the work to get done, but I also do not trust these systems like at all." Regular audits found a problem. A request went through approval and required checks, and "the agent noticed things were going wrong, but then there was no mechanism in place for it to actually enforce a stopping situation." The slide: "My approval-queue audit found paths that allowed execution when required components were missing."
+
+The fix is to "decouple what's happening with an agent or some other system flagging something versus actually enforcing that gate within the code itself," and then decide how it escalates to a human. The proposed enforcement test runs request, approval plus required checks, execution and observed effect, while deliberately breaking a control: reject or cancel, remove a required component, or change the proposal after approval. Outcomes should be measured separately: authorized completion, safe stop, and people's repair work. The footnote added: "Also measure false blocks on legitimate work; this audit did not establish unauthorized production writes."
+
+## 8. The human review load
+
+Escalation has a cost, Jarmak said, on a slide the author did not photograph. The example came from "auditing and repairing LLM-as-a-judge failures that were happening in a separate system," which had "a 1% false alarm rate. And if all of those alarms that are raised go to a human, that would result in 10,000 reviews. And does your organization actually have the capacity for domain experts to be going and doing that?" Think about where the bottleneck will be, how to change alarm rates, and how consequential each alarm is downstream.
+
+## 9. Some evidence needs another observer
+
+![Some evidence needs another observer](../slides/10-13-1155-lies-damned-lies-and-evals-how-to-trust/09.jpg)
+*The harness's own record passed a hash check while missing every injected change; an independent record caught all of them.*
+
+"The actual agent trace itself can sometimes not be reliable or trustworthy," Jarmak said. Researchers seeded security issues into an agent's setup. "They had a hash check in place to check for any sort of tampering with that system, and … everything passed. It didn't notice any of those injected security issues." When they compared against an independent record of all the model traffic, "they were able to detect everything."
+
+The slide traced the path from model to harness to tool to destination, with three possible records: an independent record of model traffic, the harness's self-written record, and a record of the resulting state. The harness's own record passed the hash check 28/28; the independent record comparison detected 28/28 of the 28 deliberately introduced changes. The footnote limited the claim: "Detection beyond this scope is untested; model traffic does not prove execution or destination state." For security claims, the slide said, test missed detections, false alarms and blind spots. (The slide cites "Dai et al. · Hearsay," a source the author could not locate.)
+
+## 10. A retrieval upgrade, run properly
+
+![A retrieval upgrade: the experiment I would run](../slides/10-13-1155-lies-damned-lies-and-evals-how-to-trust/10.jpg)
+*A proposed workflow before deployment, and what to watch after.*
+
+Returning to the original search example, the slide laid out the experiment Jarmak would run. Before deployment: a matched comparison on target work, then an independent challenge ("Can an independent challenger find the decisive evidence?"), then running alongside current work, testing state changes in isolation. After deployment: track completion, repair, latency and cost; audit accepted work and failures; check traces against real outcomes; watch for workload and version changes; and assign an owner, interventions and regression tests ("Do scores predict real outcomes?"). The footnote: "Set restriction or rollback triggers before deployment."
+
+At Omni, Jarmak is building the evaluation harness this way, classifying how users interact with the agent from internal production data: "Q&A, which may be easy questions to harder questions. Or it could be dashboard building and app building." Representative proxies help, "but ultimately, production is truth." Measurement has to continue after deployment, and changes with "a higher blast radius" can be run in shadow mode first.
+
+## 11. Make the next autonomy decision explicit
+
+![Make the next autonomy decision explicit](../slides/10-13-1155-lies-damned-lies-and-evals-how-to-trust/11.jpg)
+*A proposed autonomy decision, the evidence it needs, and three ways out.*
+
+The last step is deciding "what level of risk you are going to be willing to accept," Jarmak said. In the software factory, when the agent seeks autonomy for a lower-risk decision, it states the next action, why a human needs to weigh in, the operating scope, and which human check it proposes to remove. The slide framed a proposed autonomy decision as "additional action + operating scope + human check removed," tested against an evidence bar (representative repeated outcomes; tolerable failures and total burden), a validated evaluator with execution controls ("accept good work, detect defects and enforce the operating boundary"), and a human owner who decides acceptable risk and conflicting business values. There are three outcomes: expand within the tested boundary, retain review, or stop and escalate "for missing evidence, a failed gate or changed scope." The goal is to define "when is it safe to autonomously deploy versus stop and escalate to the human."
+
+## 12. Resources
+
+![Evaluation procedures and references](../slides/10-13-1155-lies-damned-lies-and-evals-how-to-trust/12.jpg)
+*Jarmak's skills repository and book.*
+
+Jarmak closed with two resources. The GitHub repository `sjarmak/coding-agent-workflows` contains a set of agent skills, including three procedures directly relevant to the talk: evaluation design, harness traceability and reliability procedures. And the book, which Jarmak called "this monstrous 300-page arXiv tome that you can point your agents at," *Engineering Reliable Coding Agents*, published on arXiv in August 2026, opens: "AI coding agents are commonly evaluated as models but deployed as systems." "You can point your agents at all of this to pull in some of those best practices into your own systems," Jarmak said.
+
+---
+
+**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=b1fe8396-6fa8-4574-9775-0dc01f56ce57) · [Video: Don't Trust Your AI Agents. Test Them Like a Scientist](https://www.youtube.com/watch?v=A3FL_zTQKU0) · [Engineering Reliable Coding Agents (arXiv:2608.13867)](https://arxiv.org/abs/2608.13867) · [Online edition](https://www.sjarmak.ai/books/engineering-reliable-coding-agents) · [coding-agent-workflows](https://github.com/sjarmak/coding-agent-workflows) · [CodeProbe](https://github.com/sjarmak/codeprobe) · [Li et al., Finding the Right Fit: Model-Harness Interactions across Agent Tasks](https://arxiv.org/abs/2610.00917) · [Omni's Blobby](https://docs.omni.co/docs/ai/queries)
+
+The schedule abstract promised material that does not appear in the video or the slides: an audience vote between two release candidates, a +5.4-point win in a repository-level eval that shrank to +0.35 after repeated runs, a coding benchmark whose sponsor stopped reporting it, and model graders that agreed with each other while missing defects. The video ends with applause and no Q&A. This write-up is based on the official video captions, the author's room recording and slide photos (the title slide and slide 10 were not photographed), and the sources above. The [precise notes](precise/10-13-1155-lies-damned-lies-and-evals-how-to-trust.md) (Chinese) keep timestamps and the full record of where the sources disagree.
