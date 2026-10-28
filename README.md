@@ -1,3 +1,5 @@
+**English** | [中文](README.zh.md)
+
 # AI Engineer NYC 2026: Conference Report
 
 My notes from **[AI Engineer NYC 2026](https://ai.engineer/nyc/2026)** (October 12–14, 2026, Sheraton New York Times Square), an event focused on production AI in banking, hedge funds, fintech, insurance and asset management.
@@ -6,6 +8,9 @@ This repository lists the 38 sessions I attended: who spoke, what each talk cove
 
 - ⭐ marks a session I starred as a highlight while attending.
 - **📰 Full write-up** (in `sessions/`, with a Chinese version in `sessions/zh/`) is a complete article for each session: every section and slide of the talk, data from the slides as tables, and the Q&A where there was one. **Precise notes** (in `sessions/precise/`, Chinese) are the underlying verified record with timestamps, speech-to-text corrections and source-by-source discrepancies.
+- **What it covers** is based on the official abstract and, where a recording exists, its YouTube description. **My takeaways** are from my own notes taken during the talk.
+- Recordings are being published gradually. A session without a video link had no recording on the channel when this was last checked (**2026-10-27**).
+- Public slide decks are rare. Where a speaker or the official talk page links slides or workshop materials, it is listed in **Links**; sessions without one have none that I could find.
 - Some talk titles were changed when the video was published; the schedule title is used here and the video title is noted when different.
 
 ## Where to watch
