@@ -2,7 +2,7 @@
 
 My notes from **[AI Engineer NYC 2026](https://ai.engineer/nyc/2026)** (October 12–14, 2026, Sheraton New York Times Square), an event focused on production AI in banking, hedge funds, fintech, insurance and asset management.
 
-This repository lists the 34 sessions I attended: who spoke, what each talk covered, what I took away, and a link to the recording where one exists. It is the companion reference for my conference write-up and talk.
+This repository lists the 38 sessions I attended: who spoke, what each talk covered, what I took away, and a link to the recording where one exists. It is the companion reference for my conference write-up and talk.
 
 - ⭐ marks a session I starred as a highlight while attending.
 - **What it covers** is based on the official abstract and, where a recording exists, its YouTube description. **My takeaways** are from my own notes taken during the talk.
@@ -25,7 +25,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 ## Contents
 
 - [Sessions at a glance](#sessions-at-a-glance)
-- [Monday, October 12](#monday-october-12) (1 session)
+- [Monday, October 12](#monday-october-12) (5 sessions)
 - [Tuesday, October 13](#tuesday-october-13) (19 sessions)
 - [Wednesday, October 14](#wednesday-october-14) (14 sessions)
 
@@ -33,6 +33,10 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 | Day | Time | Session | Speaker | Video |
 | --- | --- | --- | --- | --- |
+| October 12 | 9:00am–11:00am | [Orchestrating Claude Managed Agents](#orchestrating-claude-managed-agents) | CJ Avilla, Harrison Stall | [▶](https://www.youtube.com/watch?v=kiClTcJUnhc) |
+| October 12 | 11:05am–12:05pm | [Agent = Model + Harness: Build your own Memory-Aware AML AI Agent Harness for Financial Crime Detection](#agent--model--harness-build-your-own-memory-aware-aml-ai-agent-harness-for-financial-crime-detection) | Nacho Martinez | [▶](https://www.youtube.com/watch?v=KtBivPzmOM8) |
+| October 12 | 1:15pm–2:15pm | [Beyond “Done”: Building Verification Loops for AI Agents](#beyond-done-building-verification-loops-for-ai-agents) | Nick Nisi, Zack Proser | [▶](https://www.youtube.com/watch?v=q4WC4TowkBo) |
+| October 12 | 2:20pm–3:20pm | [Langfuse Workshop - Evals and Observability in regulated Industries](#langfuse-workshop---evals-and-observability-in-regulated-industries) | Doneyli De Jesus, Annabell Schäfer | [▶](https://www.youtube.com/watch?v=obfPzbapMIM) |
 | October 12 | 3:30pm–4:30pm | [Unhobbling the Frontier](#unhobbling-the-frontier) | Lance Martin | – |
 | October 13 | 9:00am–9:18am | [Vault: Making Unstructured Data Work for Investing](#vault-making-unstructured-data-work-for-investing) | Aaron Linsky, Sam Green | [▶](https://www.youtube.com/watch?v=CLve4Nx_RwI) |
 | October 13 | 9:18am–9:36am | [Anthropic: Accelerating frontier AI in Financial Services.](#anthropic-accelerating-frontier-ai-in-financial-services) | Belinda Neal, Keon Shahab | – |
@@ -69,6 +73,88 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 | October 14 | 5:06pm–5:24pm | [Everything will be Simulated](#everything-will-be-simulated) | Cristóbal Valenzuela | [▶](https://www.youtube.com/watch?v=jiUC6IUMdvc&t=30551s) |
 
 ## Monday, October 12
+
+### Orchestrating Claude Managed Agents
+
+**Speakers:** CJ Avilla (Member of Technical Staff, Anthropic); Harrison Stall (Member of Technical Staff, Anthropic)  
+**When / where:** 9:00am–11:00am · Sutton Room (NY Ballroom W) · Workshop (1-2 hrs)  
+**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=c415d432-5b6f-4b4a-9d2c-2e02cfde99db) · [▶ Video](https://www.youtube.com/watch?v=kiClTcJUnhc)
+
+**What it covers.** Two-hour workshop on dynamic workflows in Claude Managed Agents and the controls that keep them in bounds. The recording frames the problem as the same coordination wall Unix, OS/360 and Linux hit, now applied to running many agents at once. (The video was retitled “Why One AI Agent Isn’t Enough (And How to Run 1,000)”.)
+
+<details><summary>Official talk description</summary>
+
+> Dynamic workflows in Claude Managed Agents, and the controls that keep them in bounds.
+
+</details>
+
+### Agent = Model + Harness: Build your own Memory-Aware AML AI Agent Harness for Financial Crime Detection
+
+**Speaker:** Nacho Martinez (AI Developer Advocate, Oracle)  
+**When / where:** 11:05am–12:05pm · Sutton Room (NY Ballroom W) · Workshop (1-2 hrs)  
+**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=898cb76b-41f3-47c0-ba31-6a5f8df40117) · [▶ Video](https://www.youtube.com/watch?v=KtBivPzmOM8)
+
+**What it covers.** The model is the part you can’t change; the harness is where agent quality is won or lost. The workshop builds that harness from primitives on Oracle AI Database with an AML dataset: long-term memory and schema scanning, semantic and hybrid retrieval, a vector-indexed toolbox and skillboxes, and a bounded agent-turn loop. (The video was retitled “Memory-Aware Agent Harnesses for Anti-Money Laundering”.)
+
+<details><summary>Official talk description</summary>
+
+> Agent = Model + Harness. The model emits tokens; state, memory, retrieval, tool dispatch, identity, retries, and budgets. All these concepts are harness code — and that is where agent quality is won or lost.
+>
+> In this hands-on workshop, you build that harness from primitives against Oracle AI Database and a realistic AML dataset: Meridian Bank, 25 branches, ~1,200 transactions over 90 days, and transactions flagged by Anti Money Laundering (AML) rules.
+>
+> We will go through long-term memory and schema scanning with OAMP, semantic and hybrid RRF retrieval with ONNX in-database embeddings, vector-indexed toolbox and skillboxes, and a bounded agent_turn loop.
+>
+> After this workshop, you will know everything required to build your own agent harness from scratch, staying faithful to best agent harness and AI practices.
+>
+> You leave with a readable ~100-line loop you can operate, and a mental model that you can improve for your financial AI agents.
+
+</details>
+
+### Beyond “Done”: Building Verification Loops for AI Agents
+
+**Speakers:** Nick Nisi (Engineering Manager, WorkOS); Zack Proser (AI Engineer, WorkOS)  
+**When / where:** 1:15pm–2:15pm · Sutton Room (NY Ballroom W) · Workshop (1-2 hrs)  
+**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=edb4f982-0cb8-48ee-8bf7-410255a40cb3) · [▶ Video](https://www.youtube.com/watch?v=q4WC4TowkBo)
+
+**What it covers.** Build a verification and repair loop around an AI agent: Playwright checks browser behavior, an evaluator judges whether the collected evidence supports each acceptance criterion, and the loop accepts the work, requests a bounded repair, or escalates to a human. Then try to fool it with deliberately broken outputs to test the verifier itself. (The video was retitled “Teach Your Agent to Prove It’s Done”.)
+
+<details><summary>Official talk description</summary>
+
+> Delegating work takes more than a capable model and a good prompt. It takes a system that can check results, catch unsupported claims, and decide when to retry or ask for help.
+>
+> In this hands-on, 60-minute workshop, you’ll build a verification and repair loop around an AI agent. We’ll use Playwright to check browser behavior and Jev to evaluate whether collected evidence supports specific acceptance criteria. Your code will combine those signals to accept work, request a bounded repair, or escalate to a human.
+>
+> Then we’ll try to fool it. Using deliberately broken outputs and misleading evidence, you’ll test not just the agent, but the verifier itself, and explore the trade-off between catching failures and interrupting people unnecessarily.
+>
+> Drawing on real projects involving delegated work and agent supervision, this workshop focuses on patterns you can apply with your own stack. You’ll leave with a working verification loop and a practical method for deciding what to automate, what to check, and where human judgment still belongs.
+
+</details>
+
+### Langfuse Workshop - Evals and Observability in regulated Industries
+
+**Speakers:** Doneyli De Jesus (Head of AI Engineering Solutions, Langfuse (by ClickHouse)); Annabell Schäfer (AI Engineering Solutions, Langfuse by ClickHouse)  
+**When / where:** 2:20pm–3:20pm · Sutton Room (NY Ballroom W) · Workshop (1-2 hrs)  
+**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=f20b8d60-8a75-4ab3-a2fb-42159024e65f) · [▶ Video](https://www.youtube.com/watch?v=obfPzbapMIM)
+
+**What it covers.** Closing the loop from demo to production in a regulated industry, using a banking support agent (Northwind Bank): end-to-end tracing, guardrails that block and record risky requests, quality and compliance evals on datasets in CI/CD, and a dashboard of top failure modes. (The video was retitled “Evals for High-Stakes AI Agents”.)
+
+<details><summary>Official talk description</summary>
+
+> Building an AI agent demo is easy. Getting it into production is hard: you need to know what it actually does, catch it when it goes wrong, and keep improving it. In regulated industries you also have to prove all of that. In this hands-on workshop, Annabell Schäfer and Doneyli De Jesus from Langfuse show how to close that loop, using a banking support agent, Northwind Bank, as the example.
+>
+> You'll see how to:
+>
+> • Trace every agent interaction end to end
+>
+> • Use guardrails to catch and block risky requests, and record each block
+>
+> • Evaluate answers for quality and compliance using datasets as part of your CI/CD
+>
+> • Spot your agent's top failure modes on a dashboard and estimate the business impact
+>
+> The session suits both AI leaders and engineers. Bring a laptop if you want to follow along: a seed script loads the demo into your own Langfuse project.
+
+</details>
 
 ### Unhobbling the Frontier
 
