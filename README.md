@@ -77,7 +77,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speakers:** CJ Avilla (Member of Technical Staff, Anthropic); Harrison Stall (Member of Technical Staff, Anthropic)  
 **When / where:** 9:00am–11:00am · Sutton Room (NY Ballroom W) · Workshop (1-2 hrs)  
-**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=c415d432-5b6f-4b4a-9d2c-2e02cfde99db) · [▶ Video](https://www.youtube.com/watch?v=kiClTcJUnhc)
+**Links:** **[📰 Full write-up](sessions/10-12-0900-orchestrating-claude-managed-agents.md)** · **[📰 中文版](sessions/zh/10-12-0900-orchestrating-claude-managed-agents.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=c415d432-5b6f-4b4a-9d2c-2e02cfde99db) · [▶ Video](https://www.youtube.com/watch?v=kiClTcJUnhc) · [Precise notes (中文)](sessions/precise/10-12-0900-orchestrating-claude-managed-agents.md)
 
 **What it covers.** Two-hour workshop on dynamic workflows in Claude Managed Agents and the controls that keep them in bounds. The recording frames the problem as the same coordination wall Unix, OS/360 and Linux hit, now applied to running many agents at once. (The video was retitled “Why One AI Agent Isn’t Enough (And How to Run 1,000)”.)
 
@@ -91,7 +91,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speaker:** Nacho Martinez (AI Developer Advocate, Oracle)  
 **When / where:** 11:05am–12:05pm · Sutton Room (NY Ballroom W) · Workshop (1-2 hrs)  
-**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=898cb76b-41f3-47c0-ba31-6a5f8df40117) · [▶ Video](https://www.youtube.com/watch?v=KtBivPzmOM8) · [Workshop site (exercises)](https://workshopwaitingroom.com/) · [Speaker GitHub](https://github.com/jasperan)
+**Links:** **[📰 Full write-up](sessions/10-12-1105-agent--model--harness-build-your-own-mem.md)** · **[📰 中文版](sessions/zh/10-12-1105-agent--model--harness-build-your-own-mem.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=898cb76b-41f3-47c0-ba31-6a5f8df40117) · [▶ Video](https://www.youtube.com/watch?v=KtBivPzmOM8) · [Workshop site (exercises)](https://workshopwaitingroom.com/) · [Speaker GitHub](https://github.com/jasperan) · [Precise notes (中文)](sessions/precise/10-12-1105-agent--model--harness-build-your-own-mem.md)
 
 **What it covers.** The model is the part you can’t change; the harness is where agent quality is won or lost. The workshop builds that harness from primitives on Oracle AI Database with an AML dataset: long-term memory and schema scanning, semantic and hybrid retrieval, a vector-indexed toolbox and skillboxes, and a bounded agent-turn loop. (The video was retitled “Memory-Aware Agent Harnesses for Anti-Money Laundering”.)
 
@@ -113,7 +113,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speakers:** Nick Nisi (Engineering Manager, WorkOS); Zack Proser (AI Engineer, WorkOS)  
 **When / where:** 1:15pm–2:15pm · Sutton Room (NY Ballroom W) · Workshop (1-2 hrs)  
-**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=edb4f982-0cb8-48ee-8bf7-410255a40cb3) · [▶ Video](https://www.youtube.com/watch?v=q4WC4TowkBo) · [Slides & exercises (workshop workbench; returned 401, may need a login)](https://talks.workos.cloud/beyonddone)
+**Links:** **[📰 Full write-up](sessions/10-12-1315-beyond-done-building-verification-loops.md)** · **[📰 中文版](sessions/zh/10-12-1315-beyond-done-building-verification-loops.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=edb4f982-0cb8-48ee-8bf7-410255a40cb3) · [▶ Video](https://www.youtube.com/watch?v=q4WC4TowkBo) · [Slides & exercises (workshop workbench; returned 401, may need a login)](https://talks.workos.cloud/beyonddone) · [Precise notes (中文)](sessions/precise/10-12-1315-beyond-done-building-verification-loops.md)
 
 **What it covers.** Build a verification and repair loop around an AI agent: Playwright checks browser behavior, an evaluator judges whether the collected evidence supports each acceptance criterion, and the loop accepts the work, requests a bounded repair, or escalates to a human. Then try to fool it with deliberately broken outputs to test the verifier itself. (The video was retitled “Teach Your Agent to Prove It’s Done”.)
 
@@ -133,7 +133,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speakers:** Doneyli De Jesus (Head of AI Engineering Solutions, Langfuse (by ClickHouse)); Annabell Schäfer (AI Engineering Solutions, Langfuse by ClickHouse)  
 **When / where:** 2:20pm–3:20pm · Sutton Room (NY Ballroom W) · Workshop (1-2 hrs)  
-**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=f20b8d60-8a75-4ab3-a2fb-42159024e65f) · [▶ Video](https://www.youtube.com/watch?v=obfPzbapMIM) · [Workshop materials](https://langfuse.com/workshop)
+**Links:** **[📰 Full write-up](sessions/10-12-1420-langfuse-workshop---evals-and-observabil.md)** · **[📰 中文版](sessions/zh/10-12-1420-langfuse-workshop---evals-and-observabil.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=f20b8d60-8a75-4ab3-a2fb-42159024e65f) · [▶ Video](https://www.youtube.com/watch?v=obfPzbapMIM) · [Workshop materials](https://langfuse.com/workshop) · [Precise notes (中文)](sessions/precise/10-12-1420-langfuse-workshop---evals-and-observabil.md)
 
 **What it covers.** Closing the loop from demo to production in a regulated industry, using a banking support agent (Northwind Bank): end-to-end tracing, guardrails that block and record risky requests, quality and compliance evals on datasets in CI/CD, and a dashboard of top failure modes. (The video was retitled “Evals for High-Stakes AI Agents”.)
 
@@ -1007,7 +1007,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speaker:** Pim de Witte (Co-Founder & CEO, General Intuition)  
 **When / where:** 4:48pm–5:06pm · Simons Room (Metropolitan East) · Featured Keynote  
-**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=cada670e-c5ea-4977-b3c2-9a68dda26abb) · [▶ Livestream @ 7:02:19](https://www.youtube.com/watch?v=akEqiXFo3GM&t=25339s)
+**Links:** **[📰 Full write-up](sessions/10-13-1648-frontier-models-for-acting-in-space-and.md)** · **[📰 中文版](sessions/zh/10-13-1648-frontier-models-for-acting-in-space-and.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=cada670e-c5ea-4977-b3c2-9a68dda26abb) · [▶ Livestream @ 7:02:19](https://www.youtube.com/watch?v=akEqiXFo3GM&t=25339s) · [Precise notes (中文)](sessions/precise/10-13-1648-frontier-models-for-acting-in-space-and.md)
 
 **What it covers.** Pim de Witte introduces General Intuition, a frontier lab building models that act in space and time (raised $650M+ from Khosla and General Catalyst).
 
@@ -1028,7 +1028,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speaker:** Dillon Rolnick (CEO, Nous Research)  
 **When / where:** 5:06pm–5:24pm · Simons Room (Metropolitan East) · Featured Keynote  
-**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=871cd5c8-13f4-4fe9-ac49-c8b25d970add) · [▶ Livestream @ 7:21:20](https://www.youtube.com/watch?v=akEqiXFo3GM&t=26480s)
+**Links:** **[📰 Full write-up](sessions/10-13-1706-hermes-gives-you-wings-build-on-open-fou.md)** · **[📰 中文版](sessions/zh/10-13-1706-hermes-gives-you-wings-build-on-open-fou.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=871cd5c8-13f4-4fe9-ac49-c8b25d970add) · [▶ Livestream @ 7:21:20](https://www.youtube.com/watch?v=akEqiXFo3GM&t=26480s) · [Precise notes (中文)](sessions/precise/10-13-1706-hermes-gives-you-wings-build-on-open-fou.md)
 
 **What it covers.** Nous Research’s CEO makes the case that modern businesses require open agents, built on open foundations (Hermes).
 
@@ -1537,7 +1537,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speakers:** Michael Manapat (Co-Founder, Rowspace); Jack McDonald (Principal at Apollo Global Management, COO of Redding Ridge, Apollo Global Management)  
 **When / where:** 4:30pm–4:48pm · Simons Room (Metropolitan East) · Featured Keynote  
-**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=44e9d04a-e8b4-418c-8a85-02fbb9263dd0) · [▶ Video](https://www.youtube.com/watch?v=BOWYujhIQuo) · [▶ Livestream @ 7:50:03](https://www.youtube.com/watch?v=jiUC6IUMdvc&t=28203s)
+**Links:** **[📰 Full write-up](sessions/10-14-1630-ai-in-practice-an-inside-look-at-apollos.md)** · **[📰 中文版](sessions/zh/10-14-1630-ai-in-practice-an-inside-look-at-apollos.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=44e9d04a-e8b4-418c-8a85-02fbb9263dd0) · [▶ Video](https://www.youtube.com/watch?v=BOWYujhIQuo) · [▶ Livestream @ 7:50:03](https://www.youtube.com/watch?v=jiUC6IUMdvc&t=28203s) · [Precise notes (中文)](sessions/precise/10-14-1630-ai-in-practice-an-inside-look-at-apollos.md)
 
 **What it covers.** Apollo’s CLO business used to spend 2–3 days building one mock portfolio by hand in Excel; with Rowspace it takes minutes. A customer co-presentation on applying AI to fragmented credit data. (The video was retitled “AI Agents Cut 3-Day Portfolio Builds to Minutes”.)
 
@@ -1557,7 +1557,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speaker:** Mitchell Troyanovsky (Co-Founder, Basis)  
 **When / where:** 4:48pm–5:06pm · Simons Room (Metropolitan East) · Featured Keynote · ⭐ starred  
-**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=1cbc625f-7f07-49bb-9c5c-57c95f07ba77) · [▶ Livestream @ 8:09:22](https://www.youtube.com/watch?v=jiUC6IUMdvc&t=29362s) · [Basis behavior specs](https://www.agentbehavior.dev/)
+**Links:** **[📰 Full write-up](sessions/10-14-1648-process-supervision-for-agents-that-do-l.md)** · **[📰 中文版](sessions/zh/10-14-1648-process-supervision-for-agents-that-do-l.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=1cbc625f-7f07-49bb-9c5c-57c95f07ba77) · [▶ Livestream @ 8:09:22](https://www.youtube.com/watch?v=jiUC6IUMdvc&t=29362s) · [Basis behavior specs](https://www.agentbehavior.dev/) · [Precise notes (中文)](sessions/precise/10-14-1648-process-supervision-for-agents-that-do-l.md)
 
 **What it covers.** Basis builds agents for accountants. A long-horizon agent can reach a correct result through unreliable steps, such as a tax conclusion based on pretraining or a blog rather than primary sources. Evaluating long-horizon work needs evidence about both the result and the decisions behind it.
 
@@ -1604,7 +1604,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speaker:** Cristóbal Valenzuela (Co-Founder and Co-CEO, Runway)  
 **When / where:** 5:06pm–5:24pm · Simons Room (Metropolitan East) · Featured Keynote  
-**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=af8422e8-d5f8-4dbd-a918-6360f5bfba80) · [▶ Livestream @ 8:29:11](https://www.youtube.com/watch?v=jiUC6IUMdvc&t=30551s)
+**Links:** **[📰 Full write-up](sessions/10-14-1706-everything-will-be-simulated.md)** · **[📰 中文版](sessions/zh/10-14-1706-everything-will-be-simulated.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=af8422e8-d5f8-4dbd-a918-6360f5bfba80) · [▶ Livestream @ 8:29:11](https://www.youtube.com/watch?v=jiUC6IUMdvc&t=30551s) · [Precise notes (中文)](sessions/precise/10-14-1706-everything-will-be-simulated.md)
 
 **What it covers.** Runway’s co-founder on world models mature enough to simulate real environments in real time, and what that opens up for robotics, digital interfaces and science.
 
