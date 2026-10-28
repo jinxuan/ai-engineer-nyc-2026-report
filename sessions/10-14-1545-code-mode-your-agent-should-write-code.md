@@ -1,3 +1,5 @@
+**English** | [中文](zh/10-14-1545-code-mode-your-agent-should-write-code.md)
+
 # Stop Handing Your Agent a Tool Menu; Give It a Sandbox
 
 *At AI Engineer NYC 2026, Arize AI's Mikyo King argued that agents should write code against their tools instead of calling them one at a time, described how Arize built "code mode" into its Phoenix agent, and was candid about the costs, before reporting 43% fewer tokens and 31% lower cost in Arize's own evals.*

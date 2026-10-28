@@ -1,3 +1,5 @@
+**English** | [中文](zh/10-14-1340-building-a-self-improving-software-facto.md)
+
 # Coding Agents Belong in a Cloud Factory That Scores and Improves Itself
 
 *At AI Engineer NYC 2026, Warp's Zach Lloyd argued that companies should move coding agents off engineers' laptops into a "cloud software factory" defined in code, measured on their own data and improved by agents, then showed Warp's version of one.*

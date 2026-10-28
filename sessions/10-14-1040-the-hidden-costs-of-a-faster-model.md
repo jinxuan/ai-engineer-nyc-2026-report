@@ -1,3 +1,5 @@
+**English** | [中文](zh/10-14-1040-the-hidden-costs-of-a-faster-model.md)
+
 # A Faster Model Is Only Faster If the Whole Job Is
 
 *At AI Engineer NYC 2026, MiniMax's Morgan Suo walked through the speed-ups inside the company's new M3.1 Flash model, from sparse attention to 4-bit math, and argued that each one has to be judged by the cost and time of a finished, checkable result.*

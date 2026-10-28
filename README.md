@@ -5,7 +5,7 @@ My notes from **[AI Engineer NYC 2026](https://ai.engineer/nyc/2026)** (October 
 This repository lists the 38 sessions I attended: who spoke, what each talk covered, what I took away, and a link to the recording where one exists. It is the companion reference for my conference write-up and talk.
 
 - ⭐ marks a session I starred as a highlight while attending.
-- **📰 Full write-up** (in `sessions/`) is a complete English article for each session: every section and slide of the talk, data from the slides as tables, and the Q&A where there was one. **Precise notes** (in `sessions/precise/`, Chinese) are the underlying verified record with timestamps, speech-to-text corrections and source-by-source discrepancies.
+- **📰 Full write-up** (in `sessions/`, with a Chinese version in `sessions/zh/`) is a complete article for each session: every section and slide of the talk, data from the slides as tables, and the Q&A where there was one. **Precise notes** (in `sessions/precise/`, Chinese) are the underlying verified record with timestamps, speech-to-text corrections and source-by-source discrepancies.
 - Some talk titles were changed when the video was published; the schedule title is used here and the video title is noted when different.
 
 ## Where to watch
@@ -159,7 +159,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speaker:** Lance Martin (Member of Technical Staff, Anthropic)  
 **When / where:** 3:30pm–4:30pm · Shannon Room (NY Ballroom E) · Workshop (1-2 hrs)  
-**Links:** **[📰 Full write-up](sessions/10-12-1530-unhobbling-the-frontier.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=6a4e7cfd-334a-4d3b-94ed-282acc905448) · [Speaker’s blog: Automating eval design and hillclimbing with Claude](https://claude.dev/blog/automating-eval-design-and-hillclimbing/) · [Precise notes (中文)](sessions/precise/10-12-1530-unhobbling-the-frontier.md)  
+**Links:** **[📰 Full write-up](sessions/10-12-1530-unhobbling-the-frontier.md)** · **[📰 中文版](sessions/zh/10-12-1530-unhobbling-the-frontier.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=6a4e7cfd-334a-4d3b-94ed-282acc905448) · [Speaker’s blog: Automating eval design and hillclimbing with Claude](https://claude.dev/blog/automating-eval-design-and-hillclimbing/) · [Precise notes (中文)](sessions/precise/10-12-1530-unhobbling-the-frontier.md)  
 **Recording:** not published yet
 
 **What it covers.** Lance Martin’s thesis: many applications sit inside the cost–performance frontier (not on it) because of small misconfigurations. Five themes, each with a command in the `claude-api` skill for Claude Code: audit your prompts, use the prompt cache, design a good eval, hillclimb against it, and design the harness for tasks that run for hours to days. The slides took about 23 minutes and the rest of the hour was Q&A.
@@ -418,7 +418,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speaker:** Louis-François Bouchard (CTO & Co-Founder, Towards AI)  
 **When / where:** 10:40am–10:58am · Turing Room (Riverside Ballroom) · Breakouts  
-**Links:** **[📰 Full write-up](sessions/10-13-1040-can-any-model-write-like-me-building-a-b.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=736edd83-bb08-49f1-90ed-722b7ed07eb2) · [▶ Video](https://www.youtube.com/watch?v=_dTF3NpPzGo) · [Speaker article (DEV)](https://dev.to/dailycontext/what-9050-ai-written-scripts-taught-me-about-slop-1g5n) · [Precise notes (中文)](sessions/precise/10-13-1040-can-any-model-write-like-me-building-a-b.md)
+**Links:** **[📰 Full write-up](sessions/10-13-1040-can-any-model-write-like-me-building-a-b.md)** · **[📰 中文版](sessions/zh/10-13-1040-can-any-model-write-like-me-building-a-b.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=736edd83-bb08-49f1-90ed-722b7ed07eb2) · [▶ Video](https://www.youtube.com/watch?v=_dTF3NpPzGo) · [Speaker article (DEV)](https://dev.to/dailycontext/what-9050-ai-written-scripts-taught-me-about-slop-1g5n) · [Precise notes (中文)](sessions/precise/10-13-1040-can-any-model-write-like-me-building-a-b.md)
 
 **What it covers.** Which model writes a YouTube script that sounds like the author? Breaks down what makes AI writing “slop” and shows how a personal benchmark was built: 10 scripts, 5 drafts per model, 4 LLM judges, nine scoring metrics and 1,000 human A/B checks. (The video was retitled “Why AI Writing Still Reads Like Slop”.)
 
@@ -489,7 +489,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speaker:** Nathanael Weill (Director, Data Science & AI, Air Canada)  
 **When / where:** 11:05am–11:23am · Turing Room (Riverside Ballroom) · Breakouts  
-**Links:** **[📰 Full write-up](sessions/10-13-1105-write-the-answer-first-generating-eval-d.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=c4ba0138-6f6d-4780-93a1-4d8f0c478339) · [▶ Video](https://www.youtube.com/watch?v=c_SPW__jF9w) · [Precise notes (中文)](sessions/precise/10-13-1105-write-the-answer-first-generating-eval-d.md)
+**Links:** **[📰 Full write-up](sessions/10-13-1105-write-the-answer-first-generating-eval-d.md)** · **[📰 中文版](sessions/zh/10-13-1105-write-the-answer-first-generating-eval-d.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=c4ba0138-6f6d-4780-93a1-4d8f0c478339) · [▶ Video](https://www.youtube.com/watch?v=c_SPW__jF9w) · [Precise notes (中文)](sessions/precise/10-13-1105-write-the-answer-first-generating-eval-d.md)
 
 **What it covers.** Air Canada has agents with no public benchmark and domain experts with no time. The fix is to write the answer first: start from a known answer, generate the input from it, and check whether the agent finds its way back. A past RAG project went from one expert-graded test a week to dozens of automated tests a day; the same idea is applied to a supplier-contract review agent. (The video was retitled “How to Test AI Agents When No Benchmark Exists”.)
 
@@ -543,7 +543,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speaker:** Anirudh Veeraragavan (Lead Security Engineer, Fieldguide)  
 **When / where:** 11:30am–11:48am · Turing Room (Riverside Ballroom) · Breakouts  
-**Links:** **[📰 Full write-up](sessions/10-13-1130-your-financial-agent-passed-every-eval-c.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=30afe596-abe2-417c-bd5a-313fa4bc54b3) · [Precise notes (中文)](sessions/precise/10-13-1130-your-financial-agent-passed-every-eval-c.md)  
+**Links:** **[📰 Full write-up](sessions/10-13-1130-your-financial-agent-passed-every-eval-c.md)** · **[📰 中文版](sessions/zh/10-13-1130-your-financial-agent-passed-every-eval-c.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=30afe596-abe2-417c-bd5a-313fa4bc54b3) · [Precise notes (中文)](sessions/precise/10-13-1130-your-financial-agent-passed-every-eval-c.md)  
 **Recording:** not published yet
 
 **What it covers.** A financial agent can pass every eval and still make a decision nobody can defend. Defensibility needs four controls: authorization, execution control, evidence provenance and evaluation integrity, worked through on a synthetic audit decision trace.
@@ -586,7 +586,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speaker:** Stephanie Jarmak (AI Engineer, Omni Analytics)  
 **When / where:** 11:55am–12:13pm · Turing Room (Riverside Ballroom) · Breakouts  
-**Links:** **[📰 Full write-up](sessions/10-13-1155-lies-damned-lies-and-evals-how-to-trust.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=b1fe8396-6fa8-4574-9775-0dc01f56ce57) · [▶ Video](https://www.youtube.com/watch?v=A3FL_zTQKU0) · [Precise notes (中文)](sessions/precise/10-13-1155-lies-damned-lies-and-evals-how-to-trust.md)
+**Links:** **[📰 Full write-up](sessions/10-13-1155-lies-damned-lies-and-evals-how-to-trust.md)** · **[📰 中文版](sessions/zh/10-13-1155-lies-damned-lies-and-evals-how-to-trust.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=b1fe8396-6fa8-4574-9775-0dc01f56ce57) · [▶ Video](https://www.youtube.com/watch?v=A3FL_zTQKU0) · [Precise notes (中文)](sessions/precise/10-13-1155-lies-damned-lies-and-evals-how-to-trust.md)
 
 **What it covers.** Most agent evaluations are easy to misread. Swapping only the harness moved results by 30%; public benchmarks are for shortlisting, not deciding. Design your own evals like an experiment: realistic tasks, repeated runs, full traces and a measurement that matches what you care about. (The video was retitled “Don’t Trust Your AI Agents. Test Them Like a Scientist”.)
 
@@ -643,7 +643,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speakers:** Vishal Srivastava (Corporate VP, Lead Data Scientist, New York Life Insurance); Tanmay Sah (AI Researcher)  
 **When / where:** 12:20pm–12:38pm · Turing Room (Riverside Ballroom) · Breakouts  
-**Links:** **[📰 Full write-up](sessions/10-13-1220-1368-ai-failures-what-they-teach-us-abou.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=9d72d7ac-a2a2-42cf-b880-5859316d840c) · [▶ Video](https://www.youtube.com/watch?v=mMw3arwQsL0) · [Speaker article (DEV)](https://dev.to/dailycontext/what-1368-real-world-ai-incidents-teach-us-about-evaluation-71p) · [Precise notes (中文)](sessions/precise/10-13-1220-1368-ai-failures-what-they-teach-us-abou.md)
+**Links:** **[📰 Full write-up](sessions/10-13-1220-1368-ai-failures-what-they-teach-us-abou.md)** · **[📰 中文版](sessions/zh/10-13-1220-1368-ai-failures-what-they-teach-us-abou.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=9d72d7ac-a2a2-42cf-b880-5859316d840c) · [▶ Video](https://www.youtube.com/watch?v=mMw3arwQsL0) · [Speaker article (DEV)](https://dev.to/dailycontext/what-1368-real-world-ai-incidents-teach-us-about-evaluation-71p) · [Precise notes (中文)](sessions/precise/10-13-1220-1368-ai-failures-what-they-teach-us-abou.md)
 
 **What it covers.** Analysis of 1,368 documented AI incidents across three areas (technical strength, deployment controls, business impact) and 13 sub-areas covering about 98% of incidents. Weak deployment controls such as human review and monitoring are most closely tied to harm. Includes a build-break-fix loop that tries to prove a system wrong rather than right. (The video was retitled “1,368 AI Failures and What They Teach About Evals”.)
 
@@ -741,7 +741,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speaker:** Hari Kumar (Head of AI and Data Science, Contour Asset Management)  
 **When / where:** 1:40pm–1:58pm · Turing Room (Riverside Ballroom) · Breakouts  
-**Links:** **[📰 Full write-up](sessions/10-13-1340-proving-alpha-showcasing-ais-value-in-fu.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=ae273f0b-db0f-4638-8ae3-05874bebf9ca) · [▶ Video](https://www.youtube.com/watch?v=ZMZlAn6Pyfg) · [Precise notes (中文)](sessions/precise/10-13-1340-proving-alpha-showcasing-ais-value-in-fu.md)
+**Links:** **[📰 Full write-up](sessions/10-13-1340-proving-alpha-showcasing-ais-value-in-fu.md)** · **[📰 中文版](sessions/zh/10-13-1340-proving-alpha-showcasing-ais-value-in-fu.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=ae273f0b-db0f-4638-8ae3-05874bebf9ca) · [▶ Video](https://www.youtube.com/watch?v=ZMZlAn6Pyfg) · [Precise notes (中文)](sessions/precise/10-13-1340-proving-alpha-showcasing-ais-value-in-fu.md)
 
 **What it covers.** Contour Asset Management, a $6B fundamental long/short fund, tackles what AI spend actually returns. It runs live A/B tests of analysts’ research with and without AI tools, tracks “cost per useful insight”, resurfaces old ideas when the market makes them interesting again, and extends the approach to trading, operations and compliance. (The video was retitled “Proving Alpha: How a Hedge Fund Measures AI’s ROI”.)
 
@@ -780,7 +780,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speaker:** Harneet Kaur (Founder, Axim Intelligence)  
 **When / where:** 2:05pm–2:23pm · Turing Room (Riverside Ballroom) · Breakouts  
-**Links:** **[📰 Full write-up](sessions/10-13-1405-can-ai-understand-a-distressed-credit.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=adca6e26-1ddc-4f77-8e35-59bf1d1de81d) · [▶ Video](https://www.youtube.com/watch?v=WOszaC1WWbQ) · [Precise notes (中文)](sessions/precise/10-13-1405-can-ai-understand-a-distressed-credit.md)
+**Links:** **[📰 Full write-up](sessions/10-13-1405-can-ai-understand-a-distressed-credit.md)** · **[📰 中文版](sessions/zh/10-13-1405-can-ai-understand-a-distressed-credit.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=adca6e26-1ddc-4f77-8e35-59bf1d1de81d) · [▶ Video](https://www.youtube.com/watch?v=WOszaC1WWbQ) · [Precise notes (中文)](sessions/precise/10-13-1405-can-ai-understand-a-distressed-credit.md)
 
 **What it covers.** Tests whether frontier models can reason about a live distressed situation (iHeartMedia). Two top models disagreed sharply on bankruptcy vs a negotiated restructuring; breaking the analysis into checked layers (extraction, derivation, judgment, prediction) brought them to the same answer, which raises the question of whether agreement is the same as being right.
 
@@ -813,7 +813,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speakers:** Chanyeol Choi (Co-founder & CEO, LinqAlpha); Janie Gu (Group Product Manager (Kaggle Benchmarks), Google DeepMind); Jack Haverty (Head of Product, LinqAlpha); Suyeol Yun (Head of AI, LinqAlpha)  
 **When / where:** 2:30pm–2:48pm · Turing Room (Riverside Ballroom) · Breakouts  
-**Links:** **[📰 Full write-up](sessions/10-13-1430-why-frontier-models-fail-on-billion-doll.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=e8e53365-3c1f-4c28-bdd0-44c305a05d57) · [▶ Video](https://www.youtube.com/watch?v=aVbRSIQO2dE) · [Precise notes (中文)](sessions/precise/10-13-1430-why-frontier-models-fail-on-billion-doll.md)
+**Links:** **[📰 Full write-up](sessions/10-13-1430-why-frontier-models-fail-on-billion-doll.md)** · **[📰 中文版](sessions/zh/10-13-1430-why-frontier-models-fail-on-billion-doll.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=e8e53365-3c1f-4c28-bdd0-44c305a05d57) · [▶ Video](https://www.youtube.com/watch?v=aVbRSIQO2dE) · [Precise notes (中文)](sessions/precise/10-13-1430-why-frontier-models-fail-on-billion-doll.md)
 
 **What it covers.** Janie Gu (Google DeepMind, Kaggle Benchmarks) explains why most AI benchmarks are broken: they don’t reflect real work, are expensive to keep current, and their scores can’t be verified; Kaggle reproduced 65 industry benchmarks and found five recurring failure modes. Suyeol Yun (LinqAlpha) presents Mandate-Bench, co-developed with Google DeepMind and Kaggle, which grades whether a model can work like a buy-side analyst from a fund mandate to an investment memo: 50 tasks across 13 sectors, with preliminary results on 10 of them where the best average was 58/100 (Claude Opus 5.5 in Claude Code). The full set is due on Kaggle in November 2026. (The video was retitled “Why Frontier Models Fail as Buy-Side Analysts”; the abstract’s “>60% from the right harness” figure does not appear in the talk.)
 
@@ -868,7 +868,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speakers:** Jack Woodruff (Senior Advisor, Kepler); Vinoo Ganesh (CEO, Kepler)  
 **When / where:** 2:55pm–3:13pm · Simons Room (Metropolitan East) · Stage Talk (18 mins)  
-**Links:** **[📰 Full write-up](sessions/10-13-1455-ai-and-the-future-of-fundamental-investi.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=a244839c-239c-4789-b621-32a3568a218e) · [▶ Livestream @ 5:29:04](https://www.youtube.com/watch?v=akEqiXFo3GM&t=19744s) · [Related talk by Vinoo Ganesh: “Do Not Let Models Invent Numbers”](https://www.youtube.com/watch?v=dZgA6btnb_s) · [Speaker Q&A (DEV)](https://dev.to/dailycontext/keplers-vinoo-ganesh-on-building-ai-you-can-trust-3p0f) · [Precise notes (中文)](sessions/precise/10-13-1455-ai-and-the-future-of-fundamental-investi.md)
+**Links:** **[📰 Full write-up](sessions/10-13-1455-ai-and-the-future-of-fundamental-investi.md)** · **[📰 中文版](sessions/zh/10-13-1455-ai-and-the-future-of-fundamental-investi.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=a244839c-239c-4789-b621-32a3568a218e) · [▶ Livestream @ 5:29:04](https://www.youtube.com/watch?v=akEqiXFo3GM&t=19744s) · [Related talk by Vinoo Ganesh: “Do Not Let Models Invent Numbers”](https://www.youtube.com/watch?v=dZgA6btnb_s) · [Speaker Q&A (DEV)](https://dev.to/dailycontext/keplers-vinoo-ganesh-on-building-ai-you-can-trust-3p0f) · [Precise notes (中文)](sessions/precise/10-13-1455-ai-and-the-future-of-fundamental-investi.md)
 
 **What it covers.** Fireside chat between Jack Woodruff (Kepler; formerly one of the largest books at Citadel) and Vinoo Ganesh (CEO, Kepler) on what AI is changing in fundamental investing, where it saves real time, and what an investor would never hand over to a model.
 
@@ -882,7 +882,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speaker:** Sofia Jakovcevic (AI Forward Deployed Engineer, Arize AI)  
 **When / where:** 3:20pm–3:38pm · Turing Room (Riverside Ballroom) · Breakouts  
-**Links:** **[📰 Full write-up](sessions/10-13-1520-your-agent-fix-just-broke-something-else.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=2a589e49-4ee4-4c53-bfeb-40bc3db16506) · [▶ Video](https://www.youtube.com/watch?v=v5tm5EAzsAs) · [Precise notes (中文)](sessions/precise/10-13-1520-your-agent-fix-just-broke-something-else.md)
+**Links:** **[📰 Full write-up](sessions/10-13-1520-your-agent-fix-just-broke-something-else.md)** · **[📰 中文版](sessions/zh/10-13-1520-your-agent-fix-just-broke-something-else.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=2a589e49-4ee4-4c53-bfeb-40bc3db16506) · [▶ Video](https://www.youtube.com/watch?v=v5tm5EAzsAs) · [Precise notes (中文)](sessions/precise/10-13-1520-your-agent-fix-just-broke-something-else.md)
 
 **What it covers.** A one-line prompt change made a support agent 17 points safer and 17 points worse at finishing tasks. Agents fail at runtime, not in code; the session walks through a five-step regression loop built from production traces (datasets, evaluators, baseline experiments, comparisons, CI gates) and closes with agents that read traces and fix themselves.
 
@@ -920,7 +920,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speaker:** Mislav Ivanda  
 **When / where:** 3:45pm–4:03pm · Sutton Room (NY Ballroom W) · Expo Session (18 mins)  
-**Links:** **[📰 Full write-up](sessions/10-13-1545-give-the-model-a-computer-the-one-thing.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=8d424512-c7f0-483c-9094-ca899d7bb1fd) · [Precise notes (中文)](sessions/precise/10-13-1545-give-the-model-a-computer-the-one-thing.md)  
+**Links:** **[📰 Full write-up](sessions/10-13-1545-give-the-model-a-computer-the-one-thing.md)** · **[📰 中文版](sessions/zh/10-13-1545-give-the-model-a-computer-the-one-thing.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=8d424512-c7f0-483c-9094-ca899d7bb1fd) · [Precise notes (中文)](sessions/precise/10-13-1545-give-the-model-a-computer-the-one-thing.md)  
 **Recording:** not published yet
 
 **What it covers.** A year of building Daytona integrations across LangChain, CrewAI, Google ADK, Mastra, Pydantic AI and the OpenAI Agents SDK showed that frameworks that agree on nothing else converge on one primitive: give the model a computer (a sandbox).
@@ -1053,7 +1053,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speaker:** Morgan Suo (Head of US Business Development, MiniMax)  
 **When / where:** 10:40am–10:58am · McCarthy Room (Riverside Suite) · Breakout Session (18 mins)  
-**Links:** **[📰 Full write-up](sessions/10-14-1040-the-hidden-costs-of-a-faster-model.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=f3445fe7-308b-4e84-8490-fd78a13db4fb) · [▶ Video](https://www.youtube.com/watch?v=YvQ4BVTWfHI) · [Precise notes (中文)](sessions/precise/10-14-1040-the-hidden-costs-of-a-faster-model.md)
+**Links:** **[📰 Full write-up](sessions/10-14-1040-the-hidden-costs-of-a-faster-model.md)** · **[📰 中文版](sessions/zh/10-14-1040-the-hidden-costs-of-a-faster-model.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=f3445fe7-308b-4e84-8490-fd78a13db4fb) · [▶ Video](https://www.youtube.com/watch?v=YvQ4BVTWfHI) · [Precise notes (中文)](sessions/precise/10-14-1040-the-hidden-costs-of-a-faster-model.md)
 
 **What it covers.** A faster model only helps if the finished job gets faster. Uses one research task to test the changes inside MiniMax’s M3.1 Flash (sparse attention, 4-bit KV cache, low-precision experts, speculative decoding, reasoning budgets), each of which saves compute and can quietly cost accuracy or wait time. (The video was retitled “Is a Faster Model Actually Faster? Test the Whole Job”.)
 
@@ -1089,7 +1089,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speaker:** Ryan Stevens (Director of Applied Science, Ramp)  
 **When / where:** 11:05am–11:23am · Shannon Room (NY Ballroom E) · Breakout Session (18 mins)  
-**Links:** **[📰 Full write-up](sessions/10-14-1105-building-better-agents-through-end-to-en.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=4607dbbe-8f94-4b0e-91ce-257d1cfb5448) · [Precise notes (中文)](sessions/precise/10-14-1105-building-better-agents-through-end-to-en.md)  
+**Links:** **[📰 Full write-up](sessions/10-14-1105-building-better-agents-through-end-to-en.md)** · **[📰 中文版](sessions/zh/10-14-1105-building-better-agents-through-end-to-en.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=4607dbbe-8f94-4b0e-91ce-257d1cfb5448) · [Precise notes (中文)](sessions/precise/10-14-1105-building-better-agents-through-end-to-en.md)  
 **Recording:** not published yet
 
 **What it covers.** Ramp built a benchmark of real accounting workflows to test frontier models, tools, skills, memory and the harness end to end. Some intuitive improvements made the system worse; skill ablation identified context that was hurting performance.
@@ -1136,7 +1136,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speaker:** Matt Ragone (Financial Planner, Range)  
 **When / where:** 11:30am–11:48am · Turing Room (Riverside Ballroom) · Breakouts  
-**Links:** **[📰 Full write-up](sessions/10-14-1130-we-let-our-financial-planners-write-the.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=9b002687-09cf-42e2-9282-532ed9d0c184) · [▶ Video](https://www.youtube.com/watch?v=gpmze-6ueGU) · [Precise notes (中文)](sessions/precise/10-14-1130-we-let-our-financial-planners-write-the.md)
+**Links:** **[📰 Full write-up](sessions/10-14-1130-we-let-our-financial-planners-write-the.md)** · **[📰 中文版](sessions/zh/10-14-1130-we-let-our-financial-planners-write-the.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=9b002687-09cf-42e2-9282-532ed9d0c184) · [▶ Video](https://www.youtube.com/watch?v=gpmze-6ueGU) · [Precise notes (中文)](sessions/precise/10-14-1130-we-let-our-financial-planners-write-the.md)
 
 **What it covers.** Range’s financial planners write and maintain the agent skills they use every day, without writing code: 24 skills company-wide after six months, 17 of them in planning. The planner reviews every recommendation before it reaches a client.
 
@@ -1178,7 +1178,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speaker:** Jediah Katz (Engineer, Agent Harness, SpaceX Super Intelligence)  
 **When / where:** 11:55am–12:13pm · Shannon Room (NY Ballroom E) · Breakout Session (18 mins) · ⭐ starred  
-**Links:** **[📰 Full write-up](sessions/10-14-1155-the-model-ate-the-coding-harness-now-wha.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=29083884-87dc-44f8-b412-b494afca8856) · [▶ Video](https://www.youtube.com/watch?v=7Y4sbZgBdnc) · [Precise notes (中文)](sessions/precise/10-14-1155-the-model-ate-the-coding-harness-now-wha.md)
+**Links:** **[📰 Full write-up](sessions/10-14-1155-the-model-ate-the-coding-harness-now-wha.md)** · **[📰 中文版](sessions/zh/10-14-1155-the-model-ate-the-coding-harness-now-wha.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=29083884-87dc-44f8-b412-b494afca8856) · [▶ Video](https://www.youtube.com/watch?v=7Y4sbZgBdnc) · [Precise notes (中文)](sessions/precise/10-14-1155-the-model-ate-the-coding-harness-now-wha.md)
 
 **What it covers.** Jediah Katz (SpaceXAI; previously Cursor’s agent-harness engineer) on what smarter models mean for coding agents, Grok Bot and the future of harnesses. Fancy harnesses no longer add coding intelligence because the data flywheel teaches models the skills they used to patch in; the harness matters more for what models can’t absorb: infrastructure, trust and security, efficiency. (The video was retitled “Is the Agent Harness Dead?”.)
 
@@ -1226,7 +1226,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speaker:** Supriya Subudhi (Staff Product Manager, Bumble)  
 **When / where:** 12:20pm–12:38pm · Turing Room (Riverside Ballroom) · Breakouts  
-**Links:** **[📰 Full write-up](sessions/10-14-1220-ab-testing-ai-products-is-weird-what-cha.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=11fef189-97e8-4c8e-87e8-dac43d800846) · [Speaker article (DEV)](https://dev.to/dailycontext/ab-testing-ai-products-is-weird-576h) · [Precise notes (中文)](sessions/precise/10-14-1220-ab-testing-ai-products-is-weird-what-cha.md)  
+**Links:** **[📰 Full write-up](sessions/10-14-1220-ab-testing-ai-products-is-weird-what-cha.md)** · **[📰 中文版](sessions/zh/10-14-1220-ab-testing-ai-products-is-weird-what-cha.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=11fef189-97e8-4c8e-87e8-dac43d800846) · [Speaker article (DEV)](https://dev.to/dailycontext/ab-testing-ai-products-is-weird-576h) · [Precise notes (中文)](sessions/precise/10-14-1220-ab-testing-ai-products-is-weird-what-cha.md)  
 **Recording:** not published yet
 
 **What it covers.** Traditional experimentation assumes you can define a feature, measure a response and compare outcomes. AI outputs vary, user responses depend on context, and a metric win does not say why the experience improved. Draws on experimentation in consumer tech and fintech, including an AI-powered experience at Bumble.
@@ -1263,7 +1263,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speaker:** Zach Lloyd (Founder & CEO, Warp)  
 **When / where:** 1:40pm–1:58pm · McCarthy Room (Riverside Suite) · Expo Session (18 mins) · ⭐ starred  
-**Links:** **[📰 Full write-up](sessions/10-14-1340-building-a-self-improving-software-facto.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=a901d5ea-57c6-433f-9c37-5fe6531adb99) · [Precise notes (中文)](sessions/precise/10-14-1340-building-a-self-improving-software-facto.md)  
+**Links:** **[📰 Full write-up](sessions/10-14-1340-building-a-self-improving-software-facto.md)** · **[📰 中文版](sessions/zh/10-14-1340-building-a-self-improving-software-facto.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=a901d5ea-57c6-433f-9c37-5fe6531adb99) · [Precise notes (中文)](sessions/precise/10-14-1340-building-a-self-improving-software-facto.md)  
 **Recording:** not published yet
 
 **What it covers.** Warp argues interactive agents are not scaling (runaway cost, no governance) and that teams need software factories: closed-loop systems for automating development, with shared infrastructure rather than every company rolling its own.
@@ -1332,7 +1332,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speaker:** Jason Mancuso (Member of Technical Staff, Research, Modal)  
 **When / where:** 2:05pm–2:23pm · Shannon Room (NY Ballroom E) · Expo Session (18 mins) · ⭐ starred  
-**Links:** **[📰 Full write-up](sessions/10-14-1405-scaling-agentic-rl-across-the-globe.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=e6ccda8d-0613-44f8-b98f-53ba8037b518) · [Stitch (open-source RL framework)](https://github.com/modal-projects/stitch) · [Precise notes (中文)](sessions/precise/10-14-1405-scaling-agentic-rl-across-the-globe.md)  
+**Links:** **[📰 Full write-up](sessions/10-14-1405-scaling-agentic-rl-across-the-globe.md)** · **[📰 中文版](sessions/zh/10-14-1405-scaling-agentic-rl-across-the-globe.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=e6ccda8d-0613-44f8-b98f-53ba8037b518) · [Stitch (open-source RL framework)](https://github.com/modal-projects/stitch) · [Precise notes (中文)](sessions/precise/10-14-1405-scaling-agentic-rl-across-the-globe.md)  
 **Recording:** not published yet
 
 **What it covers.** Modal supports customers scaling agent RL across a multi-cloud, multi-region fleet and presents Stitch, an open-source framework for disaggregating RL training.
@@ -1382,7 +1382,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speaker:** Ben Holmes (DevEx Lead, Warp)  
 **When / where:** 2:30pm–2:48pm · Turing Room (Riverside Ballroom) · Breakouts · ⭐ starred  
-**Links:** **[📰 Full write-up](sessions/10-14-1430-your-agent-needs-a-skill-to-improve-its.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=0a0cbd67-23fa-4a3d-a8dc-06e3caa3ab2f) · [Precise notes (中文)](sessions/precise/10-14-1430-your-agent-needs-a-skill-to-improve-its.md)  
+**Links:** **[📰 Full write-up](sessions/10-14-1430-your-agent-needs-a-skill-to-improve-its.md)** · **[📰 中文版](sessions/zh/10-14-1430-your-agent-needs-a-skill-to-improve-its.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=0a0cbd67-23fa-4a3d-a8dc-06e3caa3ab2f) · [Precise notes (中文)](sessions/precise/10-14-1430-your-agent-needs-a-skill-to-improve-its.md)  
 **Recording:** not published yet
 
 **What it covers.** Warp found its orchestration agent wasting hundreds of tool calls in a month because of one bad instruction in a message-passing skill. Shows how to build a feedback loop that evaluates past agent conversations and finds failures in the skills themselves.
@@ -1428,7 +1428,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speaker:** Jack Wotherspoon (Member of Technical Staff, Google DeepMind)  
 **When / where:** 2:55pm–3:13pm · Shannon Room (NY Ballroom E) · Expo Session (18 mins)  
-**Links:** **[📰 Full write-up](sessions/10-14-1455-build-your-own-team-of-managed-agents.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=970f672e-f351-46bb-9790-78c6b1baf81d) · [▶ Video](https://www.youtube.com/watch?v=Y_p3y6zP5QE) · [Precise notes (中文)](sessions/precise/10-14-1455-build-your-own-team-of-managed-agents.md)
+**Links:** **[📰 Full write-up](sessions/10-14-1455-build-your-own-team-of-managed-agents.md)** · **[📰 中文版](sessions/zh/10-14-1455-build-your-own-team-of-managed-agents.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=970f672e-f351-46bb-9790-78c6b1baf81d) · [▶ Video](https://www.youtube.com/watch?v=Y_p3y6zP5QE) · [Precise notes (中文)](sessions/precise/10-14-1455-build-your-own-team-of-managed-agents.md)
 
 **What it covers.** Gemini Managed Agents run coding agents in cloud sandboxes from a single API call: the Interactions API, the Antigravity harness, environments shared across agents, uploaded skills and AGENTS.md files, scheduled triggers and multi-agent workflows.
 
@@ -1475,7 +1475,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speaker:** Cameron Wolfe (Staff Research Scientist, Netflix)  
 **When / where:** 3:20pm–3:38pm · Turing Room (Riverside Ballroom) · Breakouts  
-**Links:** **[📰 Full write-up](sessions/10-14-1520-a-roadmap-for-evaluating-highly-subjecti.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=f5c310e9-b0bb-4fa6-bc0d-bda758e1c464) · [Slides (public Google Slides)](https://docs.google.com/presentation/d/146TscsJ21LU4kATVS3ES2oC_oZxoCBsTH3soepY25P4/edit?slide=id.g3ec03477a51_0_0#slide=id.g3ec03477a51_0_0) · [Precise notes (中文)](sessions/precise/10-14-1520-a-roadmap-for-evaluating-highly-subjecti.md)  
+**Links:** **[📰 Full write-up](sessions/10-14-1520-a-roadmap-for-evaluating-highly-subjecti.md)** · **[📰 中文版](sessions/zh/10-14-1520-a-roadmap-for-evaluating-highly-subjecti.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=f5c310e9-b0bb-4fa6-bc0d-bda758e1c464) · [Slides (public Google Slides)](https://docs.google.com/presentation/d/146TscsJ21LU4kATVS3ES2oC_oZxoCBsTH3soepY25P4/edit?slide=id.g3ec03477a51_0_0#slide=id.g3ec03477a51_0_0) · [Precise notes (中文)](sessions/precise/10-14-1520-a-roadmap-for-evaluating-highly-subjecti.md)  
 **Recording:** not published yet
 
 **What it covers.** Roadmap for building large-scale automatic evals for subjective tasks: coordinating human annotation, building and evaluating LLM judges, using production monitoring to inform evals, and reducing uncertainty with statistics.
@@ -1500,7 +1500,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speaker:** Mikyo King (Head of Open Source, Arize AI)  
 **When / where:** 3:45pm–4:03pm · Turing Room (Riverside Ballroom) · Breakouts  
-**Links:** **[📰 Full write-up](sessions/10-14-1545-code-mode-your-agent-should-write-code.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=8413d6ee-ceb1-4095-9f27-49d518f1dd5a) · [▶ Video](https://www.youtube.com/watch?v=dAoOYFx7ZYw) · [Precise notes (中文)](sessions/precise/10-14-1545-code-mode-your-agent-should-write-code.md)
+**Links:** **[📰 Full write-up](sessions/10-14-1545-code-mode-your-agent-should-write-code.md)** · **[📰 中文版](sessions/zh/10-14-1545-code-mode-your-agent-should-write-code.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=8413d6ee-ceb1-4095-9f27-49d518f1dd5a) · [▶ Video](https://www.youtube.com/watch?v=dAoOYFx7ZYw) · [Precise notes (中文)](sessions/precise/10-14-1545-code-mode-your-agent-should-write-code.md)
 
 **What it covers.** Give an agent 40 tools and it gets worse at using any of them; give it a sandbox and it can compose what it needs. Covers how Arize built code mode into Phoenix (Bash, a Python sandbox, SQL, even UI control), its hidden costs (secrets, permissions, durability, double sandboxing), and Harbor evals showing 43% fewer tokens and 31% lower cost. (The video was retitled “Stop Giving Your Agent Tools. Give It a Sandbox”.)
 

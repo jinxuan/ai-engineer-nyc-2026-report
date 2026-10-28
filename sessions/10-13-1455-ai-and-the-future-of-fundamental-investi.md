@@ -1,3 +1,5 @@
+**English** | [中文](zh/10-13-1455-ai-and-the-future-of-fundamental-investi.md)
+
 # AI Won't Pick the Stocks; It Will Tell Analysts Where to Look
 
 *At AI Engineer NYC 2026, former hedge fund CIO Jack Woodruff argued that AI will raise the baseline every fund works from, not replace the search for a divergent view, and that no number should be trusted unless it can be audited.*

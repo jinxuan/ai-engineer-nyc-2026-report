@@ -1,3 +1,5 @@
+**English** | [中文](zh/10-14-1455-build-your-own-team-of-managed-agents.md)
+
 # One API Call Gets an Agent Its Own Computer
 
 *At AI Engineer NYC 2026, Google DeepMind's Jack Wotherspoon showed how Gemini Managed Agents run a full agent loop in a cloud sandbox from a single API call, then chained three financial agents through one shared sandbox to research, value and write up a stock.*

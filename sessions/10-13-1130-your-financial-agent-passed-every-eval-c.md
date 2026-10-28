@@ -1,3 +1,5 @@
+**English** | [中文](zh/10-13-1130-your-financial-agent-passed-every-eval-c.md)
+
 # A 97% Eval Score Is Not a Defense: Four Controls for Financial Agents
 
 *At AI Engineer NYC 2026, Fieldguide's Anirudh Veeraragavan argued that a financial agent's decision is defensible only when four controls hold together (authorization, execution control, evidence provenance and evaluation integrity), and walked through one failing reconciling item for each.*

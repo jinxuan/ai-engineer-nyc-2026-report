@@ -1,3 +1,5 @@
+**English** | [中文](zh/10-13-1405-can-ai-understand-a-distressed-credit.md)
+
 # Two Frontier Models Disagreed on a Distressed Credit Until Their Reasoning Was Structured
 
 *At AI Engineer NYC 2026, Axim Intelligence founder Harneet Kaur showed two frontier models giving opposite outlooks for iHeartMedia's debt, then converging once their analysis was broken into checkable layers, and asked whether agreement is the same as being right.*

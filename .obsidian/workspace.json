@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "sessions/10-12-1530-unhobbling-the-frontier.md",
+                "file": "sessions/zh/10-12-1530-unhobbling-the-frontier.md",
                 "mode": "source",
                 "source": false
               },
@@ -99,7 +99,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "sessions/10-12-1530-unhobbling-the-frontier.md",
+                "file": "sessions/zh/10-12-1530-unhobbling-the-frontier.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -118,7 +118,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "sessions/10-12-1530-unhobbling-the-frontier.md",
+                "file": "sessions/zh/10-12-1530-unhobbling-the-frontier.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
@@ -161,7 +161,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "sessions/10-12-1530-unhobbling-the-frontier.md",
+                "file": "sessions/zh/10-12-1530-unhobbling-the-frontier.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -190,24 +190,51 @@
   },
   "active": "e72f95ab7f0d6088",
   "lastOpenFiles": [
-    "slides/10-14-1648-process-supervision-for-agents-that-do-l/16.jpg",
-    "slides/10-14-1648-process-supervision-for-agents-that-do-l/15.jpg",
-    "slides/10-14-1648-process-supervision-for-agents-that-do-l/14.jpg",
-    "slides/10-14-1648-process-supervision-for-agents-that-do-l/13.jpg",
-    "slides/10-14-1648-process-supervision-for-agents-that-do-l/12.jpg",
-    "slides/10-14-1648-process-supervision-for-agents-that-do-l/11.jpg",
-    "slides/10-14-1648-process-supervision-for-agents-that-do-l/10.jpg",
-    "slides/10-14-1648-process-supervision-for-agents-that-do-l/09.jpg",
     "slides/10-14-1648-process-supervision-for-agents-that-do-l/08.jpg",
     "slides/10-14-1648-process-supervision-for-agents-that-do-l/07.jpg",
     "slides/10-14-1648-process-supervision-for-agents-that-do-l/06.jpg",
+    "slides/10-14-1648-process-supervision-for-agents-that-do-l/05.jpg",
+    "slides/10-14-1648-process-supervision-for-agents-that-do-l/04.jpg",
+    "slides/10-14-1648-process-supervision-for-agents-that-do-l/03.jpg",
+    "slides/10-14-1648-process-supervision-for-agents-that-do-l/02.jpg",
+    "slides/10-14-1648-process-supervision-for-agents-that-do-l/01.jpg",
     "slides/10-14-1648-process-supervision-for-agents-that-do-l",
+    "slides/10-14-1545-code-mode-your-agent-should-write-code/13.jpg",
+    "slides/10-14-1545-code-mode-your-agent-should-write-code/12.jpg",
+    "slides/10-14-1545-code-mode-your-agent-should-write-code/11.jpg",
     "slides/10-14-1545-code-mode-your-agent-should-write-code",
+    "slides/10-14-1520-a-roadmap-for-evaluating-highly-subjecti",
     "slides/10-14-1455-build-your-own-team-of-managed-agents",
     "slides/10-14-1430-your-agent-needs-a-skill-to-improve-its",
     "slides/10-14-1405-scaling-agentic-rl-across-the-globe",
     "slides/10-14-1340-building-a-self-improving-software-facto",
     "slides/10-14-1220-ab-testing-ai-products-is-weird-what-cha",
-    "slides/10-14-1155-the-model-ate-the-coding-harness-now-wha"
+    "slides/10-14-1155-the-model-ate-the-coding-harness-now-wha",
+    "slides/10-14-1130-we-let-our-financial-planners-write-the",
+    "sessions/zh/10-13-1155-lies-damned-lies-and-evals-how-to-trust.md",
+    "sessions/10-12-1530-unhobbling-the-frontier.md",
+    "sessions/zh/10-13-1405-can-ai-understand-a-distressed-credit.md",
+    "sessions/zh/10-13-1130-your-financial-agent-passed-every-eval-c.md",
+    "sessions/zh/10-14-1130-we-let-our-financial-planners-write-the.md",
+    "sessions/zh/10-13-1455-ai-and-the-future-of-fundamental-investi.md",
+    "sessions/zh/10-14-1545-code-mode-your-agent-should-write-code.md",
+    "sessions/zh/10-13-1105-write-the-answer-first-generating-eval-d.md",
+    "sessions/zh/10-14-1405-scaling-agentic-rl-across-the-globe.md",
+    "sessions/zh/10-14-1105-building-better-agents-through-end-to-en.md",
+    "sessions/zh/10-13-1430-why-frontier-models-fail-on-billion-doll.md",
+    "sessions/zh/10-14-1520-a-roadmap-for-evaluating-highly-subjecti.md",
+    "sessions/zh/10-13-1040-can-any-model-write-like-me-building-a-b.md",
+    "sessions/zh/10-14-1340-building-a-self-improving-software-facto.md",
+    "sessions/zh/10-14-1040-the-hidden-costs-of-a-faster-model.md",
+    "sessions/10-13-1405-can-ai-understand-a-distressed-credit.md",
+    "sessions/zh/10-12-1530-unhobbling-the-frontier.md",
+    "zh/10-13-1040-can-any-model-write-like-me-building-a-b.md",
+    "sessions/10-13-1040-can-any-model-write-like-me-building-a-b.md",
+    "sessions/zh/10-14-1455-build-your-own-team-of-managed-agents.md",
+    "zh/10-13-1130-your-financial-agent-passed-every-eval-c.md",
+    "sessions/10-13-1130-your-financial-agent-passed-every-eval-c.md",
+    "sessions/zh/10-14-1220-ab-testing-ai-products-is-weird-what-cha.md",
+    "sessions/zh/10-13-1340-proving-alpha-showcasing-ais-value-in-fu.md",
+    "sessions/zh/10-13-1545-give-the-model-a-computer-the-one-thing.md"
   ]
 }

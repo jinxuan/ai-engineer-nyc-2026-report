@@ -1,3 +1,5 @@
+**English** | [中文](zh/10-14-1130-we-let-our-financial-planners-write-the.md)
+
 # At Range, the Financial Planners Write the Agent Skills, in Five Steps and No Code
 
 *At AI Engineer NYC 2026, Range financial planner Matt Ragone described how planners with no engineering background built and now maintain the agent skills they use every day, and why the open questions are about ownership and testing rather than model capability.*
@@ -124,7 +126,7 @@ The session description had posed the question of "how to check quality at scale
 
 ## What only the room version had
 
-Compared with the online recording, the in-room talk added: Claude Cowork as the turning point, the team size of about 20 planners, the standardized reference documents in Notion and Google Docs, the pay-stub example, the questions about tax year and state, Rai, the colleague-as-reviewer example, the internal agent Ranger, the quarterback metaphor, the goal of 100 clients a day per planner, and the final "how could you make yourself better?" question before shipping. The online version, in turn, has the scripted lines quoted above, such as "a skill that was right in March can be wrong by December."
+Compared with the online recording, the in-room talk added: Claude Cowork as the turning point, the team size of about 20 planners, the standardized reference documents in Notion and Google Docs, the pay-stub example, the questions about tax year and state, Rai, the colleague-as-reviewer example, the internal agent Ranger, the quarterback metaphor, the goal of 100 clients a day per planner, and the final "how could you make yourself better?" question before shipping. The online version, in turn, has scripted lines the room version lacks, such as "a skill that was right in March can be wrong by December."
 
 ---
 

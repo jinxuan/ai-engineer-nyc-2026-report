@@ -1,3 +1,5 @@
+**English** | [中文](zh/10-13-1520-your-agent-fix-just-broke-something-else.md)
+
 # Every Agent Fix Needs a Regression Test Built From Production Traces
 
 *At AI Engineer NYC 2026, Arize's Sofia Jakovcevic showed how a one-line prompt change can make an agent safer while quietly breaking it, and laid out a five-step loop that tests every change against production traces before it ships.*

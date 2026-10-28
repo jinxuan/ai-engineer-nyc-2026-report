@@ -1,3 +1,5 @@
+**English** | [中文](zh/10-14-1155-the-model-ate-the-coding-harness-now-wha.md)
+
 # Models Absorbed the Coding Harness, but the Harness Still Opens the Next Frontier
 
 *At AI Engineer NYC 2026, Jediah Katz, who worked on Cursor's agent harness and now works on Grok Bot, argued that smarter models have made a fancy coding harness unnecessary, and that the harness still matters for new kinds of work, infrastructure, trust and cost.*

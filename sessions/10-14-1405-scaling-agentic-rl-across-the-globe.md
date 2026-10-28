@@ -1,3 +1,5 @@
+**English** | [中文](zh/10-14-1405-scaling-agentic-rl-across-the-globe.md)
+
 # A Stable Recipe for Agent RL on Mismatched GPUs Spread Across Clouds
 
 *At AI Engineer NYC 2026, Modal's Jason Mancuso argued that any team with an agent in production already has what reinforcement learning needs, presented a four-part recipe that keeps asynchronous RL stable when samplers and trainer disagree, and explained how sparse weight updates let inference GPUs live outside the training cluster.*

@@ -1,3 +1,5 @@
+**English** | [中文](zh/10-12-1530-unhobbling-the-frontier.md)
+
 # Your App Is Probably Sitting Inside the Frontier
 
 *At AI Engineer NYC 2026, Anthropic's Lance Martin argued that most Claude applications leave cost and quality on the table through small misconfigurations. Martin walked through five fixes in 23 minutes, then spent 48 minutes on questions about evals, hill-climbing and effort.*

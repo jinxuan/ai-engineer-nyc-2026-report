@@ -1,3 +1,5 @@
+**English** | [中文](zh/10-13-1545-give-the-model-a-computer-the-one-thing.md)
+
 # Pick Where Agent Code Runs Before You Pick a Framework
 
 *At AI Engineer NYC 2026, Daytona's Mislav Ivanda argued that agent frameworks which agree on almost nothing have converged on one primitive, giving the model a computer, and that the execution boundary is the one decision teams can't easily undo.*

@@ -1,3 +1,5 @@
+**English** | [中文](zh/10-13-1430-why-frontier-models-fail-on-billion-doll.md)
+
 # Benchmarks Are Broken, and a Buy-Side Memo Test Shows What Fixing One Looks Like
 
 *At AI Engineer NYC 2026, Kaggle's Janie Gu described how reproducing 65 industry benchmarks exposed cheating, tampering and noise behind legitimate-looking scores, and LinqAlpha's Suyeol Yun presented Mandate-Bench, a test that grades AI agents the way a portfolio manager grades an analyst's investment memo. In early results the best agent averaged 58 out of 100.*

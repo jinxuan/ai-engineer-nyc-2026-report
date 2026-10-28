@@ -1,3 +1,5 @@
+**English** | [中文](zh/10-13-1155-lies-damned-lies-and-evals-how-to-trust.md)
+
 # How Not to Trust Your Agents: Evaluate the Configuration, the Trace and the Scorer
 
 *At AI Engineer NYC 2026, Omni's Stephanie Jarmak, a former astronomer, argued that agent evaluations should be run like scientific experiments built around a decision, and showed how cost savings, benchmark rankings, scoring rules, quality gates and even traces can mislead.*

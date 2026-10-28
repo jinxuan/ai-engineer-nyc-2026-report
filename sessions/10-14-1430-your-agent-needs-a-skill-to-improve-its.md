@@ -1,3 +1,5 @@
+**English** | [中文](zh/10-14-1430-your-agent-needs-a-skill-to-improve-its.md)
+
 # Score Every Agent Conversation, Then Let an Agent Fix the Skills
 
 *At AI Engineer NYC 2026, Warp's Ben Holmes laid out a loop in which agents grade past coding-agent conversations against Markdown rubrics, collect the failures and propose edits to the skills that caused them, and demonstrated it with Warp's Skill Doctor.*

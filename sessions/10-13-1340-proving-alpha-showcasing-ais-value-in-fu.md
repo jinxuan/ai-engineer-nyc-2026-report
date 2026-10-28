@@ -1,3 +1,5 @@
+**English** | [中文](zh/10-13-1340-proving-alpha-showcasing-ais-value-in-fu.md)
+
 # A Hedge Fund Tries to Measure What AI Changes Before the P&L Shows It
 
 *At AI Engineer NYC 2026, Hari Kumar of Contour Asset Management described how a small fundamental fund is trying to put a number on AI's value: live A/B tests of analysts' research, a "cost per useful insight" metric, and an honest count of the time spent fixing tools. Kumar deliberately gave no results.*

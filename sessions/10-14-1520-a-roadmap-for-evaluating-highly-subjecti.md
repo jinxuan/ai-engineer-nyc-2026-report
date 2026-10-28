@@ -1,3 +1,5 @@
+**English** | [中文](zh/10-14-1520-a-roadmap-for-evaluating-highly-subjecti.md)
+
 # Evaluating Subjective Tasks Means Fighting Noise at Every Step
 
 *At AI Engineer NYC 2026, Netflix's Cameron Wolfe laid out a three-part roadmap for evaluating tasks with no right answer: human evaluation as the definition of quality, LLM judges as a checked proxy for it, and production monitoring as the final test, with statistics used throughout to tell real improvements from noise.*

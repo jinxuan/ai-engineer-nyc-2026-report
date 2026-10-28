@@ -1,3 +1,5 @@
+**English** | [中文](zh/10-13-1220-1368-ai-failures-what-they-teach-us-abou.md)
+
 # Evaluate the Whole AI System by Risk, Not by How Often Things Fail
 
 *At AI Engineer NYC 2026, Vishal Srivastava and Tanmay Sah mapped 1,368 publicly reported AI incidents onto 13 failure dimensions and argued that the controls around a model, not the model itself, most often decide whether a failure turns into harm.*

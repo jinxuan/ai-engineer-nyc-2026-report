@@ -1,3 +1,5 @@
+**English** | [中文](zh/10-14-1220-ab-testing-ai-products-is-weird-what-cha.md)
+
 # A Winning A/B Test Is Where an AI Feature's Ship Decision Starts, Not Where It Ends
 
 *At AI Engineer NYC 2026, Bumble product manager Supriya Subudhi used the dating app's AI photo feedback feature to show five ways a positive A/B test can still leave the question of whether to ship unanswered.*

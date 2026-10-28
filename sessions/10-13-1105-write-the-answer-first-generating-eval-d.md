@@ -1,3 +1,5 @@
+**English** | [中文](zh/10-13-1105-write-the-answer-first-generating-eval-d.md)
+
 # No Benchmark and No Experts? Write the Answer First
 
 *At AI Engineer NYC 2026, Air Canada's Nathanael Weill showed how a data science team without public benchmarks or easy access to domain experts built test sets for its agents by fixing the answer first and generating the input around it, so that plain code could do the grading.*

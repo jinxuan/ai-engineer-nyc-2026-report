@@ -1,3 +1,5 @@
+**English** | [中文](zh/10-14-1105-building-better-agents-through-end-to-en.md)
+
 # Ramp Spent Months on Accounting Evals, and the Payoff Came From Memory and Skill Ablation, Not Auto-Tuning
 
 *At AI Engineer NYC 2026, Ramp's Ryan Stevens walked through how the company built a benchmark of synthetic accounting businesses for its Ramp Stack agent, and which experiments run against it helped and which did not.*

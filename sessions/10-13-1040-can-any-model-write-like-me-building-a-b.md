@@ -1,3 +1,5 @@
+**English** | [中文](zh/10-13-1040-can-any-model-write-like-me-building-a-b.md)
+
 # Measuring Slop Means Measuring Voice, Not Banned Words
 
 *At AI Engineer NYC 2026, Towards AI's Louis-François Bouchard launched ToneBench, a benchmark that scores whether a model can write a video script in Bouchard's own voice, and shared what it cost to build and what it taught about writing with AI.*
