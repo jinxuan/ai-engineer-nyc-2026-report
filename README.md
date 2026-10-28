@@ -161,10 +161,10 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speaker:** Lance Martin (Member of Technical Staff, Anthropic)  
 **When / where:** 3:30pm–4:30pm · Shannon Room (NY Ballroom E) · Workshop (1-2 hrs)  
-**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=6a4e7cfd-334a-4d3b-94ed-282acc905448)  
+**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=6a4e7cfd-334a-4d3b-94ed-282acc905448) · [Speaker’s blog: Automating eval design and hillclimbing with Claude](https://claude.dev/blog/automating-eval-design-and-hillclimbing/)  
 **Recording:** not published yet
 
-**What it covers.** Hands-on workshop on getting more out of frontier models: harness design, prompting, and setting up evals so an agent can be improved by hill-climbing.
+**What it covers.** Lance Martin’s thesis: many applications sit inside the cost–performance frontier (not on it) because of small misconfigurations. Five themes, each with a command in the `claude-api` skill for Claude Code: audit your prompts, use the prompt cache, design a good eval, hillclimb against it, and design the harness for tasks that run for hours to days. The slides took about 23 minutes and the rest of the hour was Q&A.
 
 <details><summary>Official talk description</summary>
 
@@ -174,11 +174,15 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **My takeaways**
 
-- Audit your prompts: contradictory instructions make a prompt confusing for the model.
-- Use prompt caching on the Claude API. Claude API skills help with cost work (`/claude-api cost-optimize`) and evals (`/claude-api build-eval`, `/claude-api hillclimb`).
-- Design evals so they are hill-climbable, and watch for overfitting to the eval set.
-- Design the harness for where the model is going, not where it is today.
-- Q&A: for open-ended criteria (e.g. UI), use a well-structured rubric humans can reason about, binary scores instead of 0–5, multiple judges or models, and replicates. Pairwise comparison suits ambiguous cases. Let Claude decide when a behavior should become a skill.
+- **Prompt audit.** Tricks written for older models (verification rituals, thoroughness boosters) only cost tokens on frontier models, and contradictory rules now hurt: a frontier model takes both seriously and gets confused. Upgrading a model is a good moment to audit the prompt, not just change the model ID.
+- **Prompt cache.** The cache is a strict prefix match, so even a one-byte change invalidates it. Order the prompt from least to most frequently changing. `/claude-api cost-optimize` found cost reductions of up to about 72% on internal benchmarks with no meaningful change in performance.
+- **Good eval design** (matches the blog): tasks mirror production; a stronger model or more effort scores higher; there is headroom below 100% that is not explained by ambiguous or impossible tasks; run-to-run variance is low. `/claude-api build-eval` walks through the data, the eval and the grader with you, and is not opinionated about where your data lives. Read a sample of scored transcripts before trusting a grader.
+- **Hillclimbing.** The main risk is overfitting: benchmark quirks leak into the harness (e.g. an OCR tool added because the eval needs it). `/claude-api hillclimb` splits the eval into train and test, shows the analyzer only train failures, makes one change per round, and reverts if train improves but test stays flat. It is not guaranteed to converge; when it stalls, the cause is often ambiguous cases or a bad grader.
+- Start hillclimbing on text surfaces (prompts, skills): cheap to change and tightly coupled to the output. Harness code changes are large and harder to attribute. Prompts are also the easiest thing to overfit.
+- **Cost as the objective.** You can hillclimb for lower cost at parity performance even on a saturated eval. A stronger model at low effort is often cheaper and better than a weaker model at high effort; without an eval, try Opus 5.5 at low effort first (effort is not a hard token cap). Blog example (44 support tickets, 14 held out): Opus 4.8 at high effort scored 74.4% at 4.6¢ per ticket; Sonnet 5 at low effort with an improved prompt scored 98.9% at 1¢; on the held-out tickets 90.5% vs 78.6% at about one fifth of the cost.
+- **Harness for long-running work.** Tasks now run for hours to days, so Claude Managed Agents separate the brain (harness) from the hands (sandbox): the session log is its own append-only object and can be recovered, and secrets live in a vault Claude never touches directly.
+- **Q&A.** For eval criteria without a clear answer (e.g. UI), write a rubric a human could score with, use binary checks instead of 1–10 scales, have several models grade (disagreement is a bad sign), and run replicates. Pairwise comparison works well for ambiguous cases. Let Claude decide when a repeated workflow should become a skill. Avoid adversarial sampling (only cases one model gets wrong). Human taste and direction stay with people; Claude can scan traces for suspicious cases like an offline online-evaluator. Overfitting, not eval awareness, is the bigger concern when hillclimbing.
+- Where the sources differ: the talk gave the `claude-api` skill’s starting score as 68% and the cost saving as about 90%; the blog and slides say 66.1% and about one fifth of the cost, which are the figures used above.
 
 <details><summary>Slide photos (15)</summary>
 
