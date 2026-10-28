@@ -7,6 +7,7 @@ This repository lists the 38 sessions I attended: who spoke, what each talk cove
 - ⭐ marks a session I starred as a highlight while attending.
 - **What it covers** is based on the official abstract and, where a recording exists, its YouTube description. **My takeaways** are from my own notes taken during the talk.
 - Recordings are being published gradually. A session without a video link had no recording on the channel when this was last checked (**2026-10-27**).
+- Public slide decks are rare. Where a speaker or the official talk page links slides or workshop materials, it is listed in **Links**; sessions without one have none that I could find.
 - Some talk titles were changed when the video was published; the schedule title is used here and the video title is noted when different.
 
 ## Where to watch
@@ -92,7 +93,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speaker:** Nacho Martinez (AI Developer Advocate, Oracle)  
 **When / where:** 11:05am–12:05pm · Sutton Room (NY Ballroom W) · Workshop (1-2 hrs)  
-**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=898cb76b-41f3-47c0-ba31-6a5f8df40117) · [▶ Video](https://www.youtube.com/watch?v=KtBivPzmOM8)
+**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=898cb76b-41f3-47c0-ba31-6a5f8df40117) · [▶ Video](https://www.youtube.com/watch?v=KtBivPzmOM8) · [Workshop site (exercises)](https://workshopwaitingroom.com/) · [Speaker GitHub](https://github.com/jasperan)
 
 **What it covers.** The model is the part you can’t change; the harness is where agent quality is won or lost. The workshop builds that harness from primitives on Oracle AI Database with an AML dataset: long-term memory and schema scanning, semantic and hybrid retrieval, a vector-indexed toolbox and skillboxes, and a bounded agent-turn loop. (The video was retitled “Memory-Aware Agent Harnesses for Anti-Money Laundering”.)
 
@@ -114,7 +115,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speakers:** Nick Nisi (Engineering Manager, WorkOS); Zack Proser (AI Engineer, WorkOS)  
 **When / where:** 1:15pm–2:15pm · Sutton Room (NY Ballroom W) · Workshop (1-2 hrs)  
-**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=edb4f982-0cb8-48ee-8bf7-410255a40cb3) · [▶ Video](https://www.youtube.com/watch?v=q4WC4TowkBo)
+**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=edb4f982-0cb8-48ee-8bf7-410255a40cb3) · [▶ Video](https://www.youtube.com/watch?v=q4WC4TowkBo) · [Slides & exercises (workshop workbench; returned 401, may need a login)](https://talks.workos.cloud/beyonddone)
 
 **What it covers.** Build a verification and repair loop around an AI agent: Playwright checks browser behavior, an evaluator judges whether the collected evidence supports each acceptance criterion, and the loop accepts the work, requests a bounded repair, or escalates to a human. Then try to fool it with deliberately broken outputs to test the verifier itself. (The video was retitled “Teach Your Agent to Prove It’s Done”.)
 
@@ -134,7 +135,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speakers:** Doneyli De Jesus (Head of AI Engineering Solutions, Langfuse (by ClickHouse)); Annabell Schäfer (AI Engineering Solutions, Langfuse by ClickHouse)  
 **When / where:** 2:20pm–3:20pm · Sutton Room (NY Ballroom W) · Workshop (1-2 hrs)  
-**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=f20b8d60-8a75-4ab3-a2fb-42159024e65f) · [▶ Video](https://www.youtube.com/watch?v=obfPzbapMIM)
+**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=f20b8d60-8a75-4ab3-a2fb-42159024e65f) · [▶ Video](https://www.youtube.com/watch?v=obfPzbapMIM) · [Workshop materials](https://langfuse.com/workshop)
 
 **What it covers.** Closing the loop from demo to production in a regulated industry, using a banking support agent (Northwind Bank): end-to-end tracing, guardrails that block and record risky requests, quality and compliance evals on datasets in CI/CD, and a dashboard of top failure modes. (The video was retitled “Evals for High-Stakes AI Agents”.)
 
@@ -1473,7 +1474,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speaker:** Cameron Wolfe (Staff Research Scientist, Netflix)  
 **When / where:** 3:20pm–3:38pm · Turing Room (Riverside Ballroom) · Breakouts  
-**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=f5c310e9-b0bb-4fa6-bc0d-bda758e1c464) · [Slides](https://docs.google.com/presentation/d/146TscsJ21LU4kATVS3ES2oC_oZxoCBsTH3soepY25P4/edit?slide=id.g3ec03477a51_0_0#slide=id.g3ec03477a51_0_0)  
+**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=f5c310e9-b0bb-4fa6-bc0d-bda758e1c464) · [Slides (public Google Slides)](https://docs.google.com/presentation/d/146TscsJ21LU4kATVS3ES2oC_oZxoCBsTH3soepY25P4/edit?slide=id.g3ec03477a51_0_0#slide=id.g3ec03477a51_0_0)  
 **Recording:** not published yet
 
 **What it covers.** Roadmap for building large-scale automatic evals for subjective tasks: coordinating human annotation, building and evaluating LLM judges, using production monitoring to inform evals, and reducing uncertainty with statistics.
@@ -1555,7 +1556,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speaker:** Mitchell Troyanovsky (Co-Founder, Basis)  
 **When / where:** 4:48pm–5:06pm · Simons Room (Metropolitan East) · Featured Keynote · ⭐ starred  
-**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=1cbc625f-7f07-49bb-9c5c-57c95f07ba77) · [▶ Livestream @ 8:09:22](https://www.youtube.com/watch?v=jiUC6IUMdvc&t=29362s) · [Behavior specs](https://www.agentbehavior.dev/)
+**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=1cbc625f-7f07-49bb-9c5c-57c95f07ba77) · [▶ Livestream @ 8:09:22](https://www.youtube.com/watch?v=jiUC6IUMdvc&t=29362s) · [Basis behavior specs](https://www.agentbehavior.dev/)
 
 **What it covers.** Basis builds agents for accountants. A long-horizon agent can reach a correct result through unreliable steps, such as a tax conclusion based on pretraining or a blog rather than primary sources. Evaluating long-horizon work needs evidence about both the result and the decisions behind it.
 
