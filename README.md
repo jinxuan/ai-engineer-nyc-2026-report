@@ -208,7 +208,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speakers:** Aaron Linsky (Head of Product Engineering, Bridgewater); Sam Green (Team Lead, Applied AI - AIA Labs, Bridgewater)  
 **When / where:** 9:00am–9:18am · Simons Room (Metropolitan East) · Featured Keynote  
-**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=a84ca3a8-cc2f-4b50-a635-fc380f6f04f6) · [▶ Video](https://www.youtube.com/watch?v=CLve4Nx_RwI) · [▶ Livestream @ 7:22](https://www.youtube.com/watch?v=akEqiXFo3GM&t=442s)
+**Links:** **[📰 Full write-up](sessions/10-13-0900-vault-making-unstructured-data-work-for.md)** · **[📰 中文版](sessions/zh/10-13-0900-vault-making-unstructured-data-work-for.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=a84ca3a8-cc2f-4b50-a635-fc380f6f04f6) · [▶ Video](https://www.youtube.com/watch?v=CLve4Nx_RwI) · [▶ Livestream @ 7:22](https://www.youtube.com/watch?v=akEqiXFo3GM&t=442s) · [Precise notes (中文)](sessions/precise/10-13-0900-vault-making-unstructured-data-work-for.md)
 
 **What it covers.** Bridgewater built the Vault: 100M+ documents from 135 external sources plus internal memos and meetings, cleaned, permissioned and tagged to the firm’s ontology. Three lessons: humans and agents need different things from search, the biggest wins come from one tool that serves both, and the real prize is agents that proactively surface what deserves an investor’s attention. A hand-built benchmark took precision@10 from about 60% to over 90%.
 
@@ -257,7 +257,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speakers:** Belinda Neal (Managing Director, Financial Services, Anthropic); Keon Shahab (Applied AI Architect, Anthropic)  
 **When / where:** 9:18am–9:36am · Simons Room (Metropolitan East) · Featured Keynote  
-**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=68a1e78b-569e-4314-a56f-f20508123cbe)  
+**Links:** **[📰 Full write-up](sessions/10-13-0918-anthropic-accelerating-frontier-ai-in-fi.md)** · **[📰 中文版](sessions/zh/10-13-0918-anthropic-accelerating-frontier-ai-in-fi.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=68a1e78b-569e-4314-a56f-f20508123cbe) · [Precise notes (中文)](sessions/precise/10-13-0918-anthropic-accelerating-frontier-ai-in-fi.md)  
 **Recording:** not chaptered in the livestream, and no standalone video found
 
 **What it covers.** Anthropic’s financial-services team frames two frontiers every firm has to reach: the frontier of intelligence (what the best model can do today) and the frontier of adoption (how much of the firm’s real work runs on it). Scaling from a handful of agents to many means building connectors, skills and controls once.
@@ -294,7 +294,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speaker:** John Feminella (SVP Architecture, Two Sigma)  
 **When / where:** 9:36am–9:54am · Simons Room (Metropolitan East) · Featured Keynote  
-**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=73badd10-6f8c-4c95-b5e7-55fc3d7bafc1) · [▶ Video](https://www.youtube.com/watch?v=iniryju23Sk) · [▶ Livestream @ 23:55](https://www.youtube.com/watch?v=akEqiXFo3GM&t=1435s) · [Speaker write-up (DEV)](https://dev.to/dailycontext/brakes-let-you-go-fast-balancing-acceleration-and-safety-for-ai-agents-49p9)
+**Links:** **[📰 Full write-up](sessions/10-13-0936-balancing-acceleration-and-safety-for-ai.md)** · **[📰 中文版](sessions/zh/10-13-0936-balancing-acceleration-and-safety-for-ai.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=73badd10-6f8c-4c95-b5e7-55fc3d7bafc1) · [▶ Video](https://www.youtube.com/watch?v=iniryju23Sk) · [▶ Livestream @ 23:55](https://www.youtube.com/watch?v=akEqiXFo3GM&t=1435s) · [Speaker write-up (DEV)](https://dev.to/dailycontext/brakes-let-you-go-fast-balancing-acceleration-and-safety-for-ai-agents-49p9) · [Precise notes (中文)](sessions/precise/10-13-0936-balancing-acceleration-and-safety-for-ai.md)
 
 **What it covers.** Uses the 2020 Citibank/Revlon $900M payment error to show how to give agents real autonomy without locking everything down. Five composable controls: an agent registry, risk-based review, tool access that follows an agent’s declared purpose, shared firm-wide evals, and classifiers that send humans only the approvals that matter. (The video was retitled “What a $900M Bank Error Teaches Us About AI Agents”.)
 
@@ -344,7 +344,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speaker:** Max Kanat-Alexander (Principal Software Engineer, Capital One)  
 **When / where:** 9:54am–10:12am · Simons Room (Metropolitan East) · Featured Keynote  
-**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=5191589c-a70e-4806-99dc-86f7794f46b9) · [▶ Video](https://www.youtube.com/watch?v=bU5gDVyu_28) · [▶ Livestream @ 43:51](https://www.youtube.com/watch?v=akEqiXFo3GM&t=2631s)
+**Links:** **[📰 Full write-up](sessions/10-13-0954-does-code-quality-even-matter.md)** · **[📰 中文版](sessions/zh/10-13-0954-does-code-quality-even-matter.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=5191589c-a70e-4806-99dc-86f7794f46b9) · [▶ Video](https://www.youtube.com/watch?v=bU5gDVyu_28) · [▶ Livestream @ 43:51](https://www.youtube.com/watch?v=akEqiXFo3GM&t=2631s) · [Precise notes (中文)](sessions/precise/10-13-0954-does-code-quality-even-matter.md)
 
 **What it covers.** Code quality exists for two things: understanding a system and safely changing it. AI makes a new kind of software common, disposable software with low consequences, few dependents and near-zero replacement cost, where quality does not matter. For durable software it matters more than ever. (The video was retitled “Does Code Quality Still Matter? It Depends on This”.)
 
@@ -387,7 +387,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speaker:** Aparna Dhinakaran (Co-Founder & Chief Product Officer, Arize AI)  
 **When / where:** 10:12am–10:30am · Simons Room (Metropolitan East) · Featured Keynote  
-**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=b2ed4456-5671-4e8e-83fd-684c012fef8c) · [▶ Video](https://www.youtube.com/watch?v=ImnZ7s68jw8) · [▶ Livestream @ 1:00:43](https://www.youtube.com/watch?v=akEqiXFo3GM&t=3643s)
+**Links:** **[📰 Full write-up](sessions/10-13-1012-what-does-an-ai-engineer-do.md)** · **[📰 中文版](sessions/zh/10-13-1012-what-does-an-ai-engineer-do.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=b2ed4456-5671-4e8e-83fd-684c012fef8c) · [▶ Video](https://www.youtube.com/watch?v=ImnZ7s68jw8) · [▶ Livestream @ 1:00:43](https://www.youtube.com/watch?v=akEqiXFo3GM&t=3643s) · [Precise notes (中文)](sessions/precise/10-13-1012-what-does-an-ai-engineer-do.md)
 
 **What it covers.** As the field moves from writing features to running factories of agents, the job becomes building the loop: evals that review non-deterministic work, telemetry that agents consume, and agents that act on it. Walks through Arize’s Signal, an always-on agent that reads traces, remembers past issues and opens PRs. (The video was retitled “What Does an AI Engineer Do Now?”.)
 
@@ -967,7 +967,7 @@ For Main Stage talks, the livestream links jump to the chapter marker the organi
 
 **Speaker:** Frank Long (Head of AI, Coatue)  
 **When / where:** 4:30pm–4:48pm · Simons Room (Metropolitan East) · Featured Keynote  
-**Links:** [Schedule](https://ai.engineer/nyc/2026/schedule?session=9a9dfcd0-459f-43eb-b3f8-004864b4ad2a) · [▶ Livestream @ 6:47:46](https://www.youtube.com/watch?v=akEqiXFo3GM&t=24466s)
+**Links:** **[📰 Full write-up](sessions/10-13-1630-a-hedge-fund-as-a-function.md)** · **[📰 中文版](sessions/zh/10-13-1630-a-hedge-fund-as-a-function.md)** · [Schedule](https://ai.engineer/nyc/2026/schedule?session=9a9dfcd0-459f-43eb-b3f8-004864b4ad2a) · [▶ Livestream @ 6:47:46](https://www.youtube.com/watch?v=akEqiXFo3GM&t=24466s) · [Precise notes (中文)](sessions/precise/10-13-1630-a-hedge-fund-as-a-function.md)
 
 **What it covers.** Coatue’s Head of AI on frameworks for thinking about applying AI to investing.
 
